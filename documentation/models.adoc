@@ -1,0 +1,631 @@
+== PIComposer BIM Model and Entity
+
+A PIComposer model is a collection of entity instances which could be grouped into logical components.  Moreover, each PIComposer model embodies two essential concepts:
+
+* spatial structure
+* object placement.
+
+The spatial structure enrich a BIM model with a logical origanizational structure and object placement defines the physical location of entitity instance within the model.  Each of these concepts are presented as trees in PIComposer.  
+
+These trees are managed in parallel; a node created in the spatial tree will trigger a correponding creation of a node in the placement.  
+
+The placement tree is readonly.
+
+[NOTE]
+====
+Placement tree could be turn of by preference
+====
+
+Each entity instance is also presented as a tree (an acyclic graph actually)--the entity instance detail tree--where a tree node is either a logical grouping node or an attriubte node of the instance. All instance attribute addition, modification and deletion are managed using the instance detail tree. 
+
+Many entity related component could be displayed on the instance detail tree, including:
+
+. propertyset/quantityset
+. object placement
+. placement absolute coordinate
+. typeproduct
+. shapes
+
+And these information could be turn on/off using user preference.
+
+PIComposer Community Edition is a single document application. To load a model, select a model in the Project pane model listing and click the image:navigationbar-model-button.png[] model button or simply double click on the
+item on the model list.
+
+.Model pane, spatial tree
+image::model-spatial-tab.png[]
+
+[NOTE]
+====
+User could return to the last active model by clicking the image:navigationbar-model-button.png[] model button from any other pane.
+====
+
+PIComposer splits model presentation into two area:
+
+* the model structure
+* model instance detail
+
+The model structure area comprises of three tabs
+
+* spatial
+* placement
+* filters
+
+[NOTE]
+====
+Selection set is an essential component of the PIComposer user interface. Each of these tabs above has a selection set.  Many PIComposer commands make user of selection set.  The selection set allow a user to creating inter-node links, insert selected node into other nodes and enable many other actions. 
+====
+
+=== Working with the Spatial Tree
+
+The spatial tree is where the spatial structure is managed. The commands to manipulate the tree are directly available on the tree node as popup menu items.
+
+.typical spatial command
+image::model-spatial-node-command.png[]
+
+[NOTE]
+====
+All tree commands are context sensitive, i.e. their availability and action dependents on the node type and the content of the node.
+====
+
+The commands available to the spatial tree nodes are:
+
+* add child--add a IfcSpatialStructural element or IfcProduct to the spatial structure.
+* add template child--instantiate the selected IfcProduct template in the filter tab to the spatial structure. 
+* delete child--delete the select node
+* go to propertyset/quantityset--show the current node's propertyset/quantityset in the instance detail tab.
+* go to shape--show the IfcShapeRepresentation of the node
+* go to typed product--show the IfcTypedProduct of the node in the detail tab.
+* copy--copy the current to clipboard
+* paste--paste the clipboard content as child.
+
+[NOTE]
+====
+Only leaf node could be delete, except nodes with child opening or fill.
+====
+
+==== Add Child
+
+To add a child to the spatial tree, select the parent node, right click on it to activate the node menu, and select the image:model-add-child-menu-item.png[] add child menu item.  This command allow the user to create three set of information:
+
+* the ifcproduct entity
+* the shape component and the material for the shape
+* local object placement
+
+.product creation dialog.
+image::model-add-product-dialog.png[]
+
+Fill in the necessary on each tab and click OK when done.
+
+[TIP]
+====
+To not create add IfcShapeRepresentation, leave the type dropdown to 'null'.
+====
+
+[NOTE]
+====
+Adding child using the spatial tree node menu always add a corresponding placement node to the placement tree.  The child is placed relative the parent. 
+====
+
+[NOTE]
+====
+Adding a child also create multiple inverse links in the database to manage the various relationship between the node in the different trees.  To have the model content appear on the trees correct, it is best to use the available commands.
+====
+
+==== Add Template As Child
+
+This command uses filter selection set. To instantiate a IfcProduct template as a child of a spatial node, follow these steps:
+
+. activate the template tab
+. check the template radio button
+. use the type or tag filter to find the desired template, see the section <<Working with Entity Template>>.
+. select the template
+
+To add a template as child to the spatial structure, select the parent node, right click on it to activate the node menu, and select the image:model-add-child-template-menu-item.png[] add child template menu item. Enter the necessary information in the template creation dialog if the template is interactive.
+
+==== Other Spatial Tree Node Commands
+
+The delete child command image:model-delete-child-menu-item.png[] delete the selected node and the corresponding placement node in the placement.  If the inverse link count to the shared IfcShapeRepresentation is 0, the IfcShapeRepresentation will be deleted from the model.
+
+The copy command image:model-copy-child-menu-item.png[] copy the node to clipboard.  Only leaf node could be copy.  
+
+[TIP]
+====
+Copying exception: node that could be templates are copyable.  For exmple a IfcWall with openings and doors/windows are copyable although it has openings as children 
+====
+
+The paste command image:model-paste-child-menu-item.png[] paste the content of the clip to the tree.
+
+[TIP]
+====
+Unlike templates, which do not package IfcTypedProduct, IfcPropertyset components, the copy/paste dual do.  
+====
+
+The go to typeproduct command image:model-goto-typeproduct-menu-item.png[] show the IfcTypedProduct componet of an entity in the detail tree.  
+
+[NOTE]
+====
+The goto xxx commands apply the instance id filter to the targeted component to show the component in the detail tree.
+====
+
+=== Working with the Placement Tree
+
+The underline its importance in the BIM model, the user interface include a placement tree. 
+
+The placement tree is readonly, its structure is created during the creation of the spatial tree.  Its node are updated using the instance detail tree.
+
+To access the placement tree, activate the placement tab.
+
+.The placement tree
+image::model-placement-tab.png[]
+
+The only command available to the placement tree is image:model-add-goto-placed-instance-menu-item.png[] which navigates to the IfcLocalPacement's placed instance.
+
+[NOTE]
+====
+The goto placed instance command use a inverse link to find the placed instance.
+====
+
+[TIP]
+====
+The placement tree could be hide/show by setting the hide flag in user preference.
+====
+
+=== Working with Filters
+
+Filters allows a user to search and retrieve an item in the model or project quickly.  The filter tab also provides the workbench for dealing with free form entity instance and a place to work with entity outside of the spatial structure framework. There are two type filter in the model pane: instance and template. 
+
+For detail about template filters see the section <<Working with Entity Template>>. We will concentrate on instance filter.
+
+.Instance Filter
+image::model-instance-filter.png[]
+
+==== Instance Type Filter
+
+The basic functionality of the instance type filter is similar to template <<Type Filter>>. Instance filter has two addition features:
+
+* filter by subtypes
+* create entity instance of the filter type
+
+The subtype filter functions same way the type filter does except that it consider all subtypes of the given type in the type textfield.
+
+[TIP]
+====
+The type could be abstract for the subtype filter
+====
+
+To create instance entity of the desire type, enter the type in type text box and click image:model-instance-filter-add-entity.png[] the create button.
+
+[TIP]
+====
+To create instance of type not on the dropdown list, enter the type using the 'custom type' text box.  The type user wants to create must not be abstract
+====
+
+[NOTE]
+====
+Instance type filter is limited to return 1000 result instances.
+====
+
+[NOTE]
+====
+Instance tag filter function exactly like tempate tag filter, see <<Tag Filter>>.
+====
+
+==== Instance Id Filter
+Instance type filter is based on a list of specific instance ids and a list of ranges.  If user who had user a print will be familiar with the paradigm used.
+
+.Instance id Filter
+image::model-instance-filter-instance-id-example.png[]
+
+To use the id filter, first enter the search string in the instance id text box.  The syntax is a common separated list of positive integer and a list of integer range specified using pair of positive integer a dash.  In the example above, we are looking in the ranges 90 to 100, 200 to 210 and the instance ids 2, 45, 10 and 15.
+
+Next click image:model-instance-filter-instance-id.png[] the instance id filter button.
+
+[NOTE]
+====
+Each range is limited to return 1000.
+====
+
+=== Working with Instance Detail Tree
+
+The STEP ISO-10303 standard set includes an object model specification using the EXPRESS language.  Accord to ISO-10303-11: "EXPRESS data types are classified according to their nature as: simple data types, aggregation data types, constructed data types, named data types, and generalized data types."
+
+The instance detail tree is where PIComposer user interact with "entity data type" instance.
+
+.Instance detail tree
+image::model-instance-detail.png[]
+
+The instance detail is a federeated view when the deatil is an entity instance.  It could display the entity instance plus most of its components. The user has many levelers to control what gets exposed on the detail tree. The optional nodes include:
+
+* placement
+** absolute coordinates
+* IfcTypedProduct
+* propertyset/quantityset
+* IfcShapeRepresentation
+
+Moreover, the image:model-instance-show-detail-topple.png[] show detail toggle allow users to turn on/off the optional attribute of an instance.
+
+[TIP]
+====
+The image:model-instance-show-detail-topple.png[] show detail toggle is also part of user preference
+====
+
+List the spatial tree, user modify tree content by operating directly on the tree nodes.  
+
+==== Instance Root Node
+
+Operation that directly affect the basic structure of the node or entity's component are anchored at the root node.  The operation on the root node include:
+
+* show 3d--show the instance in 3d. Available if instance has IfcShapeRepresentation  
+* add to layer--add instance to a layer, available if there is layer in the model and the instance is of type IfcShapeRepresentation
+* clear layer--remove instance from all layer it is assigned to
+* create template--create a private template from the instance.  
+* add shape--add a IfcShapeRepresentation component to instance
+* clear shape--remove all shape.  Also, if the reference count of any shape reach zero, it will be removed from model
+* Add RepItem--add a IfcRepresenationItem to a IfcShapeRepresentation componenet.
+* add shape to selected--add selected IfcShapeRepresentation instance to the spatial tree selected node.  Current instance is the selected filtered instance.
+* add type to selected--add IfcTypedProduct to the selected spatial tree node. The current instance is the selected IfcRelDefinedByType component in the instance filter.
+* add type product--add IfcTyedProduct to instance
+* remove type product--remove instance from IfcRelDefinedByType component
+* add pset--add IfcRelDefinedByProperties to instance
+* clear pset--remove all IfcRelDefinedByProperties from instance
+* add pset to selected--add filter selected IfcRelDefinedByProperties component to the spatial selected node.
+* add template shape to selected--add template shape to the spatial selected node.
+* clone--clone the instance, available in instance filter 
+* delete--remove the instance, available in instance filter
+
+.Typical IfcProduct root node menu items
+image::model-instance-detail-root-node-commands.png[]
+
+==== Component and Composite
+A PIComposer component is self contained entity instance package.
+
+==== Working with Attributes
+
+An Entity instance is a collection of attributes.  Each attribute has a data type. The basic attribute data types are:
+
+* number
+* real
+* integer
+* string
+* boolean
+* logical
+* binary
+* aggregation--collection
+* defined type
+* entity
+* enum
+* select
+
+[TIP]
+====
+Each attribute node tooltip shows its respective data type.
+====
+
+[TIP]
+====
+Defined type is an alias for some already existed underline type.  For example IfcLogical is a LOGICAL type.
+====
+
+PIComposer divides attributes into two groups:
+
+* simple--single value, requires only single node for user inter-action
+* complex--multiple value, need a subtree to store its values
+
+==== Simple Attributes
+The simple type include:
+
+* number
+* real
+* integer
+* string
+* boolean
+* logical
+* binary
+* defined type, with simple underlining type
+* enum
+
+Numeric types, string and binary are stored store in a text box.  Boolean, logical and enums are presented in a dropdown list. In all case, user interaction is straight forward.
+
+.typcal attribute node command
+image::model-simple-attribute-commands.png[]
+
+[TIP]
+====
+When an attribute has been modified, there are two ways to commit update to data store.  Right click on the label of the attribute to access the tree node menu and select the save menu item.
+====
+
+[TIP]
+====
+The save button on the right upper corner is a batch save button.  It commit all changes to the data store all at once.
+====
+
+The defined type IfcGloballyUniqueId has string as its underlining type.  Since user might not have access to a UUID generator, PIComposer provides the set guid command. To set a guid attribute, right click on label of the attribute and select the image:model-instance-detail-set-guid.png[] set guid command. 
+
+==== Complex Attributes
+The complex attribute types are:
+
+* entity  
+* select
+* collection
+
+A complex attribute usually require multiple nodes to present its value.  In particular an entity instance, when composed in situ, will occupy a full substree.
+
+Attribute node commands include:
+
+* create--create an entity instance in place
+* set reference--set attribute value as entity instance reference
+* set reference selected--set spatial tree entity instance attriubte value to reference the selected instance in instance filter. 
+* remove--remove instance or instance reference from a instance collection attribute
+* show instance--show attribute instance in detail using instance filter.
+* nullify--set optional attriubte to null
+
+.typical entity attribute command
+image::model-instance-detail-entity-attribute-commands.png[]
+
+Just as there are two ways--link:https://en.wikipedia.org/wiki/Object_composition#:~:text=In%20computer%20science%2C%20object%20composition,and%20aggregation%20is%20often%20ignored.[aggregation and composition]--to associate one object to another, there are two way to associate an attribute to a entity instance.
+
+==== Entity Instance Aggregation and Composition
+
+Aggregation is the default instance to instance association in STEP standard, in fact, it is the only option in part21.  
+
+To use the reference selected instance command, follow the steps below:
+
+. select the desired reference target in instance filter
+. right click on the entity attribute node label to activate popup menu
+. choose image:model-set-reference-selected-command.png[] set reference selected menu item
+
+[TIP]
+====
+Reference selected command will only be available if the selected instance is compatible to the Entity attribute. If attribute is optional, it must be null. To reset to a different reference, nullify first
+====
+
+To set reference without using instance filter, select the image:model-set-reference-command.png[] set reference menu item and enter the target instance id on the dialog.
+
+.set reference
+image::model-set-reference-dialog.png[]
+
+For a component, as a rule for non-shared attribute instance, the create command is the prefered method when populating entity attribute values. In the case of shared instance in a component, use the add composite command to create the shared instance, see <<Component and Composite>>.
+
+To create attribute instance in place, right click on the attribute label, then select image:model-instance-detail-create-attribute-instance-command.png[] command.  If necessary fill in the detail in object creation dialog.
+
+[NOTE]
+====
+If the type to create has no subtype, attribute instance is directly created; no input from user is solicited. 
+====
+
+==== Working With Select
+
+A select entity attribute is a single value polymorphic container; it could hold value of any defined type within its specification.  
+
+There are two commands for select attribute:
+
+* nullify--set optional select attribute to null value
+* create--create the select object in place.
+* remove--remove select from a collection of select
+
+.select attriubte menu
+image::model-select-attribute-menu.png[]
+
+The PIComposer create select user interface is based on two key concepts:
+
+* the selected type
+* the value of the selected type
+
+To create a select attribute value, select the image:model-create-select-attribute-menu-item.png[] create select menu item.  Fill in the detail in the create select dialog by first specifying the selected type, then value type.
+
+.example of select of a select attribute
+image::model-select-create-dialog.png[]
+
+==== Working with Collection
+
+STEP aggregation data types are collections of defined types. Aggregations could contain order or unordered, unique or none-unique values.  Aggregation containers include:
+
+* array--indexed ordered collection
+* list--ordered collection
+* bag--unordered collection
+* set--unordered and unique valued collection
+
+[NOTE]
+====
+A collection such as list could be restricted to contain uniuqe values by using the key word UNIQUE. For example, the EXPRESS expression LIST [3:?] OF UNIQUE IfcCartesianPoint; means list of unique catesian points.
+====
+
+PIComposer has a simplified collection data model; PIComposer models aggregation data types as vector of defined types.  PIComposer supports multi-dimension aggregation. 
+
+PIComposer users use the following commands to work with collections:
+
+* add--add an instance
+* add many--add multiple instances
+* add reference--available for entity container only
+* clear list--empty the collection
+
+In PIComposer, a collect attribute has its own grouping node where collection commands is anchored.
+
+.Entity collect commands
+image::model-collection-attribute.png[]
+
+Each add command activate a dialog box. To add mulitple instance into colection, right click on the colleciton, and select the image:model-collection-attribute-add-many-command.png[] add many command.
+.Entity collection, add many
+image::model-collection-attribute-add-many.png[]
+
+Complete the add many command by choosing the desired and entering instance count.
+
+=== Working with Propertyset, QuantitySet and Their Templates
+
+Propertyset and quantityset are package in a IfcRelDefinesProperties component.  The preferred way to work with IfcRelDefinesProperties is using the following command on the root detail node:
+
+* add propertyset--image:model-add-properties-command.png[] add propertyset command
+* add selected propertyset--image:model-add-selected-propertyset.png[] add selected propertyset.
+* add propertyset to selected--image:model-add-propertyset-to-selected.png[] add propertyset to selected instance (from instance filter).
+
+Excecuting the image:model-add-properties-command.png[] add propertyset command activates the create propertset dialog. Choose the desired propertyset or quantityset and click OK to complete propertyset creation.
+
+.Create Property dialog
+image::model-add-propertyset-dialog.png[]
+
+[NOTE]
+====
+The dropdown in the above dialog lists all propertyset and quantityset known to PIComposer which including those defined in the standard and thos by templates. 
+====
+
+Ifc4x3 documentation defines a large number (more than 600) of propertyset and quantityset outside of the schema.  PIComposer must know their content in order to instantiate them.  To configure PIComposer to create these and other user defined propertyset, PIComposer uses template.  
+
+A template is defined using json file.
+
+==== Propertset Template
+A propertyset is collection of properties.  Each property is a entity type. A property might have multiple attributes.  We dive into propertyset template by looking at an abrigded example: 
+
+[source,javascript]
+----
+{
+    "__schema": "ifc4x3",
+    "__type": "Pset_SlabCommon",
+    "Reference" : {
+        "property_type" : "P_SINGLEVALUE",
+        "value_type" : "IfcIdentifier"
+    },
+    "Status" : {
+        "property_type" : "P_ENUMERATEDVALUE",
+        "value_type": "PEnum_ElementStatus"
+    },
+	"AcousticRating" : {
+        "property_type" : "P_SINGLEVALUE",
+        "value_type": "IfcLabel"
+    },
+	"PitchAngle" : {
+        "property_type" : "P_SINGLEVALUE",
+        "value_type": "IfcPlaneAngleMeasure"
+    },
+}
+----
+
+The first template two json properties are the headers:
+
+* __schema--it must be ifc4x3
+* __type--the propertyset type, it must be prefix with Pset_xxx
+
+The remaining properties are property definition for the prepertyset. 
+
+Each property has a name, a property_type, and value_type.  In the example above for the first property we have:
+ 
+ * name--Reference
+ * property_type--P_SINGLEVALUE
+ * value_type--IfcIdentifier
+ 
+name is the name of the proerpty.  
+ 
+The value of property_type comes for the standard enum IfcSimplePropertyTemplateTypeEnum.  The possible property_type values and their corresponding IfcProperty are:
+ 
+ * P_SINGLEVALUE--IfcPropertySingleValue
+ * P_ENUMERATEDVALUE--IfcPropertyEnumeratedValue
+ * P_BOUNDEDVALUE--IfcPropertyBoundedValue
+ * P_LISTVALUE--IfcPropertyListValue
+ * P_TABLEVALUE--IfcPropertyListValue
+ * P_REFERENCEVALUE--IfcPropertyListValue
+
+Every value_type is a ifc defined type.
+
+[NOTE]
+====
+propertyset templates are stored in the folder icon:folder[]/picomposer_data/propertyset_template
+====
+
+[TIP]
+====
+To create user defined propertyset at runtime without using templates, use the add propretyset command to create IfcPropertyset then add any IfcProperty. 
+====
+
+==== Quantityset Template
+A quantityset is a collection of quantity.  A quantity is a subtype of IfcPhysicalSimpleQuantity that has a numeric attribute. Like other templates, quantityset template specification are json files.  Below is a full example:
+
+[source,javascript]
+----
+{
+    "__schema": "ifc4x3",
+    "__type": "Qto_BeamBaseQuantities",
+    "Length":  "Q_LENGTH",
+    "CrossSectionArea":  "Q_AREA",
+	"OuterSurfaceArea":  "Q_AREA",
+	"GrossSurfaceArea":  "Q_AREA",
+	"NetSurfaceArea":  "Q_AREA",
+	"GrossVolume" : "Q_VOLUME",
+	"NetVolume" : "Q_VOLUME",
+	"GrossWeight" : "Q_WEIGHT",
+	"NetWeight" : "Q_WEIGHT"
+}
+----
+In the json file, first comes the header, which include the properties:
+
+* __schema--must be ifc4x3
+* __type--the quantityset name, must be prefixed with Qto_
+
+The remaining json properties are a list of quantity which
+has name and type. The possible types and their corresponding entity type are:
+
+* Q_LENGTH--IfcQuantityLength
+* Q_AREA--IfcQuantityArea
+* Q_VOLUME--IfcQuantityVolume
+* Q_COUNT--IfcQuantityCount
+* Q_WEIGHT--IfcQuantityWeight
+* Q_TIME--IfcQuantityTime
+
+[NOTE]
+====
+Quantityset templates are stored in the folder icon:folder[]/picomposer_data/quantityset_template
+====
+
+[TIP]
+====
+To create user defined quantityset at runtime without using templates, use the add propertyset command to create IfcElementQuantity and manual add any  IfcPhysicalSimpleQuantity subtype. 
+====
+
+=== Working with layers
+Layers are commonly use in CAD system for instance grouping and visibility control.  The corresponding concept in ifc is embodied in the IfcPresentationLayerAssignment entity.
+
+[NOTE]
+====
+Only component of type IfcShapeRepresentation can be assigned to a layer in PIComposer. However, instances could be filtered by layer indirectly by its association to a shape, see <<Layer Filter>>
+====
+
+To setup a layer, first create a IfcPresentationLayerAssignment instance using the instance filter create command.
+
+.create command
+image::model-instance-filter-create-command.png[]
+
+To add layer to a IfcShapeRepresentation component, use the 
+image:model-add-to-layer-command.png[] add to layer command.  
+
+.add layer dialog
+image::model-add-to-layer-dialog.png
+
+In the add layer dialog, select the desired layer from the dropdown list.
+
+==== Layer Filter
+A layer providing grouping of IfcShapeRepresentation component.  A layer filter provide quick access to this grouping quickly.  Optionally, instead of shape components, user may list the instances that are associated to the grouped shapes.
+
+.layer filter
+image::model-layer-filter.png[]
+
+To use the layer filter, select the layer from the dropdown list,
+and press the image:model-filter-by-layer-command.png[] filter by layer command.
+
+[TIP]
+====
+The filtered result type is controlled by preference
+====
+
+[TIP]
+====
+PIComposer does not show the layer filter if the model does not has any IfcPresentationLayerAssignment instance.
+====
+
+=== Ifc Exporting and 3d Viewer
+To export model to ifc, click the image:navigationbar-export-model-button.png[] export model ifc model on the navigation bar.
+
+To view a model in 3d view, click show the image:navigationbar-show3d-button.png[] 3d button on the navigation bar. This will kick start the export of the model to part21.  When the export is completed, the web 3d viewer will be launched.
+
+[NOTE]
+====
+Both commands are background tasks. User may continue working in parallel while the command is running. 
+====
+

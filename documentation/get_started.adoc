@@ -1,0 +1,3 @@
+== Getting Started
+
+instruction to install and set up PIComposer

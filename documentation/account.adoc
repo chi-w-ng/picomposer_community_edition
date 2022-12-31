@@ -1,0 +1,12 @@
+== User Account
+
+Users sign out current session and update user account information in the user acccount pane.
+
+.User Account
+image::account-pane.png[]
+
+There are three commands:
+
+* update--update user information
+* upload--upload user avatar
+* sign out--sign out of current user session

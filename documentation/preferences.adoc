@@ -1,0 +1,29 @@
+== Preferences
+
+User personalize PIComposer user interface through the preference pane. Some options come in combination.  The list of options are below.
+
+* show placement tree--hide show placement tree in the model pane.
+* show placement--option to show placement component in instance detail tree.
+** show absolute coordinate--show computed absolute coordinate
+* show shape--show IfcShapeRepresentation componet in instance detail tree.
+* show notification--show notification when user command is completed (error message if completed in failure).
+* show progress bar--show progress bar for long running command.
+* show instance detail--show all attributes (including optional ones) in instance detail tree.
+* show properties--show IfcRelDefinesByProperties component in instance detail tree.
+* show type product--show IfcRelDefinesByType component in instance detail tree.
+* show layer filter--show layer filter when model contains at least one layer (IfcPresentationLayerAssignment).
+** show product associated to the layer assigned IfcShapeRepresentation.
+* show Shape detail--enable show shape command in the spatial tree.  The command show the entity's IfcShapeRepresentation component in the detail tree.
+* show propertyset detail--enable show propertyset command in the spatial tree. The command show the entitys's IfcReldefinesproperties.
+* show layer fiter--show layer filter in instance filter if model has any IfcPresentationLayerAssignment
+** show product--show IfcProduct associated to shape belonging to a layer
+* show shape detail--enable show shape detail command on the spatial tree when entity has shape.
+* show propertyset detail--enable show propertyset detail command on the spatial tree when entity has propertyset.
+* show type detail--enable show type detail command on the spatial tree when entity has IfcReldefinesByType
+* show shape create dialog--show the shape creation dialog when creating a IfcShapeRepresentation in the instance filter
+* show propertyset create dialog--show propertyset create diallog when create IfcRelDefinesProperties in the instance filter
+* show type create dialog--show type create dialog when creating IfcRelDefinesByTypes in the instance filter
+* show create style dialog--show type create dialog when creating IfcStyledItem 
+* copy attribute path--enable copy attribute path command in the template filter where the template type is private
+* copy template id--enable copy template id command in the template filter where the template type is private
+* remember password--save user password and use it for the next login attempt

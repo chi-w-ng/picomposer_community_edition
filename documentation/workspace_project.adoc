@@ -1,0 +1,53 @@
+== Workspace and Projects
+
+PIComposer is a multi-user system.  Each login user on a device has his or her own distinct workspace.  
+
+In a PIComposer workspace, users organize their projects.  A project is collections of models and documents.
+
+After sucessful authentication, a user is first routed to the workspace pane.
+
+.The workspace pane
+image::workspace.png[float="right",align="center"]
+
+There are three main user interface components:
+
+* The project list
+* The navigation bar
+* The status bar
+
+Projects are listed in the project list pane.  
+
+To add a project, click the add button image:navigationbar-add-button.png[].
+
+To remove a project, select it on the project list, click the minus button image:navigationbar-minus-button.png[].
+
+****
+TIP: Most PIComposer commands are context depend.  The add and minus button, for example, would add or remove a models in the project pane.
+****
+
+The workspace button image:navigationbar-workspace-button.png[] is the home button.  It routes to the workspace pane from anywhere in PIComposer.  
+
+The project button image:navigationbar-project-button.png[] activate the project pane and displays the selected project.
+
+****
+TIP: double clicking on any project on the project list also activates the project pane and displays the project.
+****
+
+The model button image:navigationbar-model-button.png[] activates the model pane and displays the last active model.  See the <<PIComposer BIM models>> section for more detail about how to work with BIM models.
+
+The preference button image:navigationbar-setting-button.png[] activates the preference page.  See the <<Preferenes>> section for more detail.
+
+The account button image:navigationbar-account-button.png[] activates the account page.  See the <<User Account>> section for more detail.
+
+PIComposer provides user feedback using the status bar. Depending on the nature of the command, the status shows:
+
+* a progress bar for long running command
+* notification of successful completion of a command
+* error message for failed command
+
+Each type of status could be turn on and off using preferences.
+
+
+
+
+ 
