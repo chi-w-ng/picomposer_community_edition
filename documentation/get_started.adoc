@@ -1,6 +1,6 @@
 == Getting Started
 
-PIComposer is a connected desktop system, a user must have access to the cloud to use PIComposer's essentail features.  To install PIComposer, first download the installer from the https://github.com/chi-w-ng/picomposer_community_edition[PIComposer Community Edition] github repository.
+PIComposer is a connected desktop system, a user must have access to PIComposer cloud service to use PIComposer's essentail features.  To install PIComposer, first download the installer from the https://github.com/chi-w-ng/picomposer_community_edition[PIComposer Community Edition] github repository.
 The installer is a self signed msix package.  To enable the installer, install the self signed certificate by following https://www.advancedinstaller.com/install-test-certificate-from-msix.html[these steps].  Once the certificate is installed, install PIComposer.
 
 Next, launch PIComposer and follow the signup workflow by clicking the signup button.
