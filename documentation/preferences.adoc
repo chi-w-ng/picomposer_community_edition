@@ -1,6 +1,6 @@
 == Preferences
 
-User personalize PIComposer user interface through the preference pane. Some options come in combination.  The list of options are below.
+User personalization: The PIComposer user interface is accessed through the preference pane. Some options come in combination.  The list of options are below.
 
 * show placement tree--hide show placement tree in the model pane.
 * show placement--option to show placement component in instance detail tree.

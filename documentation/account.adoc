@@ -1,6 +1,6 @@
 == User Account
 
-Users sign out current session and update user account information in the user acccount pane.
+Users sign out current sessions and update user account information in the user acccount pane.
 
 .User Account
 image::account-pane.png[]

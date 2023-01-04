@@ -2,7 +2,7 @@
 
 PIComposer is a multi-user system.  Each login user on a device has his or her own distinct workspace.  
 
-In a PIComposer workspace, users organize their projects.  A project is collections of models and documents.
+In a PIComposer workspace, users organize their projects.  A project is collection of models and documents.
 
 After sucessful authentication, a user is first routed to the workspace pane.
 
@@ -27,10 +27,10 @@ TIP: Most PIComposer commands are context depend.  The add and minus button, for
 
 The workspace button image:navigationbar-workspace-button.png[] is the home button.  It routes to the workspace pane from anywhere in PIComposer.  
 
-The project button image:navigationbar-project-button.png[] activate the project pane and displays the selected project.
+The project button image:navigationbar-project-button.png[] activates the project pane and displays the selected project.
 
 ****
-TIP: double clicking on any project on the project list also activates the project pane and displays the project.
+TIP: Double clicking on any project on the project list also activates the project pane and displays the project.
 ****
 
 The model button image:navigationbar-model-button.png[] activates the model pane and displays the last active model.  See the <<PIComposer BIM models>> section for more detail about how to work with BIM models.
@@ -41,11 +41,11 @@ The account button image:navigationbar-account-button.png[] activates the accoun
 
 PIComposer provides user feedback using the status bar. Depending on the nature of the command, the status shows:
 
-* a progress bar for long running command
-* notification of successful completion of a command
-* error message for failed command
+* A progress bar for long running command
+* Notification of successful completion of a command
+* Error message for failed command
 
-Each type of status could be turn on and off using preferences.
+Each type of status can be turned on and off using preferences.
 
 
 
