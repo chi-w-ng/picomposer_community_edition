@@ -1,29 +1,72 @@
 == Preferences
 
-User personalization: The PIComposer user interface is accessed through the preference pane. Some options come in combination.  The list of options are below.
+User interface customization is done using the preference pane.  The preference setting options are grouped into major sections. Activate the preference pane by clicking the image:preference_command.png[] button.
 
-* show placement tree--hide show placement tree in the model pane.
-* show placement--option to show placement component in instance detail tree.
-** show absolute coordinate--show computed absolute coordinate
-* show shape--show IfcShapeRepresentation componet in instance detail tree.
+.Preference Pane
+image::preference.png[]
+
+=== Status Displays
+Status dispay gives feedback of success or failure to user issued commands, and for long running commands, a progress bar. The options are:
+
 * show notification--show notification when user command is completed (error message if completed in failure).
 * show progress bar--show progress bar for long running command.
-* show instance detail--show all attributes (including optional ones) in instance detail tree.
-* show properties--show IfcRelDefinesByProperties component in instance detail tree.
-* show type product--show IfcRelDefinesByType component in instance detail tree.
+
+.Command status
+image::command_status.png[]
+
+=== Model Page Options
+The model page's main function is to display model structural information.  PIComposer displays two structural elements of a model: the logical object spatial heiarchy and the phyical object placement heiarchy.  To underscore placement's importance, it has its own dedicate optionally display as a tree.
+
+* show placement tree--hide show placement tree in the model page.
+
+.placement tree option on
+image::placement_tree_option.png[]
+
+=== Instance Detail options
+Users most likely spend more time on the instance tree than any other part of PIComposer's user interface.  In addition to the instance attributes, the instance tree may optionally show its related components--shapes, propersets etc--allowing a user to manipulate an instance and its related component centrally. The options are:
+
+* show optional attributes--show all attributes (including optional ones) in instance tree. Turn this off when it is desirable to create a valid instance quickly and make sure only required attributes are valid.
+* show placement--option to show local placement component in instance tree.
+* show absolute coordinate--show computed absolute coordinate.
+* show shape--show IfcShapeRepresentation components in instance tree.
+* show propertyset--show instance's propertyset/quantityset as IfcRelDefinesByProperties components.
+* show type--show IfcRelDefinesByType component in instance tree.
+
+.Instance Detail
+image::instance_detail_options.png[]
+
+=== Layer Filter options
+Layer filter is a object grouping mechanism useful in managing large CAD data sets and is a feature found on all main stream CAD system.  PIComposer's layer filter system is configured by the layer filter options, and these options are:
+
 * show layer filter--show layer filter when model contains at least one layer (IfcPresentationLayerAssignment).
 ** show product associated to the layer assigned IfcShapeRepresentation.
+
+=== Spatial Tree Node Command Options
+PIComposer provides model navigation through the use the spatial tree. Moreover, the spatial tree privides context switching between an instance and its components through a series of command taking advantage of the instance filter. By isolating a component in the instance filter, a component could easily be shared among instances.
+
 * show Shape detail--enable show shape command in the spatial tree.  The command show the entity's IfcShapeRepresentation component in the detail tree.
-* show propertyset detail--enable show propertyset command in the spatial tree. The command show the entitys's IfcReldefinesproperties.
-* show layer fiter--show layer filter in instance filter if model has any IfcPresentationLayerAssignment
-** show product--show IfcProduct associated to shape belonging to a layer
-* show shape detail--enable show shape detail command on the spatial tree when entity has shape.
+* show propertyset detail--enable show propertyset command in the spatial tree. The command show the entitys's IfcReldefinesproperties in the instance filter.
+* show shape detail--enable show shape detail command on the spatial tree when entity has shape.  This provides a short cut to share shape as mapped items among instances.
 * show propertyset detail--enable show propertyset detail command on the spatial tree when entity has propertyset.
 * show type detail--enable show type detail command on the spatial tree when entity has IfcReldefinesByType
-* show shape create dialog--show the shape creation dialog when creating a IfcShapeRepresentation in the instance filter
-* show propertyset create dialog--show propertyset create diallog when create IfcRelDefinesProperties in the instance filter
+
+=== Create Command options
+One way to create an instance in the model is using the create command in the filter tab in the model page. Some entity types correspond to component entity types. Thus it is conveneint to create such entity using the component creation work flow. The follwing options activate just such a work flow: 
+
+* show shape create dialog--show the shape creation dialog when creating a IfcShapeRepresentation in the instance filter.  
+* show propertyset create dialog--show propertyset create dialog when create IfcRelDefinesProperties in the instance filter
 * show type create dialog--show type create dialog when creating IfcRelDefinesByTypes in the instance filter
 * show create style dialog--show type create dialog when creating IfcStyledItem 
+
+=== Private Template Root Node Command options
+Options in this section enable commands for authoring instance templates.  These are:
+
 * copy attribute path--enable copy attribute path command in the template filter where the template type is private
 * copy template id--enable copy template id command in the template filter where the template type is private
+* guid generator--enable clipboard guid generation command
+
+=== login options:
+Login options toggles the persistents of user login information.
+
+* remember email--save user email and use it for the next login attempt
 * remember password--save user password and use it for the next login attempt

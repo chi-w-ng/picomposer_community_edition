@@ -1,10 +1,10 @@
-= PIComposer Community Edition
+= image:pisys_logo_small.png[logo,40,40] PIComposer Community Edition
 :author: Chi_W. Ng, Ph.D. 
 :email: chi.w.ng@pisys.io
 :imagesdir: ./assets
 :hide-uri-scheme:
 :revnumber: v0.1
-:revdate: 12.05.2020
+:revdate: 1.10.2023
 :doctype: book
 :chapter-label: 
 :figure-caption!:

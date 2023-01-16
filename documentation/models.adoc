@@ -1,24 +1,24 @@
-== PIComposer BIM Model and Entity
+== PIComposer BIM Model and Instance
 
-A PIComposer model is a collection of entity instances which could be grouped into logical components.  Moreover, each PIComposer model embodies two essential concepts:
+A PIComposer model is a collection of instances which could be grouped into logical components.  Moreover, each PIComposer model embodies two essential concepts:
 
 * spatial structure
 * object placement.
 
-The spatial structure enrichs a BIM model with a logical origanizational structure, while object placement defines the physical location of entitity instance within the model.  Each of these concepts are presented as trees in PIComposer.  
+The spatial structure enrichs a BIM model with a logical origanizational structure, while object placement defines the physical location of a instance within the model.  Each of these concepts are presented as trees in PIComposer.  
 
-These trees are managed in parallel; a node created in the spatial tree will trigger a correponding creation of a node in the placement.  
+These trees are managed in parallel; a node created in the spatial tree will trigger a correponding creation of a node in the placement tree.  
 
-The placement tree is readonly.
+The placement tree structure is immutable.
 
 [NOTE]
 ====
 Placement tree could be turned of by preference
 ====
 
-Each entity instance is also presented as a tree (an acyclic graph actually)--the entity instance detail tree--where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree. 
+Each instance is also presented as a tree (an acyclic graph actually)--the instance detail tree--where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree. 
 
-Many entity related component could be displayed on the instance detail tree, including:
+Many instance's component could be displayed on the instance detail tree, including:
 
 . propertyset/quantityset
 . object placement
@@ -193,7 +193,7 @@ The subtype filter functions same way the type filter does except that it consid
 The type could be abstract for the subtype filter.
 ====
 
-To create instance entity of the desire type, enter the type in the type text box and click image:model-instance-filter-add-entity.png[] the create button.
+To create instance of the desire type, enter the type in the type text box and click image:model-instance-filter-add-entity.png[] the create button.
 
 [TIP]
 ====
@@ -364,9 +364,9 @@ image::model-instance-detail-entity-attribute-commands.png[]
 
 Just as there are two ways--link:https://en.wikipedia.org/wiki/Object_composition#:~:text=In%20computer%20science%2C%20object%20composition,and%20aggregation%20is%20often%20ignored.[aggregation and composition]--to associate one object to another, there are two way to associate an attribute to a entity instance.
 
-==== Entity Instance Aggregation and Composition
+==== Instance Aggregation and Composition
 
-Aggregation is the default instance to instance association in STEP standard, in fact, it is the only option in part21.  
+Aggregation is the default instance to instance association in STEP standard, in fact, it is the only option in ISO 10303 part21 standard.  
 
 To use the reference selected instance command, follow the steps below:
 

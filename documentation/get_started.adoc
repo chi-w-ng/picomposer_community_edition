@@ -1,13 +1,23 @@
 == Getting Started
 
-PIComposer is a connected desktop system, a user must have access to PIComposer cloud service to use PIComposer's essentail features.  To install PIComposer, first download the installer from the https://github.com/chi-w-ng/picomposer_community_edition[PIComposer Community Edition] github repository.
-The installer is a self signed msix package.  To enable the installer, install the self signed certificate by following https://www.advancedinstaller.com/install-test-certificate-from-msix.html[these steps].  Once the certificate is installed, install PIComposer.
+PIComposer is a connected desktop system, a user must have access to PIComposer cloud service to use PIComposer's essentail features. Therefore, a user must create an account with PIComposer cloud service. First, a user must install PIComposer.
+
+=== Installation
+
+To install PIComposer, first download the installer from the https://github.com/chi-w-ng/picomposer_community_edition[PIComposer Community Edition] github repository.
+
+The installer is a self signed msix package.  
+
+To enable the installer, install the self signed certificate by following https://www.advancedinstaller.com/install-test-certificate-from-msix.html[these steps].  Once the certificate is installed, install PIComposer.
 
 Next, launch PIComposer and follow the signup workflow by clicking the signup button.
+
+Read and accept licensing terms.
 
 .signup screen
 image::signup.png[]
 
+=== Confirm email
 Confirm your email to complete your signup process and PIComposer is ready for use.
 
 .email confirmation
@@ -15,5 +25,8 @@ image::confirm_email.png[]
 
 [NOTE]
 ====
-It might takes a few minutes for the confirmation email to be sent, and depending on the email client used, you might find the email in the spam folder.
+It might takes a few minutes for the confirmation email to be sent. Some email client might place the confirmation email in the spam folder.
 ====
+
+
+
