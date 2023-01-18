@@ -5,7 +5,7 @@
 :imagesdir: ./assets
 :hide-uri-scheme:
 :revnumber: v0.1
-:revdate: 1.10.2023
+:revdate: 1.17.2023
 :doctype: book
 :chapter-label: 
 :figure-caption!:
@@ -14,6 +14,8 @@
 :toclevels: 5
 :toc-title: Table of Contents
 :description: PIComposer community edition user guide
+
+Tool for building a better world.
 
 include::introduction.adoc[]
 

@@ -1,12 +1,15 @@
 == Getting Started
 
-PIComposer is a connected desktop system, a user must have access to PIComposer cloud service to use PIComposer's essentail features. Therefore, a user must create an account with PIComposer cloud service. 
+PIComposer is a connected desktop system, a user must have access to PIComposer cloud service to use PIComposer's essentail features. To create an account with PIComposer cloud service, first install PIComposer on desktop. 
 
-First, a user must install PIComposer.
+[NOTE]
+====
+PIComposer Community Edition is currently only available to Windows.  Support for MacOS and Linux will come.
+====
 
 === Installation
 
-To install PIComposer, first download the installer from the https://github.com/chi-w-ng/picomposer_community_edition[PIComposer Community Edition] github repository.
+To install PIComposer, first download the installer from the https://github.com/chi-w-ng/picomposer_community_edition/tree/main/installers[PIComposer Community Edition] github repository.
 
 The installer is a self signed msix package.  
 
@@ -39,7 +42,7 @@ It might takes a few minutes for the confirmation email to be sent. Some email c
 ====
 To quickly to get up and running and viewing a model:
 
-. create a project, see <<Workspace and Projects>>.
+. create a project, see <<Add and Removing a Project>>.
 . create a sample model using the procedural sample model template, see here <<Project Pane>>
 . click the view3d button image:navigationbar-show3d-button.png[] on the Navigation bar to see the sample model in 3d.
 ====

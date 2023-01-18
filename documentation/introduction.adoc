@@ -1,5 +1,7 @@
 == Introduction
 
+=== STEP ISO-10303
+
 PIComposer is a STEP ISO-10303 Standard document editor powered by a high performant EXPRESS document store. To satistfy its aim of support real time applications the document store has its own lossless STEP compliant proprietary encoding of EXPRESS data. 
 
 Moreover, to deal with models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS model and its entity instances (or instances) are faithfully presented in its user interface as trees and directed acyclic graphs. 
@@ -14,7 +16,7 @@ PIComposer community edition: althought the document store is capable of handlin
 A user of PIComposer community edition is assumed to have some knowledge of, or at least a desire, to learn https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/[*IFC*]. Otherwise, what follows in this document and the application PIComposer itself will make little sense, as PIComposer manipulates IFC models by providing user interfaces that directly interact with IFC model content: entity, select, enum, etc.  
 ====
 
-=== Entity Component System
+=== Data Organization
 
 PIComposer has an architecture similar to that of an Entity Component System https://en.wikipedia.org/wiki/Entity_component_system[*(ECS)*]. 
 
@@ -95,7 +97,7 @@ In PIComposer, geometry uses millimeter for distance measure and radian for angl
 PIComposer does not support imperial unit system or other non SI system.
 ====
 
-Instance templates are instance factories, they are used to simplified instance creation in a model. There are 4 different types of instance templates and they must all be of IfcShapeRepresentation type or of a IfcProduct subtype. 
+Instance templates are instance factories. They simplify instance creation in a model. There are 4 different types of instance templates and they must all be of IfcShapeRepresentation type or of a IfcProduct subtype. 
 
 [NOTE]
 ====
@@ -104,17 +106,17 @@ A template could be private to a user's project or be shared in the cloud and be
 
 A simple template is an extract of a component or instance in the scope of a project that could be reinstantiated in any other model. It is the most basic form of reuse in PIComposer--a form of copy and paste across space and time.     
 
-A parametric template is a template that exposes its instances and their attribute to direct user manipulation.  It is configured via json.
+A parametric template is a template that exposes its composite instances and their attribute to direct user manipulation.  It is configured via json.
 
-A transform is a parametric template with an associated procedure. The procedure may take a simple template and output something far more complex.  An example transformation being the input a brep box and the output a frustum.
+A transform is a parametric template with an associated procedure. The procedure may take a simple template and output something far more complex.  PIComposer is released with mutliple example of parametric template. One released transformation takes a brep box and the output a frustum.
 
-Procedural entity, as its name implies, is a creational procedure that instantiates an entity's instance.  A few examples of procedural entity are provided with PIComposer.
+Procedural entity, as its name implies, is a creational procedure that instantiates an instance.  A few examples of procedural entity are provided with PIComposer.
 
-Since not all propertyset and quantityset are published within the ifc schema EXPRESS file, these missing propertyset, quantityset, and user definded propertyset must be configured using templates, so that PIComposer could instantiate them. These templates are json files. Many examples are provided with the PIComposer release.
+Since not all propertyset and quantityset are published within the ifc schema EXPRESS file, these missing https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_psets.htm[*propertyset*], https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_qsets.htm[*quantityset*], plus user definded propertyset must be configured using templates so that PIComposer could properly instantiate them. These templates are json files. Many examples are provided with the PIComposer release.
 
 === Filters
 
-The https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/[*ifc4x3*] schema has 130 defined types, more than 240 enum types, almost 100 select types, and nearly 900 entity types.  In a typical IFC office tower model, it is common to have tens of million of entity instances.  To analyze and dissect this massive volume and variety of BIM data set, PIComposer provides a multitude of filters.  
+The https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/[*ifc4x3*] schema has 130 https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_definedtypes.htm[*defined types*], more than 240 https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_enumtypes.htm[*enum types*], almost 100 https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_selecttypes.htm[*select types*], and nearly 900 https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_entities.htm[*entity types*].  In a typical IFC office tower model, it is common to have tens of million of entity instances.  To analyze and dissect this massive volume and variety of BIM data set, PIComposer provides a multitude of filters.  
 
 In a model, instances could be filtered by:
 
@@ -133,7 +135,7 @@ The source code for the integration is open source, source code is https://githu
 
 Finally, in closing:
 
-PIComposer community edition, release free of charge, is a tool that the author wished was available when he first started learning and working with BIM while working at Gehry Technologies.  With its versatile and powerful template systems, simple data presentation, it is a great tool for learning, exploring and creating BIM data.   
+PIComposer community edition, release free of charge, is a tool that the author wished was available when he first started learning and working with BIM.  With its versatile and powerful template systems, simple data presentation, it is a great tool for learning, exploring and creating BIM data.   
 
 
 

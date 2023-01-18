@@ -1,8 +1,8 @@
 == Workspace and Projects
 
-PIComposer is a multi-user system.  Each login user on a device has his or her own distinct workspace.  
+PIComposer is a multi-user system.  Each user has his or her own distinct workspace projects are organized.  
 
-In a PIComposer workspace, users organize their projects.  A project is collection of models and documents.
+A project is collection of IFC models and other documents.
 
 After sucessful authentication, a user is first routed to the workspace pane.
 
@@ -11,23 +11,25 @@ image::workspace.png[float="right",align="center"]
 
 There are three main user interface components:
 
-* The project list
-* The navigation bar
-* The status bar
+* The project list--list of user's project.
+* The navigation bar--list of commands to access various part of PIComposer
+* The status bar--show status of active command
 
-Projects are listed in the project list pane.  
+=== Add and Removing a Project
 
 To add a project, click the add button image:navigationbar-add-button.png[].
 
 To remove a project, select it on the project list, click the minus button image:navigationbar-minus-button.png[].
 
+=== Navagation
+
 ****
-TIP: Most PIComposer commands are context depend.  The add and minus button, for example, would add or remove a models in the project pane.
+TIP: Most PIComposer commands are context dependant.  The add and minus button, for example, would add or remove a project in a workspace but add and remove a model in the project pane.
 ****
 
 The workspace button image:navigationbar-workspace-button.png[] is the home button.  It routes to the workspace pane from anywhere in PIComposer.  
 
-The project button image:navigationbar-project-button.png[] activates the project pane and displays the selected project.
+The project button image:navigationbar-project-button.png[] activates the project pane and displays the selected project or the most recently displayed project.
 
 ****
 TIP: Double clicking on any project on the project list also activates the project pane and displays the project.
@@ -38,6 +40,12 @@ The model button image:navigationbar-model-button.png[] activates the model pane
 The preference button image:navigationbar-setting-button.png[] activates the preference page.  See the <<Preferenes>> section for more detail.
 
 The account button image:navigationbar-account-button.png[] activates the account page.  See the <<User Account>> section for more detail.
+
+The help button image:navigationbar-help-button.png[] activates the help popup menu which has two commands image:navigationbar-help-menu.png[140,140]:
+
+* documentation--show PIComposer documentation in a browser
+* about--show PIComposer license information
+
 
 PIComposer provides user feedback using the status bar. Depending on the nature of the command, the status shows:
 
