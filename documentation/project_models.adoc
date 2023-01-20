@@ -1,10 +1,36 @@
 == Project, Models and Templates
 
-PIComposer manages models and templates within a project.  Model metadata and private templates are persisted in a project document store; templates within the project are available to all models.  Users enter the project pane from the workspace.  
+PIComposer manages models and instance templates in a project. Each project has its own document database where model metadata and private instance templates are stored. 
+
+[NOTE]
+====
+Templates within a project are available to all its models.  
+====
+
+Users navigate to the project pane from the workspace by either double clicking on an item in project listing or by clicking the project button image:navigationbar-project-button.png[] to navigate to the selected project.  
+
+The project pane has two tabs: model and template.  To work with models, activate the model tab.
+
+.Project pane, model tab
+image::project-model-tab.png[]
+
+=== Working with Models
+
+To add a model, click the image:navigationbar-add-button.png[] button on the navigation bar. This command routes the user to the model creation page.  
+
+.Model creation page
+image::project-spatial-template-list.png[]
+
+Click on the desired spatial template tile on the template list.  Fill in the detail in the model creation dialog then click the image:dialog_ok_button.png[] button.
+
+.Model creation dialog
+image::model_creation_dialog.png[]
+
+To delete a model, select it in the model list, and click the minus image:navigationbar-minus-button.png[] button.
 
 === Spatial Template
 
-The EXPRESS models are extremely powerful and versatile. Unfortunately, to achieve such versatility, it remains extremely verbose.  To name just a few instance types that must be included in a bare minuminum BIM model:
+The EXPRESS models are extremely powerful and versatile. Unfortunately, to achieve such versatility, it is extremely verbose.  To name just a few instance types that must be included in a bare minuminum valid BIM model:
 
 * Header objects
 * IfcProject
@@ -17,9 +43,7 @@ The EXPRESS models are extremely powerful and versatile. Unfortunately, to achie
 * IfcPersonAndOrganization
 * ...
 
-To cut down on boilerplates, PIComposer provides a multitude of templates.
-
-PIComposer uses spatial templates to scaffold a model. A static spatial template is a user provided json file specifying the initial model spatial heiarchy. A example spatial template is listed below:  
+PIComposer uses spatial templates definition to scaffold a model. A static spatial template is a json file specifying the initial model spatial heiarchy. A example spatial template is listed below:  
 
 [source,javascript]
 ----
@@ -76,11 +100,12 @@ PIComposer uses spatial templates to scaffold a model. A static spatial template
 }
 ----
 
-A spatial template is a json object and it defines a recursive structure.  To understand the json structure, it might be easier to look at the corresponding dart object that the json object is deserialized to.
+The json object in the spatial template defines a recursive structure.  
+
+To understand the json structure, it might be easier to look at the simplified corresponding dart object that the json object is deserialized to.
 
 [source,dart]
 ----
-@JsonSerializable(explicitToJson: true)
 class SpatialElement {
   String? icon;
   String? schema;
@@ -90,14 +115,8 @@ class SpatialElement {
     this.schema = 'ifc4x3',
     required this.element,
   });
-
-  factory SpatialElement.fromJson(Map<String, dynamic> json) =>
-      _$SpatialElementFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SpatialElementToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
 class Element {
   String type;
   String? name;
@@ -121,17 +140,14 @@ class Element {
     this.refDirection,
     this.children,
   });
-
-  factory Element.fromJson(Map<String, dynamic> json) =>
-      _$ElementFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ElementToJson(this);
 }
 ----
 A spatial template is first deserialized into a SpatialElement object.  For PIComposer to create a model from this template, the SpatialElement object must have:
 
 * Schema--the schema name of the model, must be ifc4x3
 * Element--the root instance in the spatial heiarchy, must be IfcProject type
+
+Each Element object defines a IfcSpatialStructuralElement.
 
 Starting from the root IfcProject element, the rest of the spatial structure is defined recursively; IfcProject element have "children", which in turn might have its own children, etc.
 
@@ -160,30 +176,26 @@ When executing a spatial template, PIComposer creates the IfcProject, the necess
 
 [NOTE]
 ====
-Spatial template are placed in the installation subfolder:  icon:folder[] picomposer_data/spatial_template/
+Spatial template released with PIComposer are placed in the installation subfolder:  icon:folder[] picomposer_data/spatial_template/.  They are good source of example.
+
+User defined spatial template should be placed in: icon:folder[]Users/yourusername/.picomposer_community/picomposer_data/spatial_template/
+
+All spatial templates in spatial_template folders appear in the template list in the model creation page, including user defined ones.
 ====
 
-=== Project Pane
-User works with models and templates in the project pane. 
-
-.Project pane, model tab
-image::project-model-tab.png[]
-
-To add a model, while the active tab is model, click the image:navigationbar-add-button.png[] button. This routes the user to the template list. 
-
-.Spatial template tile list
-image::project-spatial-template-list.png[]
-
-Click on a desired spatial template on the template list and complete the model creation process by entering the model name on the dialog.
-
-[NOTE]
+[TIP]
 ====
-All spatial template in the spatial_template folder appears in the template list, including user created ones.
+Spatial template could also be procedural, a dart or C++ creational script.  The sample template appearing in the template list is such example.
 ====
 
-=== Entity Templates
+=== Working with Instance Template
 
-Entity templates are the core unit of use in PIComposer models.  They are the equivalence to CATIA's Power Copy.  Only they are simpler, much easier to create and in many aspects, more flexible and powerful.  Moreover, they could be shared and available to all users. 
+To access the instance template listing, activate the template tab on the project pane.
+
+.Project pane, template tab
+image::project-template-tab.png[]
+
+Instance templates are the core unit of reuse in PIComposer models.  They are the equivalence to CATIA's Power Copy.  Only they are simpler, much easier to create and in many aspects, more flexible and powerful. Moreover, they could be shared and available to all users. 
 
 They are easy to create--they are derived from the basic building blocks of a model a user already created. 
 
@@ -193,23 +205,29 @@ They are extensible--they could be associated with a script written in dart or C
 
 They could be a pure component creational procedure in dart or C++.
 
-==== Simple Entity Template
+==== Simple Instance Template
 
-Any component of type IfcShapeRepresentation and IfcProduct subtype in PIComposer could be extracted as a simple template.  A template groups a set of entity instances into package and reuse in a compatible context. Some components may contain complex spatial heiearchy.  For exmaple, an IfcWall template may contain openings and doors/windows. A private template is stored in the project store and is available to all models in a project. 
+Any instance of type IfcShapeRepresentation and IfcProduct subtype in PIComposer could be extracted as a simple template.  A template groups a set of entity instances into package and reuse in a compatible context. Some template may contain complex spatial heiearchy.  For exmaple, an IfcWall template may contain openings and doors/windows. A private template is stored in the project store and is available to all models in a project. 
 
-A shared template is a template uploaded to the cloud and avaialable to all users. A user uses the template by downloading one into a project's private template collection. A template has a unique identifier for life time management and tracking.  Only the shared template author is allowed to remove or update a shared template.  A shared template update is made by re-uploading the shared private copy.
+An instance template is created from any above mentioned instance via the create template command, see  <<Instance Root Node>> for detail. 
 
-[NOTE]
-====
-PIComposer releases many shared templates. 
-====
+.create template
+image::root_node_create_template_command.png[]
 
 ==== Parametric Template
 
-A parametric template is a simple template with internal attributes exposed to user manipulation allowing for simple transform of the simple template. Input parameters are specified by a json file. 
-Multiple json files are possible for a given simple template.  Each parametric template has a unique identitier.  These identifiers could be copy/pasted from PIComposer.  See the <<Viewing and Editing Entity Template>> section for details.
+A parametric template is a simple template with internal attributes exposed to user manipulation allowing for dynamic transform of a simple template. These parametric attributes are specified by a json file. 
 
-We explain the parametric template's structure by examining the example below: 
+Multiple json files are possible for a given simple template.  Each parametric template must have a unique identitier.  See the <<Viewing and Editing Instance Template>> section for details.
+
+[TIP]
+====
+There is a "generated id" command on the root node of a private template to generate unique identifier.  This command must be turned on in the preference if you wish to use the command.
+====
+
+We explain the parametric template's structure by examining the example.
+
+Below is parametric template of a circular extrude where we expose the depth and radius to user input: 
 
 [source,javascript]
 ----
@@ -244,7 +262,7 @@ We explain the parametric template's structure by examining the example below:
 ----
 
 * is_procedural--always false for a parametric template, no associated procedure.
-* interactive--should mostly be true, unless the template expect no user input.
+* interactive--should mostly be true, unless the template expect no user input. 
 * template_id--the unique identifier of the template we wish to parematrize.
 * transform_id--the parametric template identifier.
 * description--the description of the parametric template.  This appears on the template listing.
@@ -254,42 +272,54 @@ We explain the parametric template's structure by examining the example below:
 *** fun_type--the possible types are: REAL, INT64, BOOLEAN
 *** value--the exchanged value of this attribute
 *** type--the type could be: RealValue, IntValue, BoolValue
-** path--the path location of the attribute.  See the <<Viewing and Editing Entity Template>> section on how to obtain this value.
-* defaults--default values for the attribute, used to populate the interactive dialog.
+** path--the path location of the attribute.  See the <<Viewing and Editing Instance Template>> section on how to obtain this value.
+* defaults--default values for the attributes, used to populate the interactive dialog.
+
+Below is the dialog when user creates an instance using the template.
+
+.cylindrical extrude transform
+image::parametric_template_instantiation.png[]
 
 [TIP]
 ====
-A parametric template is a simple transformation template.  Their json files are placed in the installation folder icon:folder[] /picomposer_data/template_transform/template_id/
+PIComposer places paremetric json configuration files in the installation folder icon:folder[] /picomposer_data/template_transform/template_id/
+
+User defined template must be placed in the folder icon:folder[] Users/yourusername/.picomposer_community/picomposer_data/template_transform/template_id/
 ====
 
-
-==== Template Transformation and Procedural Entity
+==== Template Transformation and Procedural Instance
 
 A template transformation is a parametric template associated with a procedure written either in dart or C++.  
 
-Procedural Entity is a dart or C++ script that interacts with and updates the model directly.
+Procedural Instance is a dart or C++ script that interacts with and updates the model directly.
 
-PIComposer releases many examples of template transformations and procedure entitys.
+PIComposer releases many examples of template transformations and procedure instances.
 
 [NOTE]
 ====
-Tooling for creating template transform and procedure entity is not available in PIComposer Community edition. 
+Tooling for creating template transform and procedure instance is not available in PIComposer Community edition. 
 ====
 
-=== Working with Entity Template
+An instance template is visible to all models in the project and is considered private to the project.
 
-Entity templates are created in the model page and are mangaged in the project pane under the template tab.
+A shared template is a simple template published to the PIComposer Cloud Service and is avaialable to all users. 
 
-.Project pane, template tab
-image::project-template-tab.png[]
+A user uses a shared template by downloading it into a project's private template collection. 
 
-Shared templates are templates published to the cloud and is accessible to all PIComposer users.
+All templates have a unique identifier for life time management and tracking.  Only the shared template author is allowed to remove or update a shared template.  A shared template modification is done by re-uploading a private copy.
+
+[NOTE]
+====
+PIComposer releases many shared templates. 
+====
+
+Shared template summary:
 
 * Shared templates are immutable
 * Updated by the republication a private copy 
 * Update privileges are limited to the owner of the shared template
 
-Since templates are mostly stored in databases, in the cloud or locally on a device, they must be retrieved using database query.  PIComposer distills these query into filters.
+Since templates are stored in databases, in the cloud or locally on a device, they must be retrieved using database query.  PIComposer exposes these query as filters.
 
 To browse the shared library, click the image:project-template-share-button.png[] shared radio button and use the type or tag filter.  
 
@@ -322,7 +352,7 @@ Then click on the image:project-template-type-filter-button.png[] type filter bu
 
 [NOTE]
 ====
-Type filter on the shared template library is executed on the cloud.  
+Type filter on the shared template library is executed on the cloud.
 ====
 
 ==== Tag Filter
@@ -334,16 +364,7 @@ image::project-template-tag-filter.png[]
 
 To apply the tag filter, enter the tag in the textfield and click the image:project-template-tag-filter-button.png[] tag filter button.
 
-==== Viewing and Editing Entity Template
-
-PIComposer's main tool in viewing and editing a BIM model element is through the instance detail tree (technically, it is acylic graph). 
-
-[NOTE]
-====
-Since a template is a special instance of an entity instance, details regarding template editting, see the instance detail graph in the model session.
-====
-
-Commands on a node of instance detail graph are context sensitive, that is, PIComposer only allow commands relevant node type.
+==== Viewing and Editing Instance Template
 
 To interact with a template, select it on the template list.  All commands related to the loaded template is availiable on the root node of the tree.  
 
@@ -359,15 +380,17 @@ image:project-template-ifcproduct-command.png[] image:project-template-ifcshaper
 * copy template id--copy the current template id to clipboard
 * generate id--generate a UUID and copy it to clipboard
 
+[NOTE]
+====
+A template is special kind of instance, it is manipulate like other instances in a model when it comes to its attributes.  Each attribute of a private template are mutable like those of an entity instance in a model. For detail on working with instances, see <<Working with Instance Detail Tree>>.
+====
+
 Shared templates, private parametric templates, transformation templates and procedure entitys are immutable.  
 
 .commands for readonly template
 image::project-template-readonly-command.png[]
 
-[TIP]
-====
-Each attribute of a private template are mutable like those of an entity instance in a model. 
-====
+
 
 
 

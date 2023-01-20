@@ -1,22 +1,24 @@
 == PIComposer BIM Model and Instance
 
-A PIComposer model is a collection of instances which could be grouped into logical components.  Moreover, each PIComposer model embodies two essential concepts:
+A PIComposer model is a collection of instances. Some these instance could be a collection of related instances.  Each model has its own database.  Each instance is persisted as a document.
+
+For each model, logically, PIComposer emphasizes two essential concepts:
 
 * spatial structure
 * object placement.
 
 The spatial structure enrichs a BIM model with a logical origanizational structure, while object placement defines the physical location of a instance within the model.  Each of these concepts are presented as trees in PIComposer.  
 
-These trees are managed in parallel; a node created in the spatial tree will trigger a correponding creation of a node in the placement tree.  
+These two trees are managed in parallel; a node created in the spatial tree will trigger a correponding creation of a node in the placement tree.  
 
 The placement tree structure is immutable.
 
 [NOTE]
 ====
-Placement tree could be turned of by preference
+Placement tree display could be turned of by preference
 ====
 
-Each instance is also presented as a tree (an acyclic graph actually)--the instance detail tree--where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree. 
+Each instance in the model is visualized as a tree (an acyclic graph actually)--the instance detail tree--where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree. 
 
 Many instance's component could be displayed on the instance detail tree, including:
 
@@ -26,17 +28,19 @@ Many instance's component could be displayed on the instance detail tree, includ
 . typeproduct
 . shapes
 
-This information could be turned on/off using user preference.
+[TIP]
+====
+Each component type display in the detail tree could be turned on/off using user preference.
+====
 
-PIComposer Community Edition is a single document application. To load a model, select a model in the Project pane model listing and click the image:navigationbar-model-button.png[] model button or simply double click on the
-item on the model list.
+PIComposer Community Edition is a single document application. To load a model, select a model in the Project pane model listing and click the image:navigationbar-model-button.png[] model button or simply double click on the item on the model list.
 
 .Model pane, spatial tree
 image::model-spatial-tab.png[]
 
 [NOTE]
 ====
-User could return to the last active model by clicking the image:navigationbar-model-button.png[] model button from any other pane.
+User could return to the last active model by clicking the image:navigationbar-model-button.png[] model button from any other page of PIComposer.
 ====
 
 PIComposer splits model presentation into two areas:
@@ -46,18 +50,19 @@ PIComposer splits model presentation into two areas:
 
 The model structure area comprises of three tabs
 
-* spatial
-* placement
-* filters
+* spatial--displays the logical spatial tree
+* placement--displays the phyical placement tree
+* filters--random instance access using filter and searches, also free form instance creation
 
-[NOTE]
-====
-Selection set is an essential component of the PIComposer user interface. Each of these tabs above have a selection set.  Many PIComposer commands make users of a selection set.  The selection set allows a user to create inter-node links, insert selected nodes into other nodes, and enable many other actions. 
-====
+
+=== Selection Set
+
+Selection set is an essential component of the PIComposer user interface. Each of three model structure tabs have a selection set. Many commands make use of a selection set.  The selection set allows a user to create inter-node links, to insert template into the spatial tree, to insert selected nodes into other nodes, and enabling many other actions. 
+
 
 === Working with the Spatial Tree
 
-The spatial tree is where the spatial structure is managed. The commands to manipulate the tree are directly available on the tree node as popup menu items.
+The spatial tree is where the spatial structure is managed. The commands to manipulate the tree are directly available on the tree node as popup menu items.  To see the context sensitive commands on a tree node, right click on it.
 
 .typical spatial command
 image::model-spatial-node-command.png[]
@@ -72,9 +77,9 @@ The commands available to the spatial tree nodes are:
 * add child--add a IfcSpatialStructural element or IfcProduct to the spatial structure.
 * add template child--instantiate the selected IfcProduct template in the filter tab to the spatial structure. 
 * delete child--delete the select node
-* go to propertyset/quantityset--show the current node's propertyset/quantityset in the instance detail tab.
-* go to shape--show the IfcShapeRepresentation of the node
-* go to typed product--show the IfcTypedProduct of the node in the detail tab.
+* show propertyset--show the current node's propertyset/quantityset in the instance detail tab.
+* show shape--show the IfcShapeRepresentation of the node
+* show typed--show the IfcTypeProduct of the node in the detail tab.
 * copy--copy the current to clipboard
 * paste--paste the clipboard content as child.
 
@@ -85,11 +90,11 @@ Only leaf node can be deleted, except nodes with child opening or fill.
 
 ==== Add Child
 
-To add a child to the spatial tree, select the parent node, right click on it to activate the node menu, and select the image:model-add-child-menu-item.png[] add child menu item.  This command allow the user to create three sets of information:
+To add a child to the spatial tree, select the parent node, right click on it to activate the node menu, and select the image:model-add-child-menu-item.png[] add child menu item.  This command creates three sets of information:
 
-* the ifcproduct entity
+* the instance
 * the shape component and the material for the shape
-* local object placement
+* local object placement component
 
 .product creation dialog.
 image::model-add-product-dialog.png[]
@@ -98,7 +103,7 @@ Fill in the necessary information on each tab and click OK when done.
 
 [TIP]
 ====
-To cancel adding IfcShapeRepresentation, leave the type dropdown to 'null'.
+To avoid adding IfcShapeRepresentation, leave the type dropdown to 'null'.  
 ====
 
 [NOTE]
@@ -113,11 +118,11 @@ Adding a child also creates multiple inverse links in the database to manage the
 
 ==== Add Template As Child
 
-This command uses filter selection set. To instantiate an IfcProduct template as a child of a spatial node, follow these steps:
+This command uses the filter selection set. To instantiate an IfcProduct template as a child of a spatial node, follow these steps:
 
 . activate the template tab
 . check the template radio button
-. use the type or tag filter to find the desired template, see the section <<Working with Entity Template>>.
+. use the type or tag filter to find the desired template, see the section <<Working with Instance Template>>.
 . select the template
 
 To add a template as child to the spatial structure, select the parent node, right click on it to activate the node menu, and select the image:model-add-child-template-menu-item.png[] add child template menu item. Enter the necessary information in the template creation dialog if the template is interactive.
@@ -137,32 +142,34 @@ The paste command image:model-paste-child-menu-item.png[] pastes the content of 
 
 [TIP]
 ====
-Unlike templates, which do not package IfcTypedProduct, IfcPropertyset components, the copy/paste dual do.  
+Unlike template packaging, which do not package IfcTypeProduct, IfcPropertyset components into the template, the copy/paste command copy does since we are pasting into same model context. 
 ====
 
-The go-to typeproduct command image:model-goto-typeproduct-menu-item.png[] shows the IfcTypedProduct componet of an entity in the detail tree.  
+The show type command image:model-goto-typeproduct-menu-item.png[] shows the IfcTypeProduct componet of an entity in the detail tree.  
 
 [NOTE]
 ====
-The go-to xxx commands apply the instance id filter to the targeted component to show the component in the detail tree.
+All the show xxx commands apply the instance id filter to the targeted component to show the component in the detail tree.
 ====
 
 === Working with the Placement Tree
 
 To underline its importance in the BIM model, the user interface includes a placement tree. 
 
-The placement tree is readonly, its structure is created during the creation of the spatial tree.  Its node are updated using the instance detail tree.
-
 To access the placement tree, activate the placement tab.
 
 .The placement tree
 image::model-placement-tab.png[]
 
+The placement tree is immutable, its structure is created during the creation of the spatial tree.  When the spatial node corresponds to the placement is deleted, the placement will be automatically deleted.
+
 The only command available to the placement tree is image:model-add-goto-placed-instance-menu-item.png[] which navigates to the IfcLocalPacement's placed instance.
+
+The placement tree is immutable but the placement node is mutable.  Like all instance, its attribute are modified using the instance detail tree.
 
 [NOTE]
 ====
-The go-to placed instance command uses an inverse link to find the placed instance.
+The show placed instance command uses an inverse link to find the placed instance.
 ====
 
 [TIP]
@@ -172,9 +179,9 @@ The placement tree can be hidden/shown by setting the hide flag in user preferen
 
 === Working with Filters
 
-Filters allows a user to search and retrieve an item in the model or project quickly.  The filter tab also provides the workbench for dealing with free form entity instance and a place to work with entities outside of the spatial structure framework. There are two types of filters in the model pane: instance and template. 
+Filters allows a user to search and retrieve an item in the model or project quickly.  The filter tab also provides the workbench for dealing with free form instance and a place to work with instances outside of the spatial structure framework. There are two types of filters in the model pane: instance and template. 
 
-For details about template filters see the section <<Working with Entity Template>>. We will concentrate on instance filter.
+For details about template filters see the section <<Working with Instance Template>>. We will concentrate on instance filter below.
 
 .Instance Filter
 image::model-instance-filter.png[]
@@ -186,18 +193,11 @@ The basic functionality of the instance type filter is similar to template <<Typ
 * filter by subtypes
 * create entity instance of the filter type
 
-The subtype filter functions same way the type filter does except that it consider all subtypes of the given type in the type textfield.
+The subtype filter functions same way the type filter does except that it consider all subtypes of the user specified type.
 
 [TIP]
 ====
-The type could be abstract for the subtype filter.
-====
-
-To create instance of the desire type, enter the type in the type text box and click image:model-instance-filter-add-entity.png[] the create button.
-
-[TIP]
-====
-To create an instance of type not on the dropdown list, enter the type using the 'custom type' text box.  The type user wants to create must not be abstract.
+The user input type could be abstract for the subtype filter.
 ====
 
 [NOTE]
@@ -205,24 +205,44 @@ To create an instance of type not on the dropdown list, enter the type using the
 Instance type filter is limited to return 1000 result instances.
 ====
 
+==== Instance Creation  
+
+To create instance of the desired type, select the type from the dropdown list and click the create image:model-instance-filter-add-entity.png[] button.
+
+[TIP]
+====
+To create an instance of type not on the dropdown list, enter the type using the 'custom type' text box.  The type user wants to create must not be abstract.
+
+.type filter dropdown
+image::instance_type_filter_create.png[]
+====
+
+[WARNING]
+====
+Instance created using the create command here will not create any inverse links like it does using the spatial tree commands.  User is responsible for managing instance life cycle.
+====
+
+
 [NOTE]
 ====
 The instance tag filter functions exactly like the tempate tag filter, see <<Tag Filter>>.
 ====
 
 ==== Instance Id Filter
-Instance type filter is based on a list of specific instance ids and a list of ranges.  If users who had a user print will be familiar with the paradigm used.
+Instance type filter is based on a list of specific instance id laterals and a list of ranges.  
 
 .Instance id Filter
 image::model-instance-filter-instance-id-example.png[]
 
-To use the id filter, first enter the search string in the instance id text box.  The syntax is a common separated list of positive integers and a list of integer range specified using a pair of positive integer a dash.  In the example above, we are looking in the ranges 90 to 100, 200 to 210 and the instance ids 2, 45, 10 and 15.
+To use the id filter, first enter the search string in the instance id text box.  The syntax is a comma separated list of positive integers and a list of integer ranges. A range is a pair of positive integer separated by a dash.  
+
+In the example above, we are looking in the ranges 90 to 100, 200 to 210 and the instance ids 2, 45, 10 and 15.
 
 Next click image:model-instance-filter-instance-id.png[] the instance id filter button.
 
 [NOTE]
 ====
-Each range is limited to return 1000.
+Each range is limited to 1000.
 ====
 
 === Working with Instance Detail Tree
@@ -234,54 +254,48 @@ The instance detail tree is where PIComposer users interact with "entity data ty
 .Instance detail tree
 image::model-instance-detail.png[]
 
-The instance detail is a federated view when the deatil is an entity instance.  It could display the entity instance plus most of its components. The user has many levelers to control what gets exposed on the detail tree. The optional nodes include:
+The instance detail tree is a federated view .  It display the instance plus its components. The components are optional and their visibility is controlled by preference. The optional nodes include:
 
 * placement
 ** absolute coordinates
-* IfcTypedProduct
+* type--IfcTypeProduct
 * propertyset/quantityset
-* IfcShapeRepresentation
-
-Moreover, the image:model-instance-show-detail-topple.png[] show detail toggle, allows users to turn on/off the optional attribute of an instance.
+* shape--IfcShapeRepresentation
 
 [TIP]
 ====
-The image:model-instance-show-detail-topple.png[] show detail toggle, is also part of user preference
+The image:model-instance-show-detail-topple.png[] show optional attribute toggle hides optional attribute of an instance. This filter is also part of user preference
 ====
 
-List the spatial tree, user modify tree content by operating directly on the tree nodes.  
+Like the spatial tree, user modify tree content by operating directly on the tree nodes.  
 
 ==== Instance Root Node
 
 Operations that directly affect the basic structure of the node or entity's component are anchored at the root node.  The operations on the root node include:
 
-* show 3d--show the instance in 3d. Available if instance has IfcShapeRepresentation  
+* show 3d--show the instance in 3d. Available if a instance has shape  
 * add to layer--add instance to a layer, available if there is layer in the model and the instance is of type IfcShapeRepresentation
 * clear layer--remove instance from all layer it is assigned to
 * create template--create a private template from the instance.  
 * add shape--add a IfcShapeRepresentation component to instance
 * clear shape--remove all shape.  Also, if the reference count of any shape reach zero, it will be removed from model
-* Add RepItem--add a IfcRepresenationItem to a IfcShapeRepresentation componenet.
-* add shape to selected--add selected IfcShapeRepresentation instance to the spatial tree selected node.  Current instance is the selected filtered instance.
-* add type to selected--add IfcTypedProduct to the selected spatial tree node. The current instance is the selected IfcRelDefinedByType component in the instance filter.
-* add type product--add IfcTyedProduct to instance
-* remove type product--remove instance from IfcRelDefinedByType component
+* Add RepItem--add a IfcRepresenationItem to a IfcShapeRepresentation component.
+* add shape to selected--add selected IfcShapeRepresentation instance to the spatial tree selected node. 
+* add type to selected--add IfcTypeProduct subtype to the selected spatial tree node. The current instance is the selected IfcRelDefinedByType component in the instance filter.
+* add type--add IfcTyedProduct to instance
+* remove type--remove instance from IfcRelDefinedByType component
 * add pset--add IfcRelDefinedByProperties to instance
 * clear pset--remove all IfcRelDefinedByProperties from instance
 * add pset to selected--add filter selected IfcRelDefinedByProperties component to the spatial selected node.
 * add template shape to selected--add template shape to the spatial selected node.
-* clone--clone the instance, available in instance filter 
-* delete--remove the instance, available in instance filter
+* delete--remove the instance
 
 .Typical IfcProduct root node menu items
 image::model-instance-detail-root-node-commands.png[]
 
-==== Component and Composite
-A PIComposer component is a self-contained entity instance package.
-
 ==== Working with Attributes
 
-An Entity instance is a collection of attributes.  Each attribute has a data type. The basic attribute data types are:
+An instance is a collection of attributes.  Each attribute has a data type. The basic attribute data types are:
 
 * number
 * real

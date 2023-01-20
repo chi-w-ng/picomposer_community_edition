@@ -1,6 +1,8 @@
 == User Account
 
-The User Account page summarized a user's account information as it is known to PIComposer. Users sign out of current PIComposer sessions and update user account information in the user acccount pane.
+The User Account page summarized a user's account information as it is known to PIComposer. User account information is stored in PIComposer Cloud Service.
+
+Users sign out of current PIComposer sessions and update user account information in the user acccount page.
 
 .User Account
 image::account-pane.png[]

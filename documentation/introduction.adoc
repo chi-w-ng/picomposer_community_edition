@@ -20,8 +20,8 @@ A user of PIComposer community edition is assumed to have some knowledge of, or 
 
 PIComposer has an architecture similar to that of an Entity Component System https://en.wikipedia.org/wiki/Entity_component_system[*(ECS)*]. 
 
-[sidebar]
 .Entity Component System
+[sidebar]
 --
 In a typical ECS system:
 
@@ -39,12 +39,12 @@ A PIComposer component is a special type of instance that is a container of a se
 A component could be associated to instance either using an instance's attribute or through a relationship object.
 ====
 
-In PIComposer, entities and components are stored as documents, and systems are internal functions or external scripts written in dart or C++ that operate on entities and components.  
+In PIComposer, instances and components are stored as documents, and systems are internal functions or external scripts written in dart or C++ that operate on instances and components.  
 
-
-[EXAMPLE]
+.placement component example
+[example]
 ====
-For example, a placement component is a IfcLocalPlacement instance comprises of axis instances, position instance, etc. All the data that would completely define IfcLocalPlacement are placed in a single store document.
+A placement component is a IfcLocalPlacement instance comprises of axis instances, position instance, etc. All the data that would completely define IfcLocalPlacement are placed in a single store document.
 And the placement is associated to an instance using the IfcProduct's ObjectPlacement attribute.
 ====
 
@@ -66,7 +66,8 @@ Currently, a component must be of the following type:
 ** IfcRelContainedInSpatialStructure
 ** Other subtype of IfcRelationship
 
-In addition to instances and components, other concrete IFC types could be instantiated into the model as free form instance and will be stored as a store document.
+In addition to instances and components, other concrete IFC types could be instantiated into the model as free form instance and will be stored as a document.
+A good example of such an instance is instance of IfcOwnerHistory.
 
 === Templates
 
@@ -133,9 +134,31 @@ IFC models are 3d datasets. For the community edition, PIComposer 3d view is pro
 
 The source code for the integration is open source, source code is https://github.com/chi-w-ng/picomposer_community_edition[here].
 
-Finally, in closing:
+=== Road Map
 
-PIComposer community edition, release free of charge, is a tool that the author wished was available when he first started learning and working with BIM.  With its versatile and powerful template systems, simple data presentation, it is a great tool for learning, exploring and creating BIM data.   
+PIComposer community edition, release free of charge, is a tool that the author wished was available when he first started learning and working with BIM.  With its versatile and powerful template systems, simple data presentation, it is a great tool for learning, exploring and creating BIM data. 
+
+Looking forward, we are working on making PIComposer an even more powerful system. 
+
+Coming to a store need you in a not too distant future, in the order of importance, we will have:
+
+* dart scripting and graphic programming interface
+* data backup and sync 
+* integraded native 3d viewer
+* other ISO 10303 AP support and model interoperability
+* STEP import
+* drawing and 2d workbench
+* measures and analytics
+* support for MacOS and Linux
+* web client
+* team collaboration workflow
+* issue and knowledge management
+* Real time collaboration
+* ...
+
+
+
+
 
 
 

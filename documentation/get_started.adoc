@@ -43,7 +43,7 @@ It might takes a few minutes for the confirmation email to be sent. Some email c
 To quickly to get up and running and viewing a model:
 
 . create a project, see <<Add and Removing a Project>>.
-. create a sample model using the procedural sample model template, see here <<Project Pane>>
+. create a sample model using the procedural sample model template, see here <<Working with Models>>
 . click the view3d button image:navigationbar-show3d-button.png[] on the Navigation bar to see the sample model in 3d.
 ====
 
