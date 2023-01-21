@@ -1,0 +1,21 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "PIComposer community viewer",
+  "main": "app.js",
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js",
+    "watch": "rollup -w -c ./rollup.config.js"
+  },
+  "author": "pisys.io",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup": "^2.79.1"
+  },
+  "dependencies": {
+    "three": "^0.135.0",
+    "web-ifc": "^0.0.36",
+    "web-ifc-three": "^0.0.121"
+  }
+}
