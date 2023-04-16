@@ -510,13 +510,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#working-with-instance-detail-tree">5.5. Working with Instance Detail Tree</a>
 <ul class="sectlevel3">
-<li><a href="#instance-root-node">5.5.1. Instance Root Node</a></li>
-<li><a href="#working-with-attributes">5.5.2. Working with Attributes</a></li>
-<li><a href="#simple-attributes">5.5.3. Simple Attributes</a></li>
-<li><a href="#complex-attributes">5.5.4. Complex Attributes</a></li>
-<li><a href="#instance-aggregation-and-composition">5.5.5. Instance Aggregation and Composition</a></li>
-<li><a href="#working-with-select">5.5.6. Working With Select</a></li>
-<li><a href="#working-with-collection">5.5.7. Working with Collection</a></li>
+<li><a href="#a-brief-primer-on-objects-and-object-association">5.5.1. A Brief Primer on Objects and Object Association</a></li>
+<li><a href="#instance-detail-tree">5.5.2. Instance Detail Tree</a></li>
+<li><a href="#instance-root-node">5.5.3. Instance Root Node</a></li>
+<li><a href="#working-with-attributes">5.5.4. Working with Attributes</a></li>
+<li><a href="#simple-attributes">5.5.5. Simple Attributes</a></li>
+<li><a href="#complex-attributes">5.5.6. Complex Attributes</a></li>
+<li><a href="#instance-aggregation-and-composition">5.5.7. Instance Aggregation and Composition</a></li>
+<li><a href="#working-with-select">5.5.8. Working With Select</a></li>
+<li><a href="#working-with-collection">5.5.9. Working with Collection</a></li>
 </ul>
 </li>
 <li><a href="#working-with-propertyset-quantityset-and-their-templates">5.6. Working with Propertyset, QuantitySet and Their Templates</a>
@@ -576,7 +578,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 <td class="content">
 <div class="paragraph">
-<p>PIComposer community edition: althought the document store is capable of handling any STEP AP, it is restricted to the latest version of IFC: <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/"><strong>ifc4x3</strong></a>. To keep our discussion concrete, for the rest of this document we will concentrate on IFC.</p>
+<p>PIComposer community edition: althought the document store is capable of handling any STEP AP, it is restricted to the latest version of IFC: <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/toc.html"><strong>ifc4x3</strong></a>. To keep our discussion concrete, for the rest of this document we will concentrate on IFC.</p>
 </div>
 </td>
 </tr>
@@ -590,7 +592,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 <td class="content">
 <div class="paragraph">
-<p>A user of PIComposer community edition is assumed to have some knowledge of, or at least a desire, to learn <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/"><strong>IFC</strong></a>. Otherwise, what follows in this document and the application PIComposer itself will make little sense, as PIComposer manipulates IFC models by providing user interfaces that directly interact with IFC model content: entity, select, enum, etc.</p>
+<p>A user of PIComposer community edition is assumed to have some knowledge of, or at least a desire, to learn <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/toc.html"><strong>IFC</strong></a>. Otherwise, what follows in this document and the application PIComposer itself will make little sense, as PIComposer manipulates IFC models by providing user interfaces that directly interact with IFC model content: entity, select, enum, etc.</p>
 </div>
 </td>
 </tr>
@@ -814,13 +816,13 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 <p>Procedural entity, as its name implies, is a creational procedure that instantiates an instance.  A few examples of procedural entity are provided with PIComposer.</p>
 </div>
 <div class="paragraph">
-<p>Since not all propertyset and quantityset are published within the ifc schema EXPRESS file, these missing <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_psets.htm"><strong>propertyset</strong></a>, <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_qsets.htm"><strong>quantityset</strong></a>, plus user definded propertyset must be configured using templates so that PIComposer could properly instantiate them. These templates are json files. Many examples are provided with the PIComposer release.</p>
+<p>Since not all propertyset and quantityset are published within the ifc schema EXPRESS file, these missing <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/annex-b3.html"><strong>propertyset</strong></a>, <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/annex-b3.html"><strong>quantityset</strong></a>, plus user definded propertyset must be configured using templates so that PIComposer could properly instantiate them. These templates are json files. Many examples are provided with the PIComposer release.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="filters"><a class="anchor" href="#filters"></a>1.4. Filters</h3>
 <div class="paragraph">
-<p>The <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/"><strong>ifc4x3</strong></a> schema has 130 <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_definedtypes.htm"><strong>defined types</strong></a>, more than 240 <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_enumtypes.htm"><strong>enum types</strong></a>, almost 100 <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_selecttypes.htm"><strong>select types</strong></a>, and nearly 900 <a href="https://standards.buildingsmart.org/IFC/DEV/IFC4_3/RC1/HTML/annex/annex-b/alphabeticalorder_entities.htm"><strong>entity types</strong></a>.  In a typical IFC office tower model, it is common to have tens of million of entity instances.  To analyze and dissect this massive volume and variety of BIM data set, PIComposer provides a multitude of filters.</p>
+<p><a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/toc.html"><strong>ifc4x3</strong></a> schema has 130 <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/annex-b2.html"><strong>defined types</strong></a>, more than 240 enum types, almost 100 select types, and nearly 900 <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/annex-b1.html"><strong>entity types</strong></a>.  In a typical IFC office tower model, it is common to have tens of million of entity instances.  To analyze and dissect this massive volume and variety of BIM data set, PIComposer provides a multitude of filters.</p>
 </div>
 <div class="paragraph">
 <p>In a model, instances could be filtered by:</p>
@@ -934,13 +936,24 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 <div class="sect2">
 <h3 id="installation"><a class="anchor" href="#installation"></a>2.1. Installation</h3>
 <div class="paragraph">
-<p>To install PIComposer, first download the installer from the <a href="https://github.com/chi-w-ng/picomposer_community_edition/tree/main/installers">PIComposer Community Edition</a> github repository.</p>
+<p>To install PIComposer, first download the installer from <a href="https://www.microsoft.com/store/apps/9NKNML3421HC">Microsoft App Store</a> or <a href="https://github.com/chi-w-ng/picomposer_community_edition/tree/main/installers">PIComposer Community Edition</a> github repository.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The installer in Gibhub is a self signed msix package. To use the installer, you must install the certificate embedded in the msix package.</p>
 </div>
 <div class="paragraph">
-<p>The installer is a self signed msix package.</p>
+<p>To enable the installer, install the self signed certificate by following <a href="https://www.advancedinstaller.com/install-test-certificate-from-msix.html">these steps</a>.   Once the certificate is installed, use the installer to install PIComposer.</p>
 </div>
-<div class="paragraph">
-<p>To enable the installer, install the self signed certificate by following <a href="https://www.advancedinstaller.com/install-test-certificate-from-msix.html">these steps</a>.  Once the certificate is installed, use the installer to install PIComposer.</p>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Next, launch PIComposer and initiate the signup workflow by clicking the signup button.</p>
@@ -2435,10 +2448,21 @@ class Element {
 <div class="sect2">
 <h3 id="working-with-instance-detail-tree"><a class="anchor" href="#working-with-instance-detail-tree"></a>5.5. Working with Instance Detail Tree</h3>
 <div class="paragraph">
-<p>The STEP ISO-10303 standard set includes an object model specification using the EXPRESS language.  According to ISO-10303-11: "EXPRESS data types are classified according to their nature as: simple data types, aggregation data types, constructed data types, named data types, and generalized data types."</p>
+<p>The STEP ISO-10303 standard is a group of standards including an object model specification using the <a href="https://en.wikipedia.org/wiki/EXPRESS_(data_modeling_language)">EXPRESS language</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="a-brief-primer-on-objects-and-object-association"><a class="anchor" href="#a-brief-primer-on-objects-and-object-association"></a>5.5.1. A Brief Primer on Objects and Object Association</h4>
+<div class="paragraph">
+<p>An abstract object is a collection of attributes.  In PIComposer, an object is referred to as an instance&#8212;&#8203;an instantiation of an entity type.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="instance-detail-tree"><a class="anchor" href="#instance-detail-tree"></a>5.5.2. Instance Detail Tree</h4>
+<div class="paragraph">
+<p>According to ISO-10303-11: "EXPRESS data types are classified according to their nature as: simple data types, aggregation data types, constructed data types, named data types, and generalized data types."</p>
 </div>
 <div class="paragraph">
-<p>The instance detail tree is where PIComposer users interact with "entity data type" instance.</p>
+<p>The instance detail tree is where PIComposer users interact with instance and its attributes--"entity data type".</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -2489,8 +2513,9 @@ class Element {
 <div class="paragraph">
 <p>Like the spatial tree, user modify tree content by operating directly on the tree nodes.</p>
 </div>
+</div>
 <div class="sect3">
-<h4 id="instance-root-node"><a class="anchor" href="#instance-root-node"></a>5.5.1. Instance Root Node</h4>
+<h4 id="instance-root-node"><a class="anchor" href="#instance-root-node"></a>5.5.3. Instance Root Node</h4>
 <div class="paragraph">
 <p>Operations that directly affect the basic structure of the node or entity&#8217;s component are anchored at the root node.  The operations on the root node include:</p>
 </div>
@@ -2554,7 +2579,7 @@ class Element {
 </div>
 </div>
 <div class="sect3">
-<h4 id="working-with-attributes"><a class="anchor" href="#working-with-attributes"></a>5.5.2. Working with Attributes</h4>
+<h4 id="working-with-attributes"><a class="anchor" href="#working-with-attributes"></a>5.5.4. Working with Attributes</h4>
 <div class="paragraph">
 <p>An instance is a collection of attributes.  Each attribute has a data type. The basic attribute data types are:</p>
 </div>
@@ -2641,7 +2666,7 @@ class Element {
 </div>
 </div>
 <div class="sect3">
-<h4 id="simple-attributes"><a class="anchor" href="#simple-attributes"></a>5.5.3. Simple Attributes</h4>
+<h4 id="simple-attributes"><a class="anchor" href="#simple-attributes"></a>5.5.5. Simple Attributes</h4>
 <div class="paragraph">
 <p>The simple type include:</p>
 </div>
@@ -2718,7 +2743,7 @@ class Element {
 </div>
 </div>
 <div class="sect3">
-<h4 id="complex-attributes"><a class="anchor" href="#complex-attributes"></a>5.5.4. Complex Attributes</h4>
+<h4 id="complex-attributes"><a class="anchor" href="#complex-attributes"></a>5.5.6. Complex Attributes</h4>
 <div class="paragraph">
 <p>The complex attribute types are:</p>
 </div>
@@ -2774,7 +2799,7 @@ class Element {
 </div>
 </div>
 <div class="sect3">
-<h4 id="instance-aggregation-and-composition"><a class="anchor" href="#instance-aggregation-and-composition"></a>5.5.5. Instance Aggregation and Composition</h4>
+<h4 id="instance-aggregation-and-composition"><a class="anchor" href="#instance-aggregation-and-composition"></a>5.5.7. Instance Aggregation and Composition</h4>
 <div class="paragraph">
 <p>Aggregation is the default instance to instance association in STEP standard, in fact, it is the only option in ISO 10303 part21 standard.</p>
 </div>
@@ -2839,7 +2864,7 @@ class Element {
 </div>
 </div>
 <div class="sect3">
-<h4 id="working-with-select"><a class="anchor" href="#working-with-select"></a>5.5.6. Working With Select</h4>
+<h4 id="working-with-select"><a class="anchor" href="#working-with-select"></a>5.5.8. Working With Select</h4>
 <div class="paragraph">
 <p>A select entity attribute is a single value polymorphic container; it could hold value of any defined type within its specification.</p>
 </div>
@@ -2889,7 +2914,7 @@ class Element {
 </div>
 </div>
 <div class="sect3">
-<h4 id="working-with-collection"><a class="anchor" href="#working-with-collection"></a>5.5.7. Working with Collection</h4>
+<h4 id="working-with-collection"><a class="anchor" href="#working-with-collection"></a>5.5.9. Working with Collection</h4>
 <div class="paragraph">
 <p>STEP aggregation data types are collections of defined types. Aggregations could contain order or unordered, unique or none-unique values.  Aggregation containers include:</p>
 </div>
@@ -3560,7 +3585,7 @@ and press the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAA
 <div id="footer">
 <div id="footer-text">
 Version v0.1<br>
-Last updated 2023-01-20 11:41:44 -0800
+Last updated 2023-04-16 14:43:27 -0700
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

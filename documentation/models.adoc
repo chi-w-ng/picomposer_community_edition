@@ -247,9 +247,17 @@ Each range is limited to 1000.
 
 === Working with Instance Detail Tree
 
-The STEP ISO-10303 standard set includes an object model specification using the EXPRESS language.  According to ISO-10303-11: "EXPRESS data types are classified according to their nature as: simple data types, aggregation data types, constructed data types, named data types, and generalized data types."
+The STEP ISO-10303 standard is a group of standards including an object model specification using the https://en.wikipedia.org/wiki/EXPRESS_(data_modeling_language)[EXPRESS language].  
 
-The instance detail tree is where PIComposer users interact with "entity data type" instance.
+==== A Brief Primer on Objects and Object Association
+
+An abstract object is a collection of attributes.  In PIComposer, an object is referred to as an instance--an instantiation of an entity type. 
+
+==== Instance Detail Tree
+
+According to ISO-10303-11: "EXPRESS data types are classified according to their nature as: simple data types, aggregation data types, constructed data types, named data types, and generalized data types."
+
+The instance detail tree is where PIComposer users interact with instance and its attributes--"entity data type".
 
 .Instance detail tree
 image::model-instance-detail.png[]

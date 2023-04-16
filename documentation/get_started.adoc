@@ -9,11 +9,14 @@ PIComposer Community Edition is currently only available to Windows.  Support fo
 
 === Installation
 
-To install PIComposer, first download the installer from the https://github.com/chi-w-ng/picomposer_community_edition/tree/main/installers[PIComposer Community Edition] github repository.
+To install PIComposer, first download the installer from https://www.microsoft.com/store/apps/9NKNML3421HC[Microsoft App Store] or https://github.com/chi-w-ng/picomposer_community_edition/tree/main/installers[PIComposer Community Edition] github repository.
 
-The installer is a self signed msix package.  
+[TIP]
+====
+The installer in Gibhub is a self signed msix package. To use the installer, you must install the certificate embedded in the msix package.
 
-To enable the installer, install the self signed certificate by following https://www.advancedinstaller.com/install-test-certificate-from-msix.html[these steps].  Once the certificate is installed, use the installer to install PIComposer.
+To enable the installer, install the self signed certificate by following https://www.advancedinstaller.com/install-test-certificate-from-msix.html[these steps].   Once the certificate is installed, use the installer to install PIComposer.
+====
 
 Next, launch PIComposer and initiate the signup workflow by clicking the signup button.
 
