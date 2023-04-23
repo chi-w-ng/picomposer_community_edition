@@ -1,8 +1,8 @@
-== PIComposer BIM Model and Instance
+== PIComposer BIM Model and Entity Instance
 
-A PIComposer model is a collection of instances. Some these instance could be a collection of related instances.  Each model has its own database.  Each instance is persisted as a document.
+A PIComposer model is a collection of entity instances. Some these instance could be a collection of related instances; a mini model in and of itself with a implicit context.  Each BIM model has its own database.  Each instance is persisted as a document.
 
-For each model, logically, PIComposer emphasizes two essential concepts:
+For each model, logically, PIComposer emphasizes two essential organizational concepts:
 
 * spatial structure
 * object placement.
@@ -92,18 +92,38 @@ Only leaf node can be deleted, except nodes with child opening or fill.
 
 To add a child to the spatial tree, select the parent node, right click on it to activate the node menu, and select the image:model-add-child-menu-item.png[] add child menu item.  This command creates three sets of information:
 
-* the instance
+* the IfcProduct instance
 * the shape component and the material for the shape
 * local object placement component
 
 .product creation dialog.
 image::model-add-product-dialog.png[]
+The options on the product tab include:
+
+. To specify the IfcProduct type, type it in the custom text box or select it from the dropdown.
+. To specify the relation of the product to the parent object, select the IfcRelRelation type from the dropdown or leave it at auto to automatically select it.
+. Tag the instance for search.
+
+.prodcut creation dialog IfcProductRepresentation tab
+image::model-add-product-shape-dialog.png[]
+The shape tab adds a IfcShapeRepresentation to the product.  The options are:
+
+. create shape via a template
+. create 3 dimensional shape
+. create 2 dimensional shape
+. create 1 or 0 dimensional shape
+. create IfcStyledItem for the shape
 
 Fill in the necessary information on each tab and click OK when done.
 
 [TIP]
 ====
-To avoid adding IfcShapeRepresentation, leave the type dropdown to 'null'.  
+If you wish to skip adding IfcShapeRepresentation, leave the type dropdown to 'null'.   
+====
+
+[NOTE]
+====
+If template is not used when creating IfcShapeRepresenation, only a skeleton of a IfcRepresentationItem is created.  Details must be fill out in the *Instance Detail Tree*.    
 ====
 
 [NOTE]
@@ -249,8 +269,6 @@ Each range is limited to 1000.
 
 The STEP ISO-10303 standard is a group of standards including an object model specification using the https://en.wikipedia.org/wiki/EXPRESS_(data_modeling_language)[EXPRESS language].  
 
-==== A Brief Primer on Objects and Object Association
-
 An abstract object is a collection of attributes.  In PIComposer, an object is referred to as an instance--an instantiation of an entity type. 
 
 ==== Instance Detail Tree
@@ -384,13 +402,70 @@ Attribute node commands include:
 .typical entity attribute command
 image::model-instance-detail-entity-attribute-commands.png[]
 
-Just as there are two ways--link:https://en.wikipedia.org/wiki/Object_composition#:~:text=In%20computer%20science%2C%20object%20composition,and%20aggregation%20is%20often%20ignored.[aggregation and composition]--to associate one object to another, there are two way to associate an attribute to a entity instance.
+Just as there are two ways--link:https://en.wikipedia.org/wiki/Object_composition#:~:text=In%20computer%20science%2C%20object%20composition,and%20aggregation%20is%20often%20ignored.[aggregation and composition]--to associate one object to another, there are two ways to associate an entity attribute to an entity instance.
 
-==== Instance Aggregation and Composition
+==== A Brief Introduction to Object modeling
+As mentioned at the beginning of this chapter, a PIComposer model is a collection of objects.  This section introduces some object concepts useful in the use of PIComposer.
 
-Aggregation is the default instance to instance association in STEP standard, in fact, it is the only option in ISO 10303 part21 standard.  
+.According to ChatGTP of OpenAI:
+====
+Objects and Object Association
 
-To use the reference selected instance command, follow the steps below:
+In object-oriented programming, *objects* are the fundamental building blocks that represent entities in the real world or abstract concepts. They are instances of classes that encapsulate data and behavior. *Object association* is the concept of connecting objects together to represent relationships between them. 
+
+Object association can be implemented using two approaches: composition and aggregation. Both approaches are used to represent different types of relationships between objects.
+
+Object Composition
+
+Object composition is a form of object association where one object contains another object as a part of its state. The contained object cannot exist independently of the container object, and its lifecycle is tied to the container object. This is known as a "has-a" relationship.
+
+For example, a car object may contain an engine object. The engine is a part of the car and cannot exist without it. The car object controls the lifecycle of the engine object, and the engine object cannot exist outside of the car object.
+
+Object Aggregation
+
+Object aggregation is a form of object association where one object uses another object as a part of its functionality. The contained object can exist independently of the container object, and its lifecycle is not tied to the container object. This is known as a "uses-a" relationship.
+
+For example, a car object may use a navigation system object to provide directions to the driver. The navigation system is not a part of the car, and it can exist independently of the car object. The car object does not control the lifecycle of the navigation system object, and the navigation system object can exist outside of the car object.
+
+Difference between Object Composition and Object Aggregation
+
+The key difference between object composition and object aggregation is the lifecycle of the contained object. In object composition, the contained object cannot exist independently of the container object, and its lifecycle is tied to the container object. In object aggregation, the contained object can exist independently of the container object, and its lifecycle is not tied to the container object.
+
+Another difference is the relationship between the container object and the contained object. In object composition, the contained object is a part of the container object, and it is owned by the container object. In object aggregation, the contained object is used by the container object, and it is not owned by the container object.
+
+Conclusion
+
+Object association is a powerful concept in object-oriented programming that allows developers to model relationships between objects. Object composition and object aggregation are two approaches used to represent different types of relationships between objects. It is important to understand the difference between these two approaches to choose the appropriate approach for a given situation.
+====
+
+==== Object Aggregation and Composition in PIComposer
+
+Aggregation is the default instance to instance association in STEP standard, in fact, it is the only option in ISO 10303 part21 standard.  The most important difference between object composition and aggregation is that aggregated object is potentially shared among many objects and composed object is embeded in a single parent object.
+
+.Anatomy of Aggregation and Composer
+image::model-object-aggregation-composition.png[]
+In the figure above:
+
+. the composite node groups all the shared children within a container object to be referenced.
+. The IfcCartesianPoint object is an aggregated object referenced by 7 inside the composed IfcPolyloop object.
+. The composed IfcClosedShell inside a IfcFacetedBrep object
+. The cfsfaces attribute of the IfcClosedShell object, here it contains a composed collection of IfcFaces.
+. Composed IfcFaces
+. The polygon attribute of IfcPolyloop, it comprises of a collection of aggregated IfcCartesianPoint.
+. An aggregate IfcCartesianPoint.
+. The contextofitems attribute of an IfcShapeRepresentation object.  It references a IfcGeometricRepresentationContext object in the model.
+
+[NOTE]
+====
+* To share an object with in a model, create it in the model using the filter panel and share it by aggregation.
+* To share an object with a container object, create it under the composites node and share it by aggregation.
+* To compose an object, use a create/add object command and compose the object in situ.  For detail see below.
+* Prefer composition over aggregation, whenever possible.
+* To share across model boundary, create a template.
+====
+
+One way to create an aggregation is use the *reference selected instance* command.
+To use the *reference selected instance* command, follow the steps below:
 
 . select the desired reference target in instance filter
 . right click on the entity attribute node label to activate popup menu
@@ -651,3 +726,6 @@ To view a model in 3d view, click show the image:navigationbar-show3d-button.png
 Both commands are background tasks. User may continue working in parallel while the command is running. 
 ====
 
+
+
+  

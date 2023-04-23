@@ -8,12 +8,12 @@ Moreover, to deal with models that will not fit into device memory, PIComposer l
 
 [NOTE]
 ====
-PIComposer community edition: althought the document store is capable of handling any STEP AP, it is restricted to the latest version of IFC: https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/toc.html[*ifc4x3*]. To keep our discussion concrete, for the rest of this document we will concentrate on IFC.
+PIComposer community edition: althought the document store is capable of handling any STEP AP, it is restricted to a version of IFC: https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/[*ifc4x3*]. To keep our discussion concrete, for the rest of this document we will concentrate on IFC.
 ====
 
 [WARNING]
 ====
-A user of PIComposer community edition is assumed to have some knowledge of, or at least a desire, to learn https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/toc.html[*IFC*]. Otherwise, what follows in this document and the application PIComposer itself will make little sense, as PIComposer manipulates IFC models by providing user interfaces that directly interact with IFC model content: entity, select, enum, etc.  
+A user of PIComposer community edition is assumed to have some knowledge of, or at least a desire, to learn https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/[*IFC*]. Otherwise, what follows in this document and the application PIComposer itself will make little sense, as PIComposer manipulates IFC models by providing user interfaces that directly interact with IFC model content: entity, select, enum, etc.  
 ====
 
 === Data Organization
@@ -113,11 +113,11 @@ A transform is a parametric template with an associated procedure. The procedure
 
 Procedural entity, as its name implies, is a creational procedure that instantiates an instance.  A few examples of procedural entity are provided with PIComposer.
 
-Since not all propertyset and quantityset are published within the ifc schema EXPRESS file, these missing https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/annex-b3.html[*propertyset*], https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/annex-b3.html[*quantityset*], plus user definded propertyset must be configured using templates so that PIComposer could properly instantiate them. These templates are json files. Many examples are provided with the PIComposer release.
+Since not all propertyset and quantityset are published within the ifc schema EXPRESS file, these missing https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_psets.htm[*propertyset*], https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_qsets.htm[*quantityset*], plus user definded propertyset must be configured using templates so that PIComposer could properly instantiate them. These templates are json files. Many examples are provided with the PIComposer release.
 
 === Filters
 
-https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/toc.html[*ifc4x3*] schema has 130 https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/annex-b2.html[*defined types*], more than 240 enum types, almost 100 select types, and nearly 900 https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3_0_0/annex-b1.html[*entity types*].  In a typical IFC office tower model, it is common to have tens of million of entity instances.  To analyze and dissect this massive volume and variety of BIM data set, PIComposer provides a multitude of filters.  
+The https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/[*ifc4x3*] schema has 130 https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_definedtypes.htm[*defined types*], more than 240 https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_enumtypes.htm[*enum types*], almost 100 https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_selecttypes.htm[*select types*], and more than 800 https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_entities.htm[*entity types*].  In a typical IFC office tower model, it is common to have tens of million of entity instances.  To analyze and dissect this massive volume and variety of BIM data set, PIComposer provides a multitude of filters.  
 
 In a model, instances could be filtered by:
 
@@ -156,7 +156,9 @@ Coming to a store need you in a not too distant future, in the order of importan
 * Real time collaboration
 * ...
 
+=== Support and Bug reporting
 
+To report an issue or request a feature please go to this project's github portal: https://github.com/chi-w-ng/picomposer_community_edition[picomposer_community_edition] and create an issue.
 
 
 
