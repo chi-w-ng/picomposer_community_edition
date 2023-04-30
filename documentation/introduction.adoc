@@ -2,9 +2,9 @@
 
 === STEP ISO-10303
 
-PIComposer is a STEP ISO-10303 Standard document editor powered by a high performant EXPRESS document store. To satistfy its aim of support real time applications the document store has its own lossless STEP compliant proprietary encoding of EXPRESS data. 
+PIComposer is a STEP ISO-10303 Standard document editor powered by a high performant EXPRESS document store. To satistfy its aim of support real time applications the document store has its own lossless proprietary encoding of EXPRESS data. 
 
-Moreover, to deal with models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS model and its entity instances (or instances) are faithfully presented in its user interface as trees and directed acyclic graphs. 
+Moreover, to deal with models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS model and its entity instances (hencefore refer to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs. 
 
 [NOTE]
 ====
@@ -39,7 +39,7 @@ A PIComposer component is a special type of instance that is a container of a se
 A component could be associated to instance either using an instance's attribute or through a relationship object.
 ====
 
-In PIComposer, instances and components are stored as documents, and systems are internal functions or external scripts written in dart or C++ that operate on instances and components.  
+In PIComposer, instances and components are stored as documents, and systems are internal functions or external scripts written in dart or C++ that operate on instances and components.  For example:
 
 .placement component example
 [example]
@@ -71,7 +71,7 @@ A good example of such an instance is instance of IfcOwnerHistory.
 
 === Templates
 
-Most BIM modeling work flow in PIComposer such as-- creating an model, modeling an real world object such as a table with in a model--can be most easily done utilizing templates. Templates are also the primary mechanism for a user to configure, enhance, or customize PIComposer. 
+Most BIM modeling tasks in PIComposer such as-- creating a model, modeling an real world object such as a table--can be most easily done using templates. Templates are also the primary mechanism for a user to configure, enhance, or customize PIComposer. 
 
 A template, at its most basic, is a set of pre-programmed instructions to be executed by PIComposer where the language is either dart, C++ or json. PIComposer supports multiple types of templates.  They incude:
 
@@ -85,31 +85,26 @@ A template, at its most basic, is a set of pre-programmed instructions to be exe
 * quantityset template
 * enum template
 
-A spatial template allows a user to scaffold an IFC model during inItial creation.  A spatial template specifies the initial model spatial structure such as the site, the number of IfcBuildings, IfcBuildinStoreys. A spatial template also defines each spatial element's relative placement.
+A spatial template allows a user to scaffold an IFC model during initial creation.  A spatial template specifies the initial model spatial structure such as the site, the number of IfcBuildings, IfcBuildinStoreys. A spatial template also defines each spatial element's relative placement.
 
 A spatial template is authored using json.
 
-When a spatial template is executed, a model with a root IfcProject and related context information such as model unit system is also created.  
+When a spatial template is executed, a model with a root IfcProject, all the spatial elements specified in the json file and related context information such as model unit system is created.  
 
 In PIComposer, geometry uses millimeter for distance measure and radian for angle measure. Property and quantity conforms to MKS unit measure system.  This convention defines an implicit context for templates.  
 
-[TIP]
-====
-PIComposer does not support imperial unit system or other non SI system.
-====
-
-Instance templates are instance factories. They simplify instance creation in a model. There are 4 different types of instance templates and they must all be of IfcShapeRepresentation type or of a IfcProduct subtype. 
+Instance templates are instance factories. They simplify instance creation in a model. There are 4 different types of instance templates. The instances created by these templates must all be of IfcShapeRepresentation type or of a IfcProduct subtype. 
 
 [NOTE]
 ====
 A template could be private to a user's project or be shared in the cloud and be available for all PIComposer users.
 ====
 
-A simple template is an extract of a component or instance in the scope of a project that could be reinstantiated in any other model. It is the most basic form of reuse in PIComposer--a form of copy and paste across space and time.     
+A simple template is an extract of a component or instance in the scope of a project that could be reinstantiated in any other model in the project. It is the most basic form of reuse in PIComposer--a form of copy and paste across space and time.  If the template is a IfcProduct, it packages the instance's associated shape.     
 
-A parametric template is a template that exposes its composite instances and their attribute to direct user manipulation.  It is configured via json.
+A parametric template is a template that exposes its composite instances and their attribute to direct user manipulation.  The parametrized attributes are configured via json.
 
-A transform is a parametric template with an associated procedure. The procedure may take a simple template and output something far more complex.  PIComposer is released with mutliple example of parametric template. One released transformation takes a brep box and the output a frustum.
+A transform is a parametric template with an associated procedure. The procedure may take a simple template and output something far more complex.  PIComposer is released with mutliple example of parametric template. One example transformation takes a brep box and the output a frustum.
 
 Procedural entity, as its name implies, is a creational procedure that instantiates an instance.  A few examples of procedural entity are provided with PIComposer.
 

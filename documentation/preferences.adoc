@@ -58,6 +58,13 @@ One way to create an instance in the model is using the create command in the fi
 * show type create dialog--show type create dialog when creating IfcRelDefinesByTypes in the instance filter
 * show create style dialog--show type create dialog when creating IfcStyledItem 
 
+=== Private Template Listing options
+To hide a template where there are transform of a given template, set the:
+
+* show template and transform
+
+option to false.  
+
 === Private Template Root Node Command options
 Options in this section enable commands for authoring instance templates.  These are:
 
