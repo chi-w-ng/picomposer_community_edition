@@ -447,7 +447,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author" class="author">Chi W. Ng, Ph.D.</span><br>
 <span id="email" class="email"><a href="mailto:chi.w.ng@pisys.io">chi.w.ng@pisys.io</a></span><br>
 <span id="revnumber">version v1.1,</span>
-<span id="revdate">4.29.2023</span>
+<span id="revdate">5.11.2023</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -571,6 +571,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p>Moreover, to deal with models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS model and its entity instances (hencefore refer to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs.</p>
+</div>
+<div class="paragraph">
+<p>As a user, it is best think of PIComposer as Excel for BIM; except that, instead of working with sheets, rows, columns and cells, a user works with trees and tree nodes.  Using the spatial tree and entity instance detail tree, PIComposer user interact with BIM model directly.  Editing BIM model involves adding tree nodes and updating tree node values.  Each tree node provides a context sensitive set of menu commands and for primitive type like REAL or BOOLEAN, a text box to edit or to add new node or nodes.  And along the way, schema checking is active in the background to ensure that the resulting model remains valid.  There are three trees in PIComposer:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Spatial tree that manages the model spatial structure</p>
+</li>
+<li>
+<p>Placement tree which is responsible for instance placement</p>
+</li>
+<li>
+<p>Instance detail tree which manages instance attributes.</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3771,7 +3787,7 @@ and press the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAA
 <div id="footer">
 <div id="footer-text">
 Version v1.1<br>
-Last updated 2023-04-29 17:40:14 -0700
+Last updated 2023-05-11 14:25:03 -0700
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

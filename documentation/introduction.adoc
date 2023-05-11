@@ -6,6 +6,12 @@ PIComposer is a STEP ISO-10303 Standard document editor powered by a high perfor
 
 Moreover, to deal with models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS model and its entity instances (hencefore refer to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs. 
 
+As a user, it is best think of PIComposer as Excel for BIM; except that, instead of working with sheets, rows, columns and cells, a user works with trees and tree nodes.  Using the spatial tree and entity instance detail tree, PIComposer user interact with BIM model directly.  Editing BIM model involves adding tree nodes and updating tree node values.  Each tree node provides a context sensitive set of menu commands and for primitive type like REAL or BOOLEAN, a text box to edit or to add new node or nodes.  And along the way, schema checking is active in the background to ensure that the resulting model remains valid.  There are three trees in PIComposer: 
+
+* Spatial tree that manages the model spatial structure
+* Placement tree which is responsible for instance placement
+* Instance detail tree which manages instance attributes.
+
 [NOTE]
 ====
 PIComposer community edition: althought the document store is capable of handling any STEP AP, it is restricted to a version of IFC: https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/[*ifc4x3*]. To keep our discussion concrete, for the rest of this document we will concentrate on IFC.
