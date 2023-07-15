@@ -455,12 +455,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#introduction">1. Introduction</a>
 <ul class="sectlevel2">
 <li><a href="#step-iso-10303">1.1. STEP ISO-10303</a></li>
-<li><a href="#data-organization">1.2. Data Organization</a></li>
+<li><a href="#data-storage-and-organization">1.2. Data Storage and Organization</a></li>
 <li><a href="#templates">1.3. Templates</a></li>
 <li><a href="#filters">1.4. Filters</a></li>
 <li><a href="#3d-viewer">1.5. 3d Viewer</a></li>
-<li><a href="#road-map">1.6. Road Map</a></li>
-<li><a href="#support-and-bug-reporting">1.7. Support and Bug reporting</a></li>
+<li><a href="#support-and-bug-reporting">1.6. Support and Bug reporting</a></li>
 </ul>
 </li>
 <li><a href="#getting-started">2. Getting Started</a>
@@ -513,7 +512,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#instance-detail-tree">5.5.1. Instance Detail Tree</a></li>
 <li><a href="#instance-root-node">5.5.2. Instance Root Node</a></li>
-<li><a href="#working-with-attributes">5.5.3. Working with Attributes</a></li>
+<li><a href="#schemasense-and-working-with-attributes">5.5.3. SchemaSense and working with Attributes</a></li>
 <li><a href="#simple-attributes">5.5.4. Simple Attributes</a></li>
 <li><a href="#complex-attributes">5.5.5. Complex Attributes</a></li>
 <li><a href="#a-brief-introduction-to-object-modeling">5.5.6. A Brief Introduction to Object modeling</a></li>
@@ -567,13 +566,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="step-iso-10303"><a class="anchor" href="#step-iso-10303"></a>1.1. STEP ISO-10303</h3>
 <div class="paragraph">
-<p>PIComposer is a STEP ISO-10303 Standard document editor powered by a high performant EXPRESS document store. To satistfy its aim of support real time applications the document store has its own lossless proprietary encoding of EXPRESS data.</p>
+<p>PIComposer is a STEP ISO-10303 Standard document editor powered by a highly performant EXPRESS document store. To satisfy its aim of supporting real-time applications, the document store has its own lossless proprietary binary encoding of EXPRESS data.</p>
 </div>
 <div class="paragraph">
-<p>Moreover, to deal with models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS model and its entity instances (hencefore refer to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs.</p>
+<p>Moreover, to handle models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS models and their entity instances (hereafter referred to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs.</p>
 </div>
 <div class="paragraph">
-<p>As a user, it is best think of PIComposer as Excel for BIM; except that, instead of working with sheets, rows, columns and cells, a user works with trees and tree nodes.  Using the spatial tree and entity instance detail tree, PIComposer user interact with BIM model directly.  Editing BIM model involves adding tree nodes and updating tree node values.  Each tree node provides a context sensitive set of menu commands and for primitive type like REAL or BOOLEAN, a text box to edit or to add new node or nodes.  And along the way, schema checking is active in the background to ensure that the resulting model remains valid.  There are three trees in PIComposer:</p>
+<p>As a user, it is best to think of PIComposer Community Edition as Excel for BIM, with the difference being that instead of interacting with sheets, rows, columns, and cells, a user works with trees and tree nodes. By using the spatial tree and entity instance detail tree, PIComposer users can interact directly with BIM models. Authoring a BIM model involves adding tree nodes and updating tree node values. And on each user interaction, SchemaSense, PIComposer&#8217;s schema-aware intelligent agent, is active to provide user guidance and a context-sensitive set of menu commands on each node. There are three trees in PIComposer:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -588,6 +587,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Most of user&#8217;s work is using tools and commmands of PIComposer to manipulate above trees.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -596,7 +598,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 <td class="content">
 <div class="paragraph">
-<p>PIComposer community edition: althought the document store is capable of handling any STEP AP, it is restricted to a version of IFC: <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/"><strong>ifc4x3</strong></a>. To keep our discussion concrete, for the rest of this document we will concentrate on IFC.</p>
+<p>PIComposer Community Edition is capable of handling any STEP AP through its document store. However, in the context of the community edition, it is specifically restricted to a version of IFC: <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/"><strong>ifc4x3</strong></a>. For the remainder of this document, our discussion will focus specifically on IFC.</p>
 </div>
 </td>
 </tr>
@@ -610,7 +612,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 <td class="content">
 <div class="paragraph">
-<p>A user of PIComposer community edition is assumed to have some knowledge of, or at least a desire, to learn <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/"><strong>IFC</strong></a>. Otherwise, what follows in this document and the application PIComposer itself will make little sense, as PIComposer manipulates IFC models by providing user interfaces that directly interact with IFC model content: entity, select, enum, etc.</p>
+<p>A user of PIComposer Community Edition is assumed to have some knowledge of, or at least a desire to learn, <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/"><strong>IFC</strong></a>. This is because PIComposer manipulates IFC models by providing user interfaces that directly interact with the content of IFC models, including entities, selects, enums, and more. Without an understanding of IFC, both this document and the PIComposer application itself may be difficult to comprehend.</p>
 </div>
 </td>
 </tr>
@@ -618,9 +620,53 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="data-organization"><a class="anchor" href="#data-organization"></a>1.2. Data Organization</h3>
+<h3 id="data-storage-and-organization"><a class="anchor" href="#data-storage-and-organization"></a>1.2. Data Storage and Organization</h3>
 <div class="paragraph">
-<p>PIComposer has an architecture similar to that of an Entity Component System <a href="https://en.wikipedia.org/wiki/Entity_component_system"><strong>(ECS)</strong></a>.</p>
+<p>A user&#8217;s data is organized within a workspace. A workspace consists of multiple projects owned by the user. Each project is composed of many documents.</p>
+</div>
+<div class="paragraph">
+<p>Most of the storage in PIComposer is consumed by the documents. There are various types of documents, including templates, scripts, and BIM models.</p>
+</div>
+<div class="paragraph">
+<p>Within a BIM model, the majority of the storage is devoted to entity instances. Additionally, a model document also stores entity instance&#8217;s inverse attributes, tags, search indices, and other supplemental data.</p>
+</div>
+<div class="paragraph">
+<p>Conceptually, models are documents in a project. However, each BIM model is a document database where documents are stored as binary buffers. These buffers store entity instances. Unlike a line in an ISO-10303 part 21 model file or an element of a typed dataset in part 26, a binary buffer typically contains a logically grouped set of entity instances. Furthermore, if an attribute of an entity instance is itself an entity type, it might be recursively composed within the owning entity instance.</p>
+</div>
+<div class="paragraph">
+<p>That is, using part 21 as an illustration, instead of storing instances as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">#1=IFCPERSON($,'John','Doe',$,$,$,$,$);
+#2=IFCORGANIZATION($,'Procedural Information System, LLC',$,$,$);
+#3=IFCPERSONANDORGANIZATION(#1,#2,$);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>effectively, a buffer might store IFCPERSONANDORGANIZATION as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">#3=IFCPERSONANDORGANIZATION(#1=IFCPERSON($,'John','Doe',$,$,$,$,$),#2=IFCORGANIZATION($,'Procedural Information System, LLC',$,$,$),$);</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The PIComposer command to create the first structure is <a href="#node_commands">set reference</a> command, the second is the <a href="#node_commands">create</a> command.  Which structure to prefer depends on whether the  entity instance stored in an attribute should be shared.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>PIComposer organizes BIM model data similar to an Entity Component System <a href="https://en.wikipedia.org/wiki/Entity_component_system"><strong>(ECS)</strong></a>.</p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -644,10 +690,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="paragraph">
-<p>A PIComposer entity is an instance of a non-abstract IfcProduct subtype, each instance has an immutable 64-bit integer identifier.</p>
+<p>The central elments in a BIM model are instances of a non-abstract IfcProduct subtype; these instances usually appears in the spatial tree. Each of these instance has an immutable 64-bit integer identifier and plays the entity role in a ECS system.</p>
 </div>
 <div class="paragraph">
-<p>A PIComposer component is a special type of instance that is a container of a set of IFC instances; it is composition and aggregation of a set of logically related IFC instances.  These components include shapes, propertysets, local placement, etc.</p>
+<p>A component is a special type of instance that is a container of a set of IFC instances; it is composition and aggregation of a set of logically related IFC instances.  These components include shapes, propertysets, local placement, and a few other types.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -662,9 +708,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>In PIComposer, instances and components are stored as documents, and systems are internal functions or external scripts written in dart or C++ that operate on instances and components.  For example:</p>
 </div>
 <div class="exampleblock">
 <div class="title">placement component example</div>
@@ -738,10 +781,10 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 <div class="sect2">
 <h3 id="templates"><a class="anchor" href="#templates"></a>1.3. Templates</h3>
 <div class="paragraph">
-<p>Most BIM modeling tasks in PIComposer such as-- creating a model, modeling an real world object such as a table&#8212;&#8203;can be most easily done using templates. Templates are also the primary mechanism for a user to configure, enhance, or customize PIComposer.</p>
+<p>Most BIM modeling tasks in PIComposer, such as creating a model or modeling real-world objects like tables, can be easily accomplished using templates. Templates are a fundamental mechanism for users to configure, enhance, or customize PIComposer.</p>
 </div>
 <div class="paragraph">
-<p>A template, at its most basic, is a set of pre-programmed instructions to be executed by PIComposer where the language is either dart, C++ or json. PIComposer supports multiple types of templates.  They incude:</p>
+<p>At its core, a template is a set of pre-programmed instructions to be executed by PIComposer, written in either Dart, C++, or JSON. PIComposer supports multiple types of templates, including:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -779,19 +822,19 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>A spatial template allows a user to scaffold an IFC model during initial creation.  A spatial template specifies the initial model spatial structure such as the site, the number of IfcBuildings, IfcBuildinStoreys. A spatial template also defines each spatial element&#8217;s relative placement.</p>
+<p>A spatial template allows users to scaffold an IFC model during the initial creation phase. It defines the initial spatial structure of the model, such as the site, the number of IfcBuildings, and IfcBuildingStoreys. Additionally, a spatial template specifies the relative placement of each spatial element.</p>
 </div>
 <div class="paragraph">
-<p>A spatial template is authored using json.</p>
+<p>Spatial templates are authored using JSON.</p>
 </div>
 <div class="paragraph">
-<p>When a spatial template is executed, a model with a root IfcProject, all the spatial elements specified in the json file and related context information such as model unit system is created.</p>
+<p>When a spatial template is executed, a model is created with a root IfcProject and all the spatial elements specified in the JSON file. The execution also includes the relevant context information, such as the model&#8217;s unit system.</p>
 </div>
 <div class="paragraph">
-<p>In PIComposer, geometry uses millimeter for distance measure and radian for angle measure. Property and quantity conforms to MKS unit measure system.  This convention defines an implicit context for templates.</p>
+<p>In PIComposer, distance measurements are in millimeters, and angle measurements are in radians. Property and quantity values conform to the MKS unit measure system. This convention establishes an implicit context for templates.</p>
 </div>
 <div class="paragraph">
-<p>Instance templates are instance factories. They simplify instance creation in a model. There are 4 different types of instance templates. The instances created by these templates must all be of IfcShapeRepresentation type or of a IfcProduct subtype.</p>
+<p>Instance templates serve as instance factories, simplifying the creation of instances within a model. There are four different types of instance templates (as mentioned above), and the instances created by these templates must be of the IfcShapeRepresentation type or a subtype of IfcProduct.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -808,16 +851,16 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>A simple template is an extract of a component or instance in the scope of a project that could be reinstantiated in any other model in the project. It is the most basic form of reuse in PIComposer&#8212;&#8203;a form of copy and paste across space and time.  If the template is a IfcProduct, it packages the instance&#8217;s associated shape.</p>
+<p>A simple template is an extracted representation of a component or instance within the scope of a project. It can be easily reinstantiated in any other model within the same project. Simple templates serve as a basic form of reuse in PIComposer, enabling copy and paste functionality across spaces and time. If the template represents an IfcProduct, it includes the associated shape of the instance.</p>
 </div>
 <div class="paragraph">
-<p>A parametric template is a template that exposes its composite instances and their attribute to direct user manipulation.  The parametrized attributes are configured via json.</p>
+<p>A parametric template is a simple template that exposes its attriubute and composite instances and their attributes to direct user manipulation. We called the exposed attributes parametrized attributes. The parametrized attributes are configured using JSON.</p>
 </div>
 <div class="paragraph">
-<p>A transform is a parametric template with an associated procedure. The procedure may take a simple template and output something far more complex.  PIComposer is released with mutliple example of parametric template. One example transformation takes a brep box and the output a frustum.</p>
+<p>A transform template is a parametric template that incorporates an associated procedure. This procedure can take a simple template as input and produce a more complex output. PIComposer includes multiple examples of parametric templates, such as a transformation that takes a BREP box as input and generates a frustum as output.</p>
 </div>
 <div class="paragraph">
-<p>Procedural entity, as its name implies, is a creational procedure that instantiates an instance.  A few examples of procedural entity are provided with PIComposer.</p>
+<p>Procedural entity templates are creational procedures that instantiate instances. They are dart or C++ script with a json configuration file. The configuration file specifies the user input parameter and script input parameters. PIComposer provides several examples of procedural entity templates.</p>
 </div>
 <div class="paragraph">
 <p>Since not all propertyset and quantityset are published within the ifc schema EXPRESS file, these missing <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_psets.htm"><strong>propertyset</strong></a>, <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_qsets.htm"><strong>quantityset</strong></a>, plus user definded propertyset must be configured using templates so that PIComposer could properly instantiate them. These templates are json files. Many examples are provided with the PIComposer release.</p>
@@ -861,62 +904,7 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="road-map"><a class="anchor" href="#road-map"></a>1.6. Road Map</h3>
-<div class="paragraph">
-<p>PIComposer community edition, release free of charge, is a tool that the author wished was available when he first started learning and working with BIM.  With its versatile and powerful template systems, simple data presentation, it is a great tool for learning, exploring and creating BIM data.</p>
-</div>
-<div class="paragraph">
-<p>Looking forward, we are working on making PIComposer an even more powerful system.</p>
-</div>
-<div class="paragraph">
-<p>Coming to a store need you in a not too distant future, in the order of importance, we will have:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>dart scripting and graphic programming interface</p>
-</li>
-<li>
-<p>data backup and sync</p>
-</li>
-<li>
-<p>integraded native 3d viewer</p>
-</li>
-<li>
-<p>other ISO 10303 AP support and model interoperability</p>
-</li>
-<li>
-<p>STEP import</p>
-</li>
-<li>
-<p>drawing and 2d workbench</p>
-</li>
-<li>
-<p>measures and analytics</p>
-</li>
-<li>
-<p>support for MacOS and Linux</p>
-</li>
-<li>
-<p>web client</p>
-</li>
-<li>
-<p>team collaboration workflow</p>
-</li>
-<li>
-<p>issue and knowledge management</p>
-</li>
-<li>
-<p>Real time collaboration</p>
-</li>
-<li>
-<p>&#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="support-and-bug-reporting"><a class="anchor" href="#support-and-bug-reporting"></a>1.7. Support and Bug reporting</h3>
+<h3 id="support-and-bug-reporting"><a class="anchor" href="#support-and-bug-reporting"></a>1.6. Support and Bug reporting</h3>
 <div class="paragraph">
 <p>To report an issue or request a feature please go to this project&#8217;s github portal: <a href="https://github.com/chi-w-ng/picomposer_community_edition">picomposer_community_edition</a> and create an issue.</p>
 </div>
@@ -1933,7 +1921,7 @@ class Element {
 </table>
 </div>
 <div class="paragraph">
-<p>Each instance in the model is visualized as a tree (an acyclic graph actually)--the instance detail tree&#8212;&#8203;where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree.</p>
+<p>Each instance in the model is visualized as a tree (sometimes you will see an acyclic graph actually)--the instance detail tree&#8212;&#8203;where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree.</p>
 </div>
 <div class="paragraph">
 <p>Many instance&#8217;s component could be displayed on the instance detail tree, including:</p>
@@ -2569,7 +2557,7 @@ class Element {
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAmCAYAAACWGIbgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAASISURBVGhD7ZhtT1pnHMb3kfZiyZYsq/0Ae7kXe90m27q0kyzd1nZZ134Fl9kZRdOYaUWzzBIeJs8IChVcEUVAlILSoYLrMIicOq/xv09veqg3ykNFZbz4Rbhy/4+5fp77Pie+k8/n0eEoKpUKHTlVYHIGtFZceSjzeMoKq/U1w3obukft+GTIgXd/drYF1IU6UTfe02634w+HG9cm5nBdG4R2PirL+dXiwedjMmaXBx6PzN3HT/Ce2odPH82VPs9h2OJtC6gLdaJu1JG6er1e2D0+XJ9cgMoQhjEYl+Vo3E9LYYDh9gcQCARw27iIrtElPJwOsu/tCHXrGlkqdZU7zv4ZRLd+GV+bYpgKJWU5v3lDUBkjDN9SBL/7o/hAs8p+RiKRtoY6vv+qq38pysTctD6DOZyS5Uz6V3DTlmAEYwlcNW/glnMDiUSiKRYXF8tbtBq0RjRLRKNR4YyS+fl54Ww9fOdcZ52p+zf2JL51pmBdSctydIE4brnTjOh6Gh/qMzCvbCKdTjeF0WhET0/PsWi1WuEsQcVFM0qGhoaEs/VgjpY66zKsOzm4PbMFRzwjyzGE1nHHm2U4nu3go6kckttZZLPNYTab0dvbeywGg0E4SwSDQeGMkuHhYeFsPSS3sqyzI7HDHHz/ZAeu5AtZjinyHD/4c4ypxC4uWQvI5XJNQ4/Hvr4+htvtxvLyMoM+89xkMglnCVrL1+l0uvK8Mh8ZGRHO1sslyx5MCdkBMZvaleVYYpv48WmeYU7tocsuCV+K6sXpdKK/v59BZwvP6Szh+djYGFsngu4qvs5isVRcWzmvzBuFOls39nD3lQdvek+WY1vL4N5CgWH9ax9dzgMUCoWmcblcGBgYYIRCoXIei8XKea3YbLaKa/Nco9FU5I1Cne3P98se5rb2ZTn2eBb3g0WGLS3h8vQhisVi09D2UavVDNoKPF9dXS3ntUJbVHltno+Pj1fkjUKdHaXu90oOCN92UZZDh/D9RYlh33yJyy5AkqSmmZmZweDgICMcDpfztbW1cu5wOOrKODyfmJioyBuFOjtL3bkHf0ZqnZzR0VFMTk4yqBDPa5VDTyU+T/C8LeRUo1Y51biwchYWFir+2iJ8Ph9bK5KTSqWEM0roVUD5Oxul5XLqQSSnlYjkfNmRIyOS80X3OZZTy7Z6WyJFcj67cY7lKLNqnOaBfO08bytlpnwVIHh+mnJuXBQ5b24fnl/YR3k9nLSFOnIUMt7kfy0nk8mwN2ol9ILXkVMF5d2k1+vZd86ZyNnOywvnMi+FF2klJ2014m3Ioa7UmbqfKOfK/CHU8X+FF2olrZJDXamzWE7i7wo5j5IH+HgWWN8927uH/rer3ErVEM3WCnWkrtRZKGc6+aJCDg19FTjE1ZLNsxZ0mlA36khd6XsVOf8ckbNTkAWRVXX8AL5s+0iiLtSJulFH6kq5UI57Y/eIHA7dbrQf6cBqJ6gTdVN2FcrpjezjQVTCgxUJ/TEJQ6tifiqtaQdE3Qjq/kvJAYfJ4bY6VNKRcwwdOcfA5CgPpQ6vUalU+A/X+WpIJgdx+AAAAABJRU5ErkJggg==" alt="model instance show detail topple"></span> show optional attribute toggle hides optional attribute of an instance. This filter is also part of user preference</p>
+<p>The <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAmCAYAAACWGIbgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAASISURBVGhD7ZhtT1pnHMb3kfZiyZYsq/0Ae7kXe90m27q0kyzd1nZZ134Fl9kZRdOYaUWzzBIeJs8IChVcEUVAlILSoYLrMIicOq/xv09veqg3ykNFZbz4Rbhy/4+5fp77Pie+k8/n0eEoKpUKHTlVYHIGtFZceSjzeMoKq/U1w3obukft+GTIgXd/drYF1IU6UTfe02634w+HG9cm5nBdG4R2PirL+dXiwedjMmaXBx6PzN3HT/Ce2odPH82VPs9h2OJtC6gLdaJu1JG6er1e2D0+XJ9cgMoQhjEYl+Vo3E9LYYDh9gcQCARw27iIrtElPJwOsu/tCHXrGlkqdZU7zv4ZRLd+GV+bYpgKJWU5v3lDUBkjDN9SBL/7o/hAs8p+RiKRtoY6vv+qq38pysTctD6DOZyS5Uz6V3DTlmAEYwlcNW/glnMDiUSiKRYXF8tbtBq0RjRLRKNR4YyS+fl54Ww9fOdcZ52p+zf2JL51pmBdSctydIE4brnTjOh6Gh/qMzCvbCKdTjeF0WhET0/PsWi1WuEsQcVFM0qGhoaEs/VgjpY66zKsOzm4PbMFRzwjyzGE1nHHm2U4nu3go6kckttZZLPNYTab0dvbeywGg0E4SwSDQeGMkuHhYeFsPSS3sqyzI7HDHHz/ZAeu5AtZjinyHD/4c4ypxC4uWQvI5XJNQ4/Hvr4+htvtxvLyMoM+89xkMglnCVrL1+l0uvK8Mh8ZGRHO1sslyx5MCdkBMZvaleVYYpv48WmeYU7tocsuCV+K6sXpdKK/v59BZwvP6Szh+djYGFsngu4qvs5isVRcWzmvzBuFOls39nD3lQdvek+WY1vL4N5CgWH9ax9dzgMUCoWmcblcGBgYYIRCoXIei8XKea3YbLaKa/Nco9FU5I1Cne3P98se5rb2ZTn2eBb3g0WGLS3h8vQhisVi09D2UavVDNoKPF9dXS3ntUJbVHltno+Pj1fkjUKdHaXu90oOCN92UZZDh/D9RYlh33yJyy5AkqSmmZmZweDgICMcDpfztbW1cu5wOOrKODyfmJioyBuFOjtL3bkHf0ZqnZzR0VFMTk4yqBDPa5VDTyU+T/C8LeRUo1Y51biwchYWFir+2iJ8Ph9bK5KTSqWEM0roVUD5Oxul5XLqQSSnlYjkfNmRIyOS80X3OZZTy7Z6WyJFcj67cY7lKLNqnOaBfO08bytlpnwVIHh+mnJuXBQ5b24fnl/YR3k9nLSFOnIUMt7kfy0nk8mwN2ol9ILXkVMF5d2k1+vZd86ZyNnOywvnMi+FF2klJ2014m3Ioa7UmbqfKOfK/CHU8X+FF2olrZJDXamzWE7i7wo5j5IH+HgWWN8927uH/rer3ErVEM3WCnWkrtRZKGc6+aJCDg19FTjE1ZLNsxZ0mlA36khd6XsVOf8ckbNTkAWRVXX8AL5s+0iiLtSJulFH6kq5UI57Y/eIHA7dbrQf6cBqJ6gTdVN2FcrpjezjQVTCgxUJ/TEJQ6tifiqtaQdE3Qjq/kvJAYfJ4bY6VNKRcwwdOcfA5CgPpQ6vUalU+A/X+WpIJgdx+AAAAABJRU5ErkJggg==" alt="model instance show detail topple"></span> optional attribute filter, part of SchemaSense system (see <a href="#schemasense-and-working-with-attributes">SchemaSense and working with Attributes</a> below),  hides optional attribute of an instance. This filter is also part of user preference</p>
 </div>
 </td>
 </tr>
@@ -2644,7 +2632,7 @@ class Element {
 </div>
 </div>
 <div class="sect3">
-<h4 id="working-with-attributes"><a class="anchor" href="#working-with-attributes"></a>5.5.3. Working with Attributes</h4>
+<h4 id="schemasense-and-working-with-attributes"><a class="anchor" href="#schemasense-and-working-with-attributes"></a>5.5.3. SchemaSense and working with Attributes</h4>
 <div class="paragraph">
 <p>An instance is a collection of attributes.  Each attribute has a data type. The basic attribute data types are:</p>
 </div>
@@ -2696,25 +2684,36 @@ class Element {
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Each attribute node tooltip shows its respective data type.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
 <p>Defined type is an alias for some already existed underline type.  For example IfcLogical is a LOGICAL type.</p>
 </div>
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>SchemaSense is PIComposer&#8217;s context-aware schema guidance and informational system that speeds up instance creation and edition.  It has three functional components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>filtering of optional attributes.</p>
+</li>
+<li>
+<p>attribute description during mouse hover</p>
+</li>
+<li>
+<p>context-aware schema based tree node attribute menu</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAAAmCAYAAACWGIbgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAASISURBVGhD7ZhtT1pnHMb3kfZiyZYsq/0Ae7kXe90m27q0kyzd1nZZ134Fl9kZRdOYaUWzzBIeJs8IChVcEUVAlILSoYLrMIicOq/xv09veqg3ykNFZbz4Rbhy/4+5fp77Pie+k8/n0eEoKpUKHTlVYHIGtFZceSjzeMoKq/U1w3obukft+GTIgXd/drYF1IU6UTfe02634w+HG9cm5nBdG4R2PirL+dXiwedjMmaXBx6PzN3HT/Ce2odPH82VPs9h2OJtC6gLdaJu1JG6er1e2D0+XJ9cgMoQhjEYl+Vo3E9LYYDh9gcQCARw27iIrtElPJwOsu/tCHXrGlkqdZU7zv4ZRLd+GV+bYpgKJWU5v3lDUBkjDN9SBL/7o/hAs8p+RiKRtoY6vv+qq38pysTctD6DOZyS5Uz6V3DTlmAEYwlcNW/glnMDiUSiKRYXF8tbtBq0RjRLRKNR4YyS+fl54Ww9fOdcZ52p+zf2JL51pmBdSctydIE4brnTjOh6Gh/qMzCvbCKdTjeF0WhET0/PsWi1WuEsQcVFM0qGhoaEs/VgjpY66zKsOzm4PbMFRzwjyzGE1nHHm2U4nu3go6kckttZZLPNYTab0dvbeywGg0E4SwSDQeGMkuHhYeFsPSS3sqyzI7HDHHz/ZAeu5AtZjinyHD/4c4ypxC4uWQvI5XJNQ4/Hvr4+htvtxvLyMoM+89xkMglnCVrL1+l0uvK8Mh8ZGRHO1sslyx5MCdkBMZvaleVYYpv48WmeYU7tocsuCV+K6sXpdKK/v59BZwvP6Szh+djYGFsngu4qvs5isVRcWzmvzBuFOls39nD3lQdvek+WY1vL4N5CgWH9ax9dzgMUCoWmcblcGBgYYIRCoXIei8XKea3YbLaKa/Nco9FU5I1Cne3P98se5rb2ZTn2eBb3g0WGLS3h8vQhisVi09D2UavVDNoKPF9dXS3ntUJbVHltno+Pj1fkjUKdHaXu90oOCN92UZZDh/D9RYlh33yJyy5AkqSmmZmZweDgICMcDpfztbW1cu5wOOrKODyfmJioyBuFOjtL3bkHf0ZqnZzR0VFMTk4yqBDPa5VDTyU+T/C8LeRUo1Y51biwchYWFir+2iJ8Ph9bK5KTSqWEM0roVUD5Oxul5XLqQSSnlYjkfNmRIyOS80X3OZZTy7Z6WyJFcj67cY7lKLNqnOaBfO08bytlpnwVIHh+mnJuXBQ5b24fnl/YR3k9nLSFOnIUMt7kfy0nk8mwN2ol9ILXkVMF5d2k1+vZd86ZyNnOywvnMi+FF2klJ2014m3Ioa7UmbqfKOfK/CHU8X+FF2olrZJDXamzWE7i7wo5j5IH+HgWWN8927uH/rer3ErVEM3WCnWkrtRZKGc6+aJCDg19FTjE1ZLNsxZ0mlA36khd6XsVOf8ckbNTkAWRVXX8AL5s+0iiLtSJulFH6kq5UI57Y/eIHA7dbrQf6cBqJ6gTdVN2FcrpjezjQVTCgxUJ/TEJQ6tifiqtaQdE3Qjq/kvJAYfJ4bY6VNKRcwwdOcfA5CgPpQ6vUalU+A/X+WpIJgdx+AAAAABJRU5ErkJggg==" alt="model instance show detail topple"></span> optional attribute filter hides the optional attributes of an instance.  To create a valid instance, optional attributes could be omitted.</p>
+</div>
+<div class="paragraph">
+<p>During the process of instance editing, SchemaSense is always active.  When hover over a tree node, SchemaSense will show the EXPRESS type of the node in the form of tooltip; and if an attriubte is null, it will tell the user so.</p>
+</div>
+<div class="paragraph">
+<p>SchemaSense is particular useful when dealing with complex attribute type such as entity, collection, select and enum. SchemaSense provides context-aware menu items or dropdown list for node modification or addition. It allows user to create mutliple values for collection, provides entity type list entity and enum.  It also provides a sensbile workflow when create select attribute type. SchemaSense makes it almost impossible to create any instance with syntactical errors.</p>
 </div>
 <div class="paragraph">
 <p>PIComposer divides attributes into two groups:</p>
@@ -2829,7 +2828,7 @@ class Element {
 <p>A complex attribute usually requires multiple nodes to present its value.  In particular an entity instance, when composed in situ, will occupy a full substree.</p>
 </div>
 <div class="paragraph">
-<p>Attribute node commands include:</p>
+<p><a id="node_commands"></a>Attribute node commands include:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -3787,7 +3786,7 @@ and press the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAA
 <div id="footer">
 <div id="footer-text">
 Version v1.1<br>
-Last updated 2023-05-11 14:25:03 -0700
+Last updated 2023-07-15 15:25:01 -0700
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

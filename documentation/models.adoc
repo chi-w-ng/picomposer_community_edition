@@ -18,7 +18,7 @@ The placement tree structure is immutable.
 Placement tree display could be turned of by preference
 ====
 
-Each instance in the model is visualized as a tree (an acyclic graph actually)--the instance detail tree--where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree. 
+Each instance in the model is visualized as a tree (sometimes you will see an acyclic graph actually)--the instance detail tree--where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree. 
 
 Many instance's component could be displayed on the instance detail tree, including:
 
@@ -290,7 +290,7 @@ The instance detail tree is a federated view .  It display the instance plus its
 
 [TIP]
 ====
-The image:model-instance-show-detail-topple.png[] show optional attribute toggle hides optional attribute of an instance. This filter is also part of user preference
+The image:model-instance-show-detail-topple.png[] optional attribute filter, part of SchemaSense system (see <<SchemaSense and working with Attributes>> below),  hides optional attribute of an instance. This filter is also part of user preference
 ====
 
 Like the spatial tree, user modify tree content by operating directly on the tree nodes.  
@@ -319,7 +319,7 @@ Operations that directly affect the basic structure of the node or entity's comp
 .Typical IfcProduct root node menu items
 image::model-instance-detail-root-node-commands.png[]
 
-==== Working with Attributes
+==== SchemaSense and working with Attributes
 
 An instance is a collection of attributes.  Each attribute has a data type. The basic attribute data types are:
 
@@ -338,13 +338,20 @@ An instance is a collection of attributes.  Each attribute has a data type. The 
 
 [TIP]
 ====
-Each attribute node tooltip shows its respective data type.
-====
-
-[TIP]
-====
 Defined type is an alias for some already existed underline type.  For example IfcLogical is a LOGICAL type.
 ====
+
+SchemaSense is PIComposer's context-aware schema guidance and informational system that speeds up instance creation and edition.  It has three functional components:
+
+* filtering of optional attributes.
+* attribute description during mouse hover
+* context-aware schema based tree node attribute menu
+
+The image:model-instance-show-detail-topple.png[] optional attribute filter hides the optional attributes of an instance.  To create a valid instance, optional attributes could be omitted.
+
+During the process of instance editing, SchemaSense is always active.  When hover over a tree node, SchemaSense will show the EXPRESS type of the node in the form of tooltip; and if an attriubte is null, it will tell the user so.
+
+SchemaSense is particular useful when dealing with complex attribute type such as entity, collection, select and enum. SchemaSense provides context-aware menu items or dropdown list for node modification or addition. It allows user to create mutliple values for collection, provides entity type list entity and enum.  It also provides a sensbile workflow when create select attribute type. SchemaSense makes it almost impossible to create any instance with syntactical errors.
 
 PIComposer divides attributes into two groups:
 
@@ -390,7 +397,7 @@ The complex attribute types are:
 
 A complex attribute usually requires multiple nodes to present its value.  In particular an entity instance, when composed in situ, will occupy a full substree.
 
-Attribute node commands include:
+[[node_commands]]Attribute node commands include:
 
 * create--create an entity instance in place
 * set reference--set attribute value as entity instance reference

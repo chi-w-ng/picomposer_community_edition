@@ -2,29 +2,59 @@
 
 === STEP ISO-10303
 
-PIComposer is a STEP ISO-10303 Standard document editor powered by a high performant EXPRESS document store. To satistfy its aim of support real time applications the document store has its own lossless proprietary encoding of EXPRESS data. 
+PIComposer is a STEP ISO-10303 Standard document editor powered by a highly performant EXPRESS document store. To satisfy its aim of supporting real-time applications, the document store has its own lossless proprietary binary encoding of EXPRESS data.
 
-Moreover, to deal with models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS model and its entity instances (hencefore refer to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs. 
+Moreover, to handle models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS models and their entity instances (hereafter referred to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs.
 
-As a user, it is best think of PIComposer as Excel for BIM; except that, instead of working with sheets, rows, columns and cells, a user works with trees and tree nodes.  Using the spatial tree and entity instance detail tree, PIComposer user interact with BIM model directly.  Editing BIM model involves adding tree nodes and updating tree node values.  Each tree node provides a context sensitive set of menu commands and for primitive type like REAL or BOOLEAN, a text box to edit or to add new node or nodes.  And along the way, schema checking is active in the background to ensure that the resulting model remains valid.  There are three trees in PIComposer: 
+As a user, it is best to think of PIComposer Community Edition as Excel for BIM, with the difference being that instead of interacting with sheets, rows, columns, and cells, a user works with trees and tree nodes. By using the spatial tree and entity instance detail tree, PIComposer users can interact directly with BIM models. Authoring a BIM model involves adding tree nodes and updating tree node values. And on each user interaction, SchemaSense, PIComposer's schema-aware intelligent agent, is active to provide user guidance and a context-sensitive set of menu commands on each node. There are three trees in PIComposer: 
 
 * Spatial tree that manages the model spatial structure
 * Placement tree which is responsible for instance placement
 * Instance detail tree which manages instance attributes.
 
+Most of user's work is using tools and commmands of PIComposer to manipulate above trees.
+
 [NOTE]
 ====
-PIComposer community edition: althought the document store is capable of handling any STEP AP, it is restricted to a version of IFC: https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/[*ifc4x3*]. To keep our discussion concrete, for the rest of this document we will concentrate on IFC.
+PIComposer Community Edition is capable of handling any STEP AP through its document store. However, in the context of the community edition, it is specifically restricted to a version of IFC: https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/[*ifc4x3*]. For the remainder of this document, our discussion will focus specifically on IFC.
 ====
 
 [WARNING]
 ====
-A user of PIComposer community edition is assumed to have some knowledge of, or at least a desire, to learn https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/[*IFC*]. Otherwise, what follows in this document and the application PIComposer itself will make little sense, as PIComposer manipulates IFC models by providing user interfaces that directly interact with IFC model content: entity, select, enum, etc.  
+A user of PIComposer Community Edition is assumed to have some knowledge of, or at least a desire to learn, https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/[*IFC*]. This is because PIComposer manipulates IFC models by providing user interfaces that directly interact with the content of IFC models, including entities, selects, enums, and more. Without an understanding of IFC, both this document and the PIComposer application itself may be difficult to comprehend. 
 ====
 
-=== Data Organization
+=== Data Storage and Organization
 
-PIComposer has an architecture similar to that of an Entity Component System https://en.wikipedia.org/wiki/Entity_component_system[*(ECS)*]. 
+A user's data is organized within a workspace. A workspace consists of multiple projects owned by the user. Each project is composed of many documents.
+
+Most of the storage in PIComposer is consumed by the documents. There are various types of documents, including templates, scripts, and BIM models.
+
+Within a BIM model, the majority of the storage is devoted to entity instances. Additionally, a model document also stores entity instance's inverse attributes, tags, search indices, and other supplemental data.
+
+Conceptually, models are documents in a project. However, each BIM model is a document database where documents are stored as binary buffers. These buffers store entity instances. Unlike a line in an ISO-10303 part 21 model file or an element of a typed dataset in part 26, a binary buffer typically contains a logically grouped set of entity instances. Furthermore, if an attribute of an entity instance is itself an entity type, it might be recursively composed within the owning entity instance.
+
+That is, using part 21 as an illustration, instead of storing instances as:
+[source,javascript]
+----
+#1=IFCPERSON($,'John','Doe',$,$,$,$,$);
+#2=IFCORGANIZATION($,'Procedural Information System, LLC',$,$,$);
+#3=IFCPERSONANDORGANIZATION(#1,#2,$);
+----
+
+effectively, a buffer might store IFCPERSONANDORGANIZATION as:
+
+[source,javascript]
+----
+#3=IFCPERSONANDORGANIZATION(#1=IFCPERSON($,'John','Doe',$,$,$,$,$),#2=IFCORGANIZATION($,'Procedural Information System, LLC',$,$,$),$);
+----
+
+[NOTE]
+====
+The PIComposer command to create the first structure is <<node_commands,set reference>> command, the second is the <<node_commands,create>> command.  Which structure to prefer depends on whether the  entity instance stored in an attribute should be shared.
+====
+
+PIComposer organizes BIM model data similar to an Entity Component System https://en.wikipedia.org/wiki/Entity_component_system[*(ECS)*]. 
 
 .Entity Component System
 [sidebar]
@@ -36,16 +66,14 @@ In a typical ECS system:
 * a system is the logic operating on entities and their components.
 --
 
-A PIComposer entity is an instance of a non-abstract IfcProduct subtype, each instance has an immutable 64-bit integer identifier.
+The central elments in a BIM model are instances of a non-abstract IfcProduct subtype; these instances usually appears in the spatial tree. Each of these instance has an immutable 64-bit integer identifier and plays the entity role in a ECS system.
 
-A PIComposer component is a special type of instance that is a container of a set of IFC instances; it is composition and aggregation of a set of logically related IFC instances.  These components include shapes, propertysets, local placement, etc.
+A component is a special type of instance that is a container of a set of IFC instances; it is composition and aggregation of a set of logically related IFC instances.  These components include shapes, propertysets, local placement, and a few other types.
 
 [NOTE]
 ====
 A component could be associated to instance either using an instance's attribute or through a relationship object.
 ====
-
-In PIComposer, instances and components are stored as documents, and systems are internal functions or external scripts written in dart or C++ that operate on instances and components.  For example:
 
 .placement component example
 [example]
@@ -77,9 +105,9 @@ A good example of such an instance is instance of IfcOwnerHistory.
 
 === Templates
 
-Most BIM modeling tasks in PIComposer such as-- creating a model, modeling an real world object such as a table--can be most easily done using templates. Templates are also the primary mechanism for a user to configure, enhance, or customize PIComposer. 
+Most BIM modeling tasks in PIComposer, such as creating a model or modeling real-world objects like tables, can be easily accomplished using templates. Templates are a fundamental mechanism for users to configure, enhance, or customize PIComposer.
 
-A template, at its most basic, is a set of pre-programmed instructions to be executed by PIComposer where the language is either dart, C++ or json. PIComposer supports multiple types of templates.  They incude:
+At its core, a template is a set of pre-programmed instructions to be executed by PIComposer, written in either Dart, C++, or JSON. PIComposer supports multiple types of templates, including:
 
 * spatial template
 * instance template
@@ -91,28 +119,28 @@ A template, at its most basic, is a set of pre-programmed instructions to be exe
 * quantityset template
 * enum template
 
-A spatial template allows a user to scaffold an IFC model during initial creation.  A spatial template specifies the initial model spatial structure such as the site, the number of IfcBuildings, IfcBuildinStoreys. A spatial template also defines each spatial element's relative placement.
+A spatial template allows users to scaffold an IFC model during the initial creation phase. It defines the initial spatial structure of the model, such as the site, the number of IfcBuildings, and IfcBuildingStoreys. Additionally, a spatial template specifies the relative placement of each spatial element.
 
-A spatial template is authored using json.
+Spatial templates are authored using JSON.
 
-When a spatial template is executed, a model with a root IfcProject, all the spatial elements specified in the json file and related context information such as model unit system is created.  
+When a spatial template is executed, a model is created with a root IfcProject and all the spatial elements specified in the JSON file. The execution also includes the relevant context information, such as the model's unit system.
 
-In PIComposer, geometry uses millimeter for distance measure and radian for angle measure. Property and quantity conforms to MKS unit measure system.  This convention defines an implicit context for templates.  
+In PIComposer, distance measurements are in millimeters, and angle measurements are in radians. Property and quantity values conform to the MKS unit measure system. This convention establishes an implicit context for templates.
 
-Instance templates are instance factories. They simplify instance creation in a model. There are 4 different types of instance templates. The instances created by these templates must all be of IfcShapeRepresentation type or of a IfcProduct subtype. 
+Instance templates serve as instance factories, simplifying the creation of instances within a model. There are four different types of instance templates (as mentioned above), and the instances created by these templates must be of the IfcShapeRepresentation type or a subtype of IfcProduct. 
 
 [NOTE]
 ====
 A template could be private to a user's project or be shared in the cloud and be available for all PIComposer users.
 ====
 
-A simple template is an extract of a component or instance in the scope of a project that could be reinstantiated in any other model in the project. It is the most basic form of reuse in PIComposer--a form of copy and paste across space and time.  If the template is a IfcProduct, it packages the instance's associated shape.     
+A simple template is an extracted representation of a component or instance within the scope of a project. It can be easily reinstantiated in any other model within the same project. Simple templates serve as a basic form of reuse in PIComposer, enabling copy and paste functionality across spaces and time. If the template represents an IfcProduct, it includes the associated shape of the instance.
 
-A parametric template is a template that exposes its composite instances and their attribute to direct user manipulation.  The parametrized attributes are configured via json.
+A parametric template is a simple template that exposes its attriubute and composite instances and their attributes to direct user manipulation. We called the exposed attributes parametrized attributes. The parametrized attributes are configured using JSON.
 
-A transform is a parametric template with an associated procedure. The procedure may take a simple template and output something far more complex.  PIComposer is released with mutliple example of parametric template. One example transformation takes a brep box and the output a frustum.
+A transform template is a parametric template that incorporates an associated procedure. This procedure can take a simple template as input and produce a more complex output. PIComposer includes multiple examples of parametric templates, such as a transformation that takes a BREP box as input and generates a frustum as output.
 
-Procedural entity, as its name implies, is a creational procedure that instantiates an instance.  A few examples of procedural entity are provided with PIComposer.
+Procedural entity templates are creational procedures that instantiate instances. They are dart or C++ script with a json configuration file. The configuration file specifies the user input parameter and script input parameters. PIComposer provides several examples of procedural entity templates.
 
 Since not all propertyset and quantityset are published within the ifc schema EXPRESS file, these missing https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_psets.htm[*propertyset*], https://standards.buildingsmart.org/IFC/RELEASE/IFC4_1/FINAL/HTML/annex/annex-b/alphabeticalorder_qsets.htm[*quantityset*], plus user definded propertyset must be configured using templates so that PIComposer could properly instantiate them. These templates are json files. Many examples are provided with the PIComposer release.
 
@@ -134,28 +162,6 @@ Templates could be filtered by: type and tag.
 IFC models are 3d datasets. For the community edition, PIComposer 3d view is provided via integration with web-ifc-viewer from the https://ifcjs.github.io/info/[*Ifc.js project*].
 
 The source code for the integration is open source, source code is https://github.com/chi-w-ng/picomposer_community_edition[here].
-
-=== Road Map
-
-PIComposer community edition, release free of charge, is a tool that the author wished was available when he first started learning and working with BIM.  With its versatile and powerful template systems, simple data presentation, it is a great tool for learning, exploring and creating BIM data. 
-
-Looking forward, we are working on making PIComposer an even more powerful system. 
-
-Coming to a store need you in a not too distant future, in the order of importance, we will have:
-
-* dart scripting and graphic programming interface
-* data backup and sync 
-* integraded native 3d viewer
-* other ISO 10303 AP support and model interoperability
-* STEP import
-* drawing and 2d workbench
-* measures and analytics
-* support for MacOS and Linux
-* web client
-* team collaboration workflow
-* issue and knowledge management
-* Real time collaboration
-* ...
 
 === Support and Bug reporting
 
