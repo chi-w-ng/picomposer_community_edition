@@ -100,69 +100,22 @@ PIComposer uses spatial templates definition to scaffold a model. A static spati
 }
 ----
 
-The json object in the spatial template defines a recursive structure.  
+The root json object has two properties:
+* schema--the schema name of the model, must be ifc4x3
+* element--the json object representing a spatial element in the spatial heiarchy tree. The root instance in the spatial heiarchy must be an IfcProject.  The children property of this json object allows us to define the spatial tree recursively.
 
-To understand the json structure, it might be easier to look at the simplified corresponding dart object that the json object is deserialized to.
+Each sub-object of the element has might have the following property:
 
-[source,dart]
-----
-class SpatialElement {
-  String? icon;
-  String? schema;
-  Element element;
-  SpatialElement({
-    this.icon,
-    this.schema = 'ifc4x3',
-    required this.element,
-  });
-}
-
-class Element {
-  String type;
-  String? name;
-  String? tag;
-  String? description;
-  String? relType;
-  int? count;
-  List<double>? location;
-  List<double>? axis;
-  List<double>? refDirection;
-  List<Element>? children;
-  Element({
-    required this.type,
-    this.name,
-    this.tag,
-    this.description,
-    this.relType,
-    this.count,
-    this.location,
-    this.axis,
-    this.refDirection,
-    this.children,
-  });
-}
-----
-A spatial template is first deserialized into a SpatialElement object.  For PIComposer to create a model from this template, the SpatialElement object must have:
-
-* Schema--the schema name of the model, must be ifc4x3
-* Element--the root instance in the spatial heiarchy, must be IfcProject type
-
-Each Element object defines a IfcSpatialStructuralElement.
-
-Starting from the root IfcProject element, the rest of the spatial structure is defined recursively; IfcProject element have "children", which in turn might have its own children, etc.
-
-For each object of type Element we have:
-
-* Type -- concrete subtype of IfcSpatialStructureElement, for example, IfcBuilding
-* Name -- name of the instance, optional
-* Tag -- enable search by tag, optional
-* Description -- description, optional
-* Reltype -- relationship type to parent, defalut to  IfcRelAggregates, optional
-* Count--number of instance to create, default to 1, optional
-* Location--object placement location, optional
-* Axis--object placement axis, optional
-* RefDirection--object placement refDirection, optional
-* Children--decendants, optional
+* type -- concrete subtype of IfcSpatialStructureElement, for example, IfcBuilding.  This property is mandatory.
+* name -- name of the instance, optional
+* tag -- enable search by tag, optional
+* description -- description, optional
+* reltype -- relationship type to parent, defalut to  IfcRelAggregates, optional. If not given, PIComposer will deduce the relationship object type from the parent and children type.
+* count--number of instance to create, default to 1, optional
+* location--object placement location, optional
+* axis--object placement axis, optional
+* fefDirection--object placement refDirection, optional
+* children--decendants, optional
 
 [TIP]
 ====
@@ -195,19 +148,21 @@ To access the instance template listing, activate the template tab on the projec
 .Project pane, template tab
 image::project-template-tab.png[]
 
-Instance templates are the core unit of reuse in PIComposer models.  They are the equivalence to CATIA's Power Copy.  Only they are simpler, much easier to create and in many aspects, more flexible and powerful. Moreover, they could be shared and available to all users. 
+Instance templates are the fundamental unit of reuse in PIComposer models. They serve as the equivalent of CATIA's Power Copy, but with simpler creation, enhanced flexibility, and increased power. Furthermore, they can be shared and accessed by all users.
 
-They are easy to create--they are derived from the basic building blocks of a model a user already created. 
+Creating instance templates is straightforward as they are derived from the basic building blocks of a model that a user has already created.
 
-They are customizable--they add dynamic behavior to a static element and model, allowing users to manipulate only the essentail property of an component.  
+Instance templates offer customization options by adding dynamic behavior to static elements and models. This allows users to manipulate only the essential properties of a component.
 
-They are extensible--they could be associated with a script written in dart or C++ and transform simple component into highly complex ones.
+They are also extensible by associating them with scripts written in Dart or C++, enabling the transformation of simple components into highly complex ones.
 
-They could be a pure component creational procedure in dart or C++.
+In addition, instance templates can be used as pure component creational procedures in Dart or C++.
 
 ==== Simple Instance Template
 
-Any instance of type IfcShapeRepresentation and IfcProduct subtype in PIComposer could be extracted as a simple template.  A template groups a set of entity instances into package and reuse in a compatible context. Some template may contain complex spatial heiearchy.  For exmaple, an IfcWall template may contain openings and doors/windows. A private template is stored in the project store and is available to all models in a project. 
+Any instance of type IfcShapeRepresentation and IfcProduct subtype in PIComposer can be extracted as a simple template. A template is a grouping of entity instances packaged for reuse in a compatible context. All dependent entity instances, except for a few global context objects, are included in the template. Some templates may contain complex spatial hierarchies, such as an IfcWall template that includes openings, doors/windows, and all related shapes.
+
+A private template is stored in the project store and is available to all models within a project.
 
 An instance template is created from any above mentioned instance via the create template command, see  <<Instance Root Node>> for detail. 
 
@@ -216,7 +171,7 @@ image::root_node_create_template_command.png[]
 
 ==== Parametric Template
 
-A parametric template is a simple template with internal attributes exposed to user manipulation allowing for dynamic transform of a simple template. These parametric attributes are specified by a json file. 
+A parametric template is a variation of a simple template that exposes attributes for direct user manipulation, enabling dynamic transformations of the template. These parametric attributes are specified in a JSON file. Users can input attribute values through a text box in an object creation dialog.
 
 Multiple json files are possible for a given simple template.  Each parametric template must have a unique identitier.  See the <<Viewing and Editing Instance Template>> section for details.
 
@@ -316,7 +271,7 @@ PIComposer releases many shared templates.
 Shared template summary:
 
 * Shared templates are immutable
-* Updated by the republication a private copy 
+* Updated by the republishing a private copy 
 * Update privileges are limited to the owner of the shared template
 
 Since templates are stored in databases, in the cloud or locally on a device, they must be retrieved using database query.  PIComposer exposes these query as filters.
@@ -330,7 +285,7 @@ When the template tab is activated, PIComposer loads a list of template types, s
 
 [IMPORTANT]
 ====
-When a user clicks the shared button, the list of types is retrieved from the cloud, users will experience some latancy.
+When a user clicks the shared button, the list of types is retrieved from the cloud, users might experience some latancy, espeically outside of the western region of USA.
 ====
 
 ==== Type Filter

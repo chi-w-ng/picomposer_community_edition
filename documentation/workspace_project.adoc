@@ -1,10 +1,10 @@
 == Workspace and Projects
 
-PIComposer is a multi-user system.  Each user has his or her own distinct workspace projects are organized.  
+PIComposer is a multi-user system where each user has their own distinct workspace for organizing projects.
 
-A project is collection of IFC models and other documents.
+A project is a collection of IFC models and other related documents.
 
-After sucessful authentication, a user is first routed to the workspace pane.
+After successful authentication, a user is initially directed to the workspace pane.
 
 .The workspace pane
 image::workspace.png[float="right",align="center"]
@@ -12,8 +12,8 @@ image::workspace.png[float="right",align="center"]
 There are three main user interface components:
 
 * The project list--list of user's project.
-* The navigation bar--list of commands to access various part of PIComposer
-* The status bar--show status of active command
+* The navigation bar--list of commands to access various part of PIComposer.
+* The status bar--status of active command (progress, success or failure indicators).
 
 === Add and Removing a Project
 
@@ -29,13 +29,13 @@ TIP: Most PIComposer commands are context dependant.  The add and minus button, 
 
 The workspace button image:navigationbar-workspace-button.png[] is the home button.  It routes to the workspace pane from anywhere in PIComposer.  
 
-The project button image:navigationbar-project-button.png[] activates the project pane and displays the selected project or the most recently displayed project.
+The project button image:navigationbar-project-button.png[] activates the project pane and displays the contents of selected project or the most recently displayed project.
 
 ****
-TIP: Double clicking on any project on the project list also activates the project pane and displays the project.
+TIP: Double clicking on any project on the project list also activates the project pane and displays the project content.
 ****
 
-The model button image:navigationbar-model-button.png[] activates the model pane and displays the last active model.  See the <<PIComposer BIM models>> section for more detail about how to work with BIM models.
+The model button image:navigationbar-model-button.png[] activates the model pane and displays the last active model content.  See the <<PIComposer BIM models>> section for more detail about how to work with BIM models.
 
 The preference button image:navigationbar-setting-button.png[] activates the preference page.  See the <<Preferenes>> section for more detail.
 
@@ -46,7 +46,6 @@ The help button image:navigationbar-help-button.png[] activates the help popup m
 * documentation--show PIComposer documentation in a browser
 * about--show PIComposer license information
 
-
 PIComposer provides user feedback using the status bar. Depending on the nature of the command, the status shows:
 
 * A progress bar for long running command
@@ -54,8 +53,3 @@ PIComposer provides user feedback using the status bar. Depending on the nature 
 * Error message for failed command
 
 Each type of status can be turned on and off using preferences.
-
-
-
-
- 

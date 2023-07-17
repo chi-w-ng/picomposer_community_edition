@@ -38,7 +38,7 @@ image::confirm_email.png[]
 
 [NOTE]
 ====
-It might takes a few minutes for the confirmation email to be sent. Some email client might place the confirmation email in the spam folder.
+It might takes a few minutes for the confirmation email to be sent. Some email client might place the confirmation email in the spam folder. Please check the spam folder if you do not find your confirmation email in your inbox within a few minutes.
 ====
 
 [TIP]

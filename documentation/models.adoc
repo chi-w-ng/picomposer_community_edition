@@ -1,26 +1,21 @@
 == PIComposer BIM Model and Entity Instance
 
-A PIComposer model is a collection of entity instances. Some these instance could be a collection of related instances; a mini model in and of itself with a implicit context.  Each BIM model has its own database.  Each instance is persisted as a document.
+A PIComposer model is a collection of entity instances, some of which can be grouped as a collection of related instances, forming a mini-model with an implicit context. Each BIM model in PIComposer has its own database, and each instance is persisted as a document.
 
-For each model, logically, PIComposer emphasizes two essential organizational concepts:
+In PIComposer, there are two essential organizational concepts that are emphasized for each model: spatial structure and object placement. The spatial structure enriches a BIM model with a logical organizational structure, while object placement defines the physical location of an instance within the model. These concepts are presented as trees in PIComposer.
 
-* spatial structure
-* object placement.
+The spatial tree and the placement tree are managed in parallel, meaning that creating a node in the spatial tree will trigger the corresponding creation of a node in the placement tree.
 
-The spatial structure enrichs a BIM model with a logical origanizational structure, while object placement defines the physical location of a instance within the model.  Each of these concepts are presented as trees in PIComposer.  
-
-These two trees are managed in parallel; a node created in the spatial tree will trigger a correponding creation of a node in the placement tree.  
-
-The placement tree structure is immutable.
+It's important to note that the structure of the placement tree is immutable, its structure is by product of the spatial tree structure.
 
 [NOTE]
 ====
 Placement tree display could be turned of by preference
 ====
 
-Each instance in the model is visualized as a tree (sometimes you will see an acyclic graph actually)--the instance detail tree--where a tree node is either a logical grouping node or an attriubted node of the instance. All instances attribute addition, modification and deletion are managed using the instance detail tree. 
+Each instance in the model is visualized as a tree (sometimes you may encounter an acyclic graph) called the instance detail tree. In this tree, each tree node represents either a logical grouping of instances or an attributed node of an instance. The instance detail tree is responsible for managing all additions, modifications, and deletions of instance attributes.
 
-Many instance's component could be displayed on the instance detail tree, including:
+Several components of an instance can be displayed on the instance detail tree, including:
 
 . propertyset/quantityset
 . object placement
@@ -54,15 +49,13 @@ The model structure area comprises of three tabs
 * placement--displays the phyical placement tree
 * filters--random instance access using filter and searches, also free form instance creation
 
-
 === Selection Set
 
-Selection set is an essential component of the PIComposer user interface. Each of three model structure tabs have a selection set. Many commands make use of a selection set.  The selection set allows a user to create inter-node links, to insert template into the spatial tree, to insert selected nodes into other nodes, and enabling many other actions. 
-
+A selection set is an essential component of the PIComposer user interface. Each of the three model panel tabs—spatial, placement, and filter—has its own selection set. Many commands in PIComposer are executed in the context of the current selection set. It allows users to create inter-node links, insert templates into the spatial tree, insert selected nodes into other nodes, and perform various other actions.
 
 === Working with the Spatial Tree
 
-The spatial tree is where the spatial structure is managed. The commands to manipulate the tree are directly available on the tree node as popup menu items.  To see the context sensitive commands on a tree node, right click on it.
+The spatial tree is where the model spatial structure is managed. The commands to manipulate the tree are directly available on the tree node as popup menu items. To see the context-sensitive commands on a tree node, simply right-click on it.
 
 .typical spatial command
 image::model-spatial-node-command.png[]
@@ -174,18 +167,18 @@ All the show xxx commands apply the instance id filter to the targeted component
 
 === Working with the Placement Tree
 
-To underline its importance in the BIM model, the user interface includes a placement tree. 
+To highlight its importance in the BIM model, PIComposer user interface includes the placement tree.
 
-To access the placement tree, activate the placement tab.
+To access the placement tree, simply activate the placement tab.
 
 .The placement tree
 image::model-placement-tab.png[]
 
-The placement tree is immutable, its structure is created during the creation of the spatial tree.  When the spatial node corresponds to the placement is deleted, the placement will be automatically deleted.
+TThe placement tree structure is immutable, meaning its structure is created during the creation of the spatial tree. When a spatial node corresponding to a placement is deleted, the placement will be automatically deleted as well.
 
-The only command available to the placement tree is image:model-add-goto-placed-instance-menu-item.png[] which navigates to the IfcLocalPacement's placed instance.
+The only available command for the placement tree is image:model-add-goto-placed-instance-menu-item.png[], which navigates to the placed instance associated with the IfcLocalPlacement.
 
-The placement tree is immutable but the placement node is mutable.  Like all instance, its attribute are modified using the instance detail tree.
+While the placement tree itself is immutable, the placement node is mutable. Like all instances, its attributes can be modified using the instance detail tree.
 
 [NOTE]
 ====
@@ -199,21 +192,19 @@ The placement tree can be hidden/shown by setting the hide flag in user preferen
 
 === Working with Filters
 
-Filters allows a user to search and retrieve an item in the model or project quickly.  The filter tab also provides the workbench for dealing with free form instance and a place to work with instances outside of the spatial structure framework. There are two types of filters in the model pane: instance and template. 
+Filters allow users to quickly search and retrieve items within the model or project. The filter tab serves as the workbench for dealing with free form instances and working with instances outside of the spatial structure framework. There are two types of filters in the model pane: instance filters and template filters.
 
-For details about template filters see the section <<Working with Instance Template>>. We will concentrate on instance filter below.
+For details about template filters, refer to the section on <<Working with Instance Template>>. In the following section, we will focus on instance filters.
 
 .Instance Filter
 image::model-instance-filter.png[]
 
 ==== Instance Type Filter
 
-The basic functionality of the instance type filter is similar to template <<Type Filter>>. Instance filter has two addition features:
+The basic functionality of the instance type filter is similar to the template <<Type Filter>>. However, the instance filter has two additional features:
 
-* filter by subtypes
-* create entity instance of the filter type
-
-The subtype filter functions same way the type filter does except that it consider all subtypes of the user specified type.
+* Filter by subtypes: The subtype filter operates in the same way as the <<Type Filter>>, but it considers all subtypes of the user-specified type.
+* Create entity instance of the filter type: The instance filter allows users to directly create an entity instance of the selected filter type.
 
 [TIP]
 ====
@@ -269,18 +260,18 @@ Each range is limited to 1000.
 
 The STEP ISO-10303 standard is a group of standards including an object model specification using the https://en.wikipedia.org/wiki/EXPRESS_(data_modeling_language)[EXPRESS language].  
 
-An abstract object is a collection of attributes.  In PIComposer, an object is referred to as an instance--an instantiation of an entity type. 
+An object is a collection of attributes. In PIComposer, a representation of an object is referred to as an instance—an instantiation of an entity type.
 
 ==== Instance Detail Tree
 
-According to ISO-10303-11: "EXPRESS data types are classified according to their nature as: simple data types, aggregation data types, constructed data types, named data types, and generalized data types."
+According to ISO-10303-11, "EXPRESS data types are classified according to their nature as: simple data types, aggregation data types, constructed data types, named data types, and generalized data types."
 
-The instance detail tree is where PIComposer users interact with instance and its attributes--"entity data type".
+The instance detail tree is where PIComposer users interact with instances and their attributes, which are referred to as "entity data types."
 
 .Instance detail tree
 image::model-instance-detail.png[]
 
-The instance detail tree is a federated view .  It display the instance plus its components. The components are optional and their visibility is controlled by preference. The optional nodes include:
+The instance detail tree is a federated view that displays the instance along with its components. The visibility of components is optional and can be controlled by user preference. The optional nodes in the instance detail tree include:
 
 * placement
 ** absolute coordinates
@@ -297,7 +288,7 @@ Like the spatial tree, user modify tree content by operating directly on the tre
 
 ==== Instance Root Node
 
-Operations that directly affect the basic structure of the node or entity's component are anchored at the root node.  The operations on the root node include:
+Operations that directly affect the basic structure of the node or entity's components are anchored at the root node. The operations on the root node include:
 
 * show 3d--show the instance in 3d. Available if a instance has shape  
 * add to layer--add instance to a layer, available if there is layer in the model and the instance is of type IfcShapeRepresentation
@@ -341,22 +332,18 @@ An instance is a collection of attributes.  Each attribute has a data type. The 
 Defined type is an alias for some already existed underline type.  For example IfcLogical is a LOGICAL type.
 ====
 
-SchemaSense is PIComposer's context-aware schema guidance and informational system that speeds up instance creation and edition.  It has three functional components:
+SchemaSense is PIComposer's context-aware schema guidance and informational system that speeds up instance creation and editing. It consists of three functional components:
 
-* filtering of optional attributes.
-* attribute description during mouse hover
-* context-aware schema based tree node attribute menu
+* Filtering of optional attributes: The optional attribute filter image:model-instance-show-detail-topple.png[] hides the optional attributes of an instance. This allows users to create a valid instance while omitting optional attributes.
 
-The image:model-instance-show-detail-topple.png[] optional attribute filter hides the optional attributes of an instance.  To create a valid instance, optional attributes could be omitted.
+* Attribute description during mouse hover: When hovering over a tree node, SchemaSense displays the EXPRESS type of the node in the form of a tooltip. If an attribute is null, SchemaSense indicates this to the user.
 
-During the process of instance editing, SchemaSense is always active.  When hover over a tree node, SchemaSense will show the EXPRESS type of the node in the form of tooltip; and if an attriubte is null, it will tell the user so.
+* Context-aware schema-based tree node attribute menu: SchemaSense provides a context-aware menu for modifying or adding attributes. This is particularly useful when dealing with complex attribute types (see below) such as entities, collections, selects, and enums. SchemaSense provides dropdown lists or menu items for modifying or adding values to nodes, allowing users to create multiple values for collections, select entity types or enums. It ensures a sensible workflow when creating select attribute types and helps prevent instances with syntactical errors.
 
-SchemaSense is particular useful when dealing with complex attribute type such as entity, collection, select and enum. SchemaSense provides context-aware menu items or dropdown list for node modification or addition. It allows user to create mutliple values for collection, provides entity type list entity and enum.  It also provides a sensbile workflow when create select attribute type. SchemaSense makes it almost impossible to create any instance with syntactical errors.
+PIComposer categorizes attributes into two groups: 
 
-PIComposer divides attributes into two groups:
-
-* simple--single value, requires only single node for user inter-action
-* complex--multiple value, need a subtree to store its values
+* simple attributes, which consist of single values and require only a single node for user interaction,
+* complex attributes, which consist of multiple values and require a subtree to store their values.
 
 ==== Simple Attributes
 The simple type include:
@@ -378,15 +365,15 @@ image::model-simple-attribute-commands.png[]
 
 [TIP]
 ====
-When an attribute has been modified, there are two ways to commit updates to data store.  Right click on the label of the attribute to access the tree node menu and select the save menu item.
+When an attribute has been modified, there are two ways to commit the updates to the data store in PIComposer. You can either right-click on the label of the attribute to access the tree node menu and select the 'save' menu item, or click the 'save' button located in the top-right corner of the interface.
 ====
 
 [TIP]
 ====
-The save button on the right upper corner is a batch save button.  It commits all changes to the data store all at once.
+The 'save' button located in the upper right corner of the interface is a batch save button. It allows you to commit all changes made to the instance tree to the data store all at once.
 ====
 
-The defined type IfcGloballyUniqueId has string as its underlining type.  Since the user might not have access to a UUID generator, PIComposer provides the set guid command. To set a guid attribute, right click on the label of the attribute and select the image:model-instance-detail-set-guid.png[] set guid command. 
+The defined type IfcGloballyUniqueId uses string as its underlying type. Since users may not have access to a UUID generator, PIComposer provides the 'set guid' command. To set a guid attribute, right-click on the label of the attribute and select the 'set guid' command image:model-instance-detail-set-guid.png[].
 
 ==== Complex Attributes
 The complex attribute types are:
@@ -395,7 +382,7 @@ The complex attribute types are:
 * select
 * collection
 
-A complex attribute usually requires multiple nodes to present its value.  In particular an entity instance, when composed in situ, will occupy a full substree.
+A complex attribute typically requires multiple nodes to represent its value. In particular, when an entity instance is composed in situ, it will occupy a full subtree.
 
 [[node_commands]]Attribute node commands include:
 
@@ -447,25 +434,25 @@ Object association is a powerful concept in object-oriented programming that all
 
 ==== Object Aggregation and Composition in PIComposer
 
-Aggregation is the default instance to instance association in STEP standard, in fact, it is the only option in ISO 10303 part21 standard.  The most important difference between object composition and aggregation is that aggregated object is potentially shared among many objects and composed object is embeded in a single parent object.
+Aggregation is the default instance-to-instance association in the STEP standard, and it is the only option in the ISO 10303 Part 21 standard. The most important difference between object composition and aggregation is that an aggregated object is potentially shared among many objects, while a composed object is embedded in the parent object.
 
 .Anatomy of Aggregation and Composer
 image::model-object-aggregation-composition.png[]
 In the figure above:
 
-. the composite node groups all the shared children within a container object to be referenced.
+. The composite node groups all the shared children within a container object to be referenced.
 . The IfcCartesianPoint object is an aggregated object referenced by 7 inside the composed IfcPolyloop object.
-. The composed IfcClosedShell inside a IfcFacetedBrep object
-. The cfsfaces attribute of the IfcClosedShell object, here it contains a composed collection of IfcFaces.
-. Composed IfcFaces
-. The polygon attribute of IfcPolyloop, it comprises of a collection of aggregated IfcCartesianPoint.
-. An aggregate IfcCartesianPoint.
-. The contextofitems attribute of an IfcShapeRepresentation object.  It references a IfcGeometricRepresentationContext object in the model.
+. The composed IfcClosedShell inside an IfcFacetedBrep object.
+. The cfsfaces attribute of the IfcClosedShell object contains a composed collection of IfcFaces.
+. Composed IfcFaces.
+. The polygon attribute of IfcPolyloop, which comprises a collection of aggregated IfcCartesianPoint.
+. An aggregated IfcCartesianPoint.
+. The contextofitems attribute of an IfcShapeRepresentation object. It references an IfcGeometricRepresentationContext object in the model.
 
 [NOTE]
 ====
-* To share an object with in a model, create it in the model using the filter panel and share it by aggregation.
-* To share an object with a container object, create it under the composites node and share it by aggregation.
+* To share an object within a model, create it in the model using the filter panel and share it by aggregation.
+* To share an object within a container object, create it under the composites node and share it by aggregation.
 * To compose an object, use a create/add object command and compose the object in situ.  For detail see below.
 * Prefer composition over aggregation, whenever possible.
 * To share across model boundary, create a template.
@@ -494,7 +481,7 @@ To create attribute instance in place, right click on the attribute label, then 
 
 [NOTE]
 ====
-If the type to create has no subtype, attribute instance is directly created; no input from user is solicited. 
+If the type to create has no subtype, the attribute instance is directly created without soliciting input from the user. 
 ====
 
 ==== Working With Select
@@ -534,7 +521,7 @@ STEP aggregation data types are collections of defined types. Aggregations could
 A collection such as a list could be restricted to contain uniuqe values by using the key word UNIQUE. For example, the EXPRESS expression LIST [3:?] OF UNIQUE IfcCartesianPoint; means list of unique catesian points.
 ====
 
-PIComposer has a simplified collection data model; PIComposer models aggregation data types as vector of defined types.  PIComposer supports multi-dimension aggregation. 
+PIComposer has a simplified collection data model where aggregation data types are modeled as vectors of defined types. PIComposer also supports multi-dimensional aggregation.
 
 PIComposer users use the following commands to work with collections:
 
@@ -543,7 +530,7 @@ PIComposer users use the following commands to work with collections:
 * add reference--available for entity container only
 * clear list--empty the collection
 
-In PIComposer, a collect attribute has its own grouping node where collection commands are anchored.
+In PIComposer, a collection attribute has its own grouping node where collection commands are anchored.
 
 .Entity collect commands
 image::model-collection-attribute.png[]
@@ -552,7 +539,7 @@ Each add command activates a dialog box. To add mulitple instances into a collec
 .Entity collection, add many
 image::model-collection-attribute-add-many.png[]
 
-Complete the add many command by choosing the desired and entering instance count.
+Complete the add many command by choosing the desired type and entering instance count.
 
 === Working with Propertyset, QuantitySet and Their Templates
 
@@ -569,15 +556,15 @@ image::model-add-propertyset-dialog.png[]
 
 [NOTE]
 ====
-The dropdown in the above dialog lists all propertyset and quantityset known to PIComposer which including those defined in the standard and those by templates. 
+The dropdown in the above dialog lists all property sets and quantity sets known to PIComposer, including those defined in the standard schema as well as those defined by templates.
 ====
 
-Ifc4x3 documentation defines a large number (more than 600) of propertyset and quantityset outside of the schema.  PIComposer must know their content in order to instantiate them.  To configure PIComposer to create these and other user defined propertyset, PIComposer uses template.  
+Ifc4x3 documentation defines a large number (more than 600) of property sets and quantity sets outside of the published schema. PIComposer needs to know their content in order to instantiate them. To configure PIComposer to create these and other user-defined property sets, PIComposer uses templates.
 
-A template is defined using json file.
+A template is defined using a JSON file.
 
 ==== Propertset Template
-A propertyset is a collection of properties.  Each property is an entity type. A property might have multiple attributes.  We dive into propertyset templatse by looking at an abrigded example: 
+A property set is a collection of properties. Each property is an entity type that may have multiple attributes. Let's dive into the property set template by looking at an abridged example:
 
 [source,javascript]
 ----
@@ -603,14 +590,14 @@ A propertyset is a collection of properties.  Each property is an entity type. A
 }
 ----
 
-The first template two json properties are the headers:
+The first two template json properties provide header information:
 
 * __schema--it must be ifc4x3
 * __type--the propertyset type, it must be prefix with Pset_xxx
 
 The remaining properties are property definition for the prepertyset. 
 
-Each property has a name, a property_type, and value_type.  In the example above for the first property we have:
+Each property has a name, a property_type, and a value_type.  In the example above for the first property we have:
  
  * name--Reference
  * property_type--P_SINGLEVALUE
@@ -636,7 +623,7 @@ propertyset templates are stored in the folder icon:folder[]/picomposer_data/pro
 
 [TIP]
 ====
-To create user defined propertyset at runtime without using templates, use the add propretyset command to create IfcPropertyset then add any IfcProperty. 
+To create user-defined property sets at runtime without using templates, use the "Add Property Set" command to create an IfcPropertySet, and then add any desired IfcProperty to the model.
 ====
 
 ==== Quantityset Template
@@ -684,7 +671,7 @@ To create user defined quantitysets at runtime without using templates, use the 
 ====
 
 === Working with layers
-Layers are commonly used in CAD system for instance grouping and visibility control.  The corresponding concept in ifc are embodied in the IfcPresentationLayerAssignment entity.
+Layers are commonly used in CAD systems for grouping instances and controlling their visibility. In the IFC standard, the corresponding concept is embodied in the IfcPresentationLayerAssignment entity.
 
 [NOTE]
 ====
@@ -705,7 +692,7 @@ image::model-add-to-layer-dialog.png
 In the add layer dialog, select the desired layer from the dropdown list.
 
 ==== Layer Filter
-A layer providing grouping of IfcShapeRepresentation component.  A layer filter provides quick access to this grouping quickly.  Optionally, instead of shape components, users may list the instances that are associated to the grouped shapes.
+A layer provides a grouping of IfcShapeRepresentation components. A layer filter allows for quick access to this grouping. Optionally, instead of listing the shape components, users may choose to list the instances associated with the grouped shapes.
 
 .layer filter
 image::model-layer-filter.png[]
@@ -730,7 +717,7 @@ To view a model in 3d view, click show the image:navigationbar-show3d-button.png
 
 [NOTE]
 ====
-Both commands are background tasks. User may continue working in parallel while the command is running. 
+Both commands--export and view model--are background tasks. User may continue working in parallel while the command is running. 
 ====
 
 
