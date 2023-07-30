@@ -631,7 +631,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Within a BIM model, the majority of the storage is devoted to entity instances. Additionally, a model document also stores entity instance&#8217;s inverse attributes, tags, search indices, and other supplemental data.</p>
 </div>
 <div class="paragraph">
-<p>Conceptually, models are documents in a project. However, each BIM model is a document database where documents are stored as binary buffers. These buffers store entity instances. Unlike a line in an ISO-10303 part 21 model file or an element of a typed dataset in part 26, a binary buffer typically contains a logically grouped set of entity instances. Furthermore, if an attribute of an entity instance is itself an entity type, it might be recursively composed within the owning entity instance.</p>
+<p>Conceptually, models are documents in a project. However, each BIM model is a document database where documents are stored as binary buffers. These buffers store entity instances. Unlike a line in an ISO-10303 part 21 model file or an element of a typed dataset in part 26 (HDF5 binary encoding), a binary buffer typically contains a logically grouped set of entity instances. Furthermore, if an attribute of an entity instance is itself an entity type, it might be recursively composed within the owning entity instance.</p>
 </div>
 <div class="paragraph">
 <p>That is, using part 21 and IFCPERSONANDORGANIZATION entity as an illustration, instead of storing instances as:</p>
@@ -3721,7 +3721,7 @@ and press the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAA
 <div id="footer">
 <div id="footer-text">
 Version v1.0.10.0<br>
-Last updated 2023-07-30 09:09:14 -0700
+Last updated 2023-07-30 09:13:57 -0700
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

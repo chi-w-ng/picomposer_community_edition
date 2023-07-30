@@ -32,7 +32,7 @@ Most of the storage in PIComposer is consumed by the documents. There are variou
 
 Within a BIM model, the majority of the storage is devoted to entity instances. Additionally, a model document also stores entity instance's inverse attributes, tags, search indices, and other supplemental data.
 
-Conceptually, models are documents in a project. However, each BIM model is a document database where documents are stored as binary buffers. These buffers store entity instances. Unlike a line in an ISO-10303 part 21 model file or an element of a typed dataset in part 26, a binary buffer typically contains a logically grouped set of entity instances. Furthermore, if an attribute of an entity instance is itself an entity type, it might be recursively composed within the owning entity instance.
+Conceptually, models are documents in a project. However, each BIM model is a document database where documents are stored as binary buffers. These buffers store entity instances. Unlike a line in an ISO-10303 part 21 model file or an element of a typed dataset in part 26 (HDF5 binary encoding), a binary buffer typically contains a logically grouped set of entity instances. Furthermore, if an attribute of an entity instance is itself an entity type, it might be recursively composed within the owning entity instance.
 
 That is, using part 21 and IFCPERSONANDORGANIZATION entity as an illustration, instead of storing instances as:
 [source,javascript]
