@@ -2,17 +2,17 @@
 
 === STEP ISO-10303
 
-PIComposer is a STEP ISO-10303 Standard document editor powered by a highly performant EXPRESS document store. To satisfy its aim of supporting real-time applications, the document store has its own lossless proprietary binary encoding of EXPRESS data.
+PIComposer is a STEP ISO-10303 Standard document editor powered by a highly performant EXPRESS document store. To support real-time applications, the document store utilizes its own lossless proprietary binary encoding of EXPRESS data.
 
-Moreover, to handle models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS models and their entity instances (hereafter referred to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs.
+Furthermore, to handle models that may not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS models and their entity instances (referred to as instances) are accurately presented in its user interface as trees and directed acyclic graphs.
 
-As a user, it is best to think of PIComposer Community Edition as Excel for BIM, with the difference being that instead of interacting with sheets, rows, columns, and cells, a user works with trees and tree nodes. By using the spatial tree and entity instance detail tree, PIComposer users can interact directly with BIM models. Authoring a BIM model involves adding tree nodes and updating tree node values. And on each user interaction, SchemaSense, PIComposer's schema-aware intelligent agent, is active to provide user guidance and a context-sensitive set of menu commands on each node. There are three trees in PIComposer: 
+As a user, it is best to think of PIComposer Community Edition as Excel for BIM, with the difference being that instead of interacting with sheets, rows, columns, and cells, a user works with trees and tree nodes. By utilizing the spatial tree and entity instance detail tree, PIComposer users can interact directly with BIM models. Authoring a BIM model involves adding tree nodes and updating tree node values. Upon each user interaction, SchemaSense, PIComposer's schema-aware intelligent agent, is active, providing user guidance and a context-sensitive set of menu commands on each node. There are three trees in PIComposer:
 
-* Spatial tree that manages the model spatial structure
-* Placement tree which is responsible for instance placement
-* Instance detail tree which manages instance attributes.
+* The spatial tree that manages the model spatial structure
+* The placement tree, which is responsible for instance placement
+* The instance detail tree, which manages instance attributes.
 
-Most of user's work is using tools and commmands of PIComposer to manipulate above trees.
+Most of the user's work involves using the tools and commands of PIComposer to manipulate the above trees.
 
 [NOTE]
 ====
@@ -34,7 +34,7 @@ Within a BIM model, the majority of the storage is devoted to entity instances. 
 
 Conceptually, models are documents in a project. However, each BIM model is a document database where documents are stored as binary buffers. These buffers store entity instances. Unlike a line in an ISO-10303 part 21 model file or an element of a typed dataset in part 26, a binary buffer typically contains a logically grouped set of entity instances. Furthermore, if an attribute of an entity instance is itself an entity type, it might be recursively composed within the owning entity instance.
 
-That is, using part 21 as an illustration, instead of storing instances as:
+That is, using part 21 and IFCPERSONANDORGANIZATION entity as an illustration, instead of storing instances as:
 [source,javascript]
 ----
 #1=IFCPERSON($,'John','Doe',$,$,$,$,$);
@@ -42,16 +42,23 @@ That is, using part 21 as an illustration, instead of storing instances as:
 #3=IFCPERSONANDORGANIZATION(#1,#2,$);
 ----
 
-effectively, a buffer might store IFCPERSONANDORGANIZATION as:
+structually, a buffer might alternatively store IFCPERSONANDORGANIZATION as:
 
 [source,javascript]
 ----
 #3=IFCPERSONANDORGANIZATION(#1=IFCPERSON($,'John','Doe',$,$,$,$,$),#2=IFCORGANIZATION($,'Procedural Information System, LLC',$,$,$),$);
 ----
 
+Storing the buffer in the latter structure has many benefits, including:
+
+* better overall compression
+* reduced number of disk read/write operations
+* reduced number of database queries
+* structure simplicity and easily managed data consistency
+
 [NOTE]
 ====
-The PIComposer command to create the first structure is <<node_commands,set reference>> command, the second is the <<node_commands,create>> command.  Which structure to prefer depends on whether the  entity instance stored in an attribute should be shared.
+The PIComposer command to create the first IFCPERSONANDORGANIZATION structure is <<node_commands,set reference>> command, the second is the <<node_commands,create>> command.  Which structure to prefer depends on whether the  entity instance stored in an attribute should be shared.
 ====
 
 PIComposer organizes BIM model data similar to an Entity Component System https://en.wikipedia.org/wiki/Entity_component_system[*(ECS)*]. 

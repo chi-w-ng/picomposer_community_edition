@@ -4,8 +4,8 @@
 :icons: font
 :imagesdir: ./assets
 :hide-uri-scheme:
-:revnumber: v1.1
-:revdate: 5.11.2023
+:revnumber: v1.0.10.0
+:revdate: 7.30.2023
 :doctype: book
 :chapter-label: 
 :example-caption!:

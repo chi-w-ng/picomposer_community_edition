@@ -1,44 +1,37 @@
 == Getting Started
 
-PIComposer is a connected desktop system, a user must have access to PIComposer cloud service to use PIComposer's essentail features. To create an account with PIComposer cloud service, first install PIComposer on desktop. 
+PIComposer is a connected desktop system. To access PIComposer's essential features, users must have access to the PIComposer cloud service. To create an account with the PIComposer cloud service, first, install PIComposer on your desktop. 
 
 [NOTE]
 ====
-PIComposer Community Edition is currently only available to Windows.  Support for MacOS and Linux will come.
+PIComposer Community Edition is currently available only for Windows. Support for MacOS and Linux will be added in the future.
 ====
 
 === Installation
 
-To install PIComposer, first download the installer from https://www.microsoft.com/store/apps/9NKNML3421HC[Microsoft App Store] or https://github.com/chi-w-ng/picomposer_community_edition/tree/main/installers[PIComposer Community Edition] github repository.
+To install PIComposer, first download the installer from https://www.microsoft.com/store/apps/9NKNML3421HC[Microsoft App Store] and follow the App store directions.
 
-[TIP]
-====
-The installer in Gibhub is a self signed msix package. To use the installer, you must install the certificate embedded in the msix package.
+After installation, launch PIComposer and initiate the signup workflow by clicking the signup button.
 
-To enable the installer, install the self signed certificate by following https://www.advancedinstaller.com/install-test-certificate-from-msix.html[these steps].   Once the certificate is installed, use the installer to install PIComposer.
-====
+Fill in your email and choose your password.
 
-Next, launch PIComposer and initiate the signup workflow by clicking the signup button.
+Read and accept the licensing terms.
 
-Fill in email, choose your password.
-
-Read and accept licensing terms.
-
-Click on the signup button.
+Click the signup button.
 
 .signup screen
 image::signup.png[]
 
 
 === Confirm email
-Confirm your email to complete your signup process and PIComposer is ready for use.
+Confirm your email to complete your signup process, and PIComposer will be ready for use.
 
 .email confirmation
 image::confirm_email.png[]
 
 [NOTE]
 ====
-It might takes a few minutes for the confirmation email to be sent. Some email client might place the confirmation email in the spam folder. Please check the spam folder if you do not find your confirmation email in your inbox within a few minutes.
+It might take a few minutes for the confirmation email to be sent. Some email clients might place the confirmation email in the spam folder. If you do not find your confirmation email in your inbox within a few minutes, please check the spam folder.
 ====
 
 [TIP]

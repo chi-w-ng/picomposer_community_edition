@@ -35,7 +35,7 @@ image::model-spatial-tab.png[]
 
 [NOTE]
 ====
-User could return to the last active model by clicking the image:navigationbar-model-button.png[] model button from any other page of PIComposer.
+User can return to the last active model by clicking the image:navigationbar-model-button.png[] model button from any other page of PIComposer.
 ====
 
 PIComposer splits model presentation into two areas:
@@ -62,7 +62,7 @@ image::model-spatial-node-command.png[]
 
 [NOTE]
 ====
-All tree commands are context sensitive, i.e. Their availability and action depends on the node type and the content of the node.
+All tree commands are context-sensitive, i.e. their availability and actions depend on the node type and the content of the node.
 ====
 
 The commands available to the spatial tree nodes are:
@@ -78,7 +78,7 @@ The commands available to the spatial tree nodes are:
 
 [NOTE]
 ====
-Only leaf node can be deleted, except nodes with child opening or fill.
+Only leaf nodes can be deleted, except nodes where their children are logically part of the node's content, such as a wall with child openings or fills.
 ====
 
 ==== Add Child
@@ -116,17 +116,17 @@ If you wish to skip adding IfcShapeRepresentation, leave the type dropdown to 'n
 
 [NOTE]
 ====
-If template is not used when creating IfcShapeRepresenation, only a skeleton of a IfcRepresentationItem is created.  Details must be fill out in the *Instance Detail Tree*.    
+If a template is not used when creating IfcShapeRepresenation, only a skeleton of a IfcRepresentationItem is created.  Details must be fill out in the *Instance Detail Tree*.    
 ====
 
 [NOTE]
 ====
-Adding children using the spatial tree node menu always adds a corresponding placement node to the placement tree.  The child is placed relative the parent. 
+Adding children using the spatial tree node menu always adds a corresponding placement node to the placement tree. The child is placed relative to the parent.
 ====
 
 [NOTE]
 ====
-Adding a child also creates multiple inverse links in the database to manage the various relationships between the node in different trees.  To have the correct model content appear on the trees, it is best to use the available commands.
+Adding a child using tree node menu commands creates the desired child, as well as other related nodes such as a child's placement node, and additionally, multiple inverse links in the database to manage the various relationships between the nodes in different trees. To ensure that the correct model content appears in the trees, it is best to use the available commands.
 ====
 
 ==== Add Template As Child
@@ -148,21 +148,21 @@ The copy command image:model-copy-child-menu-item.png[] copies the node to clipb
 
 [TIP]
 ====
-Copying exception: nodes that could be templates are copyable.  For exmple an IfcWall with openings and doors/windows are copyable although it has openings as children 
+Copy command exception: nodes that could be templates are copyable.  For exmple an IfcWall with openings and doors/windows are copyable although it has openings as children 
 ====
 
 The paste command image:model-paste-child-menu-item.png[] pastes the content of the clip to the tree.
 
 [TIP]
 ====
-Unlike template packaging, which do not package IfcTypeProduct, IfcPropertyset components into the template, the copy/paste command copy does since we are pasting into same model context. 
+Unlike template packaging, which do not package IfcTypeProduct, IfcPropertyset components into the template, the copy/paste command copy does since we are pasted into same model context. 
 ====
 
 The show type command image:model-goto-typeproduct-menu-item.png[] shows the IfcTypeProduct componet of an entity in the detail tree.  
 
 [NOTE]
 ====
-All the show xxx commands apply the instance id filter to the targeted component to show the component in the detail tree.
+All the 'show' commands, such as 'show shape', apply the instance ID filter to the targeted component to display the component in the detail tree.
 ====
 
 === Working with the Placement Tree
@@ -182,7 +182,7 @@ While the placement tree itself is immutable, the placement node is mutable. Lik
 
 [NOTE]
 ====
-The show placed instance command uses an inverse link to find the placed instance.
+The 'show placed instance' command uses an inverse link to find the placed product instance in the model, selects it in the instance filter, and then shows its content in the detail tree.
 ====
 
 [TIP]
@@ -208,7 +208,7 @@ The basic functionality of the instance type filter is similar to the template <
 
 [TIP]
 ====
-The user input type could be abstract for the subtype filter.
+The user input type could be abstract for the subtype filter.  
 ====
 
 [NOTE]
@@ -230,7 +230,7 @@ image::instance_type_filter_create.png[]
 
 [WARNING]
 ====
-Instance created using the create command here will not create any inverse links like it does using the spatial tree commands.  User is responsible for managing instance life cycle.
+Instances created using the 'create' command via the filter panel will not create any inverse links, unlike when using the spatial tree commands. Users are responsible for managing instance lifecycle and data consistency.  
 ====
 
 
@@ -329,7 +329,7 @@ An instance is a collection of attributes.  Each attribute has a data type. The 
 
 [TIP]
 ====
-Defined type is an alias for some already existed underline type.  For example IfcLogical is a LOGICAL type.
+A defined type is an alias for some already existing underlying type. For example, IfcLogical is a LOGICAL type.
 ====
 
 SchemaSense is PIComposer's context-aware schema guidance and informational system that speeds up instance creation and editing. It consists of three functional components:
@@ -365,12 +365,12 @@ image::model-simple-attribute-commands.png[]
 
 [TIP]
 ====
-When an attribute has been modified, there are two ways to commit the updates to the data store in PIComposer. You can either right-click on the label of the attribute to access the tree node menu and select the 'save' menu item, or click the 'save' button located in the top-right corner of the interface.
+When an attribute has been modified, there are two ways to commit the updates to the data store in PIComposer. You can either right-click on the label of the attribute to access the tree node menu and select the 'save' menu item, or click the 'save' button located at the top-right corner of the detail instance tree interface.    
 ====
 
 [TIP]
 ====
-The 'save' button located in the upper right corner of the interface is a batch save button. It allows you to commit all changes made to the instance tree to the data store all at once.
+The 'save' button located in the upper right corner of the interface is a batch save button. It allows you to commit all changes made to the detail instance tree to the data store all at once. The attribute node save command is a targeted command; it will only save its change and clear changes to other nodes.
 ====
 
 The defined type IfcGloballyUniqueId uses string as its underlying type. Since users may not have access to a UUID generator, PIComposer provides the 'set guid' command. To set a guid attribute, right-click on the label of the attribute and select the 'set guid' command image:model-instance-detail-set-guid.png[].
@@ -453,9 +453,9 @@ In the figure above:
 ====
 * To share an object within a model, create it in the model using the filter panel and share it by aggregation.
 * To share an object within a container object, create it under the composites node and share it by aggregation.
-* To compose an object, use a create/add object command and compose the object in situ.  For detail see below.
-* Prefer composition over aggregation, whenever possible.
-* To share across model boundary, create a template.
+* To compose an object, use a create/add object command and compose the object in situ. For details, see below.
+* Prefer composition over aggregation whenever possible.
+* To share across model boundaries, create a template.
 ====
 
 One way to create an aggregation is use the *reference selected instance* command.
@@ -467,7 +467,7 @@ To use the *reference selected instance* command, follow the steps below:
 
 [TIP]
 ====
-Reference selected command will only be available if the selected instance is compatible to the Entity attribute. If attribute is optional, it must be null. To reset to a different reference, nullify first
+"Reference selected" command will only be available if the selected instance is compatible to the Entity attribute. If attribute is optional, it must be null. To reset to a different reference, nullify first
 ====
 
 To set reference without using instance filter, select the image:model-set-reference-command.png[] set reference menu item and enter the target instance id on the dialog.
@@ -518,7 +518,7 @@ STEP aggregation data types are collections of defined types. Aggregations could
 
 [NOTE]
 ====
-A collection such as a list could be restricted to contain uniuqe values by using the key word UNIQUE. For example, the EXPRESS expression LIST [3:?] OF UNIQUE IfcCartesianPoint; means list of unique catesian points.
+A collection such as a list could be restricted to unique values by using the keyword UNIQUE. For example, the EXPRESS expression LIST [3:?] OF UNIQUE IfcCartesianPoint; means a list of unique Cartesian points. 
 ====
 
 PIComposer has a simplified collection data model where aggregation data types are modeled as vectors of defined types. PIComposer also supports multi-dimensional aggregation.
@@ -529,6 +529,11 @@ PIComposer users use the following commands to work with collections:
 * add many--add multiple instances
 * add reference--available for entity container only
 * clear list--empty the collection
+
+[WARNING]
+====
+When dealing with aggregation types, it is up to the user to manage the attributes' constraints, including uniqueness.
+====
 
 In PIComposer, a collection attribute has its own grouping node where collection commands are anchored.
 
@@ -711,9 +716,9 @@ PIComposer does not show the layer filter if the model does not has any IfcPrese
 ====
 
 === Ifc Exporting and 3d Viewer
-To export models to ifc, click the image:navigationbar-export-model-button.png[] export model ifc model on the navigation bar.
+To export models to ifc, click the image:navigationbar-export-model-button.png[] button on the navigation bar.  The exported model is saved to user's download folder with the the file name "modelId.ifc".
 
-To view a model in 3d view, click show the image:navigationbar-show3d-button.png[] 3d button on the navigation bar. This will kick start the export of the model to part21.  When the export is completed, the web 3d viewer will be launched.
+To view a model in 3d view, click show the show 3d image:navigationbar-show3d-button.png[] button on the navigation bar. This will kick start the export of the model to part21.  When the export is completed, the web 3d viewer will be launched.
 
 [NOTE]
 ====

@@ -446,8 +446,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Chi W. Ng, Ph.D.</span><br>
 <span id="email" class="email"><a href="mailto:chi.w.ng@pisys.io">chi.w.ng@pisys.io</a></span><br>
-<span id="revnumber">version v1.1,</span>
-<span id="revdate">5.11.2023</span>
+<span id="revnumber">version v1.0.10.0,</span>
+<span id="revdate">7.30.2023</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -566,29 +566,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="step-iso-10303"><a class="anchor" href="#step-iso-10303"></a>1.1. STEP ISO-10303</h3>
 <div class="paragraph">
-<p>PIComposer is a STEP ISO-10303 Standard document editor powered by a highly performant EXPRESS document store. To satisfy its aim of supporting real-time applications, the document store has its own lossless proprietary binary encoding of EXPRESS data.</p>
+<p>PIComposer is a STEP ISO-10303 Standard document editor powered by a highly performant EXPRESS document store. To support real-time applications, the document store utilizes its own lossless proprietary binary encoding of EXPRESS data.</p>
 </div>
 <div class="paragraph">
-<p>Moreover, to handle models that will not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS models and their entity instances (hereafter referred to as instances) are faithfully presented in its user interface as trees and directed acyclic graphs.</p>
+<p>Furthermore, to handle models that may not fit into device memory, PIComposer lazy loads all data on demand. EXPRESS models and their entity instances (referred to as instances) are accurately presented in its user interface as trees and directed acyclic graphs.</p>
 </div>
 <div class="paragraph">
-<p>As a user, it is best to think of PIComposer Community Edition as Excel for BIM, with the difference being that instead of interacting with sheets, rows, columns, and cells, a user works with trees and tree nodes. By using the spatial tree and entity instance detail tree, PIComposer users can interact directly with BIM models. Authoring a BIM model involves adding tree nodes and updating tree node values. And on each user interaction, SchemaSense, PIComposer&#8217;s schema-aware intelligent agent, is active to provide user guidance and a context-sensitive set of menu commands on each node. There are three trees in PIComposer:</p>
+<p>As a user, it is best to think of PIComposer Community Edition as Excel for BIM, with the difference being that instead of interacting with sheets, rows, columns, and cells, a user works with trees and tree nodes. By utilizing the spatial tree and entity instance detail tree, PIComposer users can interact directly with BIM models. Authoring a BIM model involves adding tree nodes and updating tree node values. Upon each user interaction, SchemaSense, PIComposer&#8217;s schema-aware intelligent agent, is active, providing user guidance and a context-sensitive set of menu commands on each node. There are three trees in PIComposer:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Spatial tree that manages the model spatial structure</p>
+<p>The spatial tree that manages the model spatial structure</p>
 </li>
 <li>
-<p>Placement tree which is responsible for instance placement</p>
+<p>The placement tree, which is responsible for instance placement</p>
 </li>
 <li>
-<p>Instance detail tree which manages instance attributes.</p>
+<p>The instance detail tree, which manages instance attributes.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Most of user&#8217;s work is using tools and commmands of PIComposer to manipulate above trees.</p>
+<p>Most of the user&#8217;s work involves using the tools and commands of PIComposer to manipulate the above trees.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -634,7 +634,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Conceptually, models are documents in a project. However, each BIM model is a document database where documents are stored as binary buffers. These buffers store entity instances. Unlike a line in an ISO-10303 part 21 model file or an element of a typed dataset in part 26, a binary buffer typically contains a logically grouped set of entity instances. Furthermore, if an attribute of an entity instance is itself an entity type, it might be recursively composed within the owning entity instance.</p>
 </div>
 <div class="paragraph">
-<p>That is, using part 21 as an illustration, instead of storing instances as:</p>
+<p>That is, using part 21 and IFCPERSONANDORGANIZATION entity as an illustration, instead of storing instances as:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -644,12 +644,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="paragraph">
-<p>effectively, a buffer might store IFCPERSONANDORGANIZATION as:</p>
+<p>structually, a buffer might alternatively store IFCPERSONANDORGANIZATION as:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-javascript hljs" data-lang="javascript">#3=IFCPERSONANDORGANIZATION(#1=IFCPERSON($,'John','Doe',$,$,$,$,$),#2=IFCORGANIZATION($,'Procedural Information System, LLC',$,$,$),$);</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Storing the buffer in the latter structure has many benefits, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>better overall compression</p>
+</li>
+<li>
+<p>reduced number of disk read/write operations</p>
+</li>
+<li>
+<p>reduced number of database queries</p>
+</li>
+<li>
+<p>structure simplicity and easily managed data consistency</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -659,7 +678,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The PIComposer command to create the first structure is <a href="#node_commands">set reference</a> command, the second is the <a href="#node_commands">create</a> command.  Which structure to prefer depends on whether the  entity instance stored in an attribute should be shared.</p>
+<p>The PIComposer command to create the first IFCPERSONANDORGANIZATION structure is <a href="#node_commands">set reference</a> command, the second is the <a href="#node_commands">create</a> command.  Which structure to prefer depends on whether the  entity instance stored in an attribute should be shared.</p>
 </div>
 </td>
 </tr>
@@ -915,7 +934,7 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 <h2 id="getting-started"><a class="anchor" href="#getting-started"></a>2. Getting Started</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>PIComposer is a connected desktop system, a user must have access to PIComposer cloud service to use PIComposer&#8217;s essentail features. To create an account with PIComposer cloud service, first install PIComposer on desktop.</p>
+<p>PIComposer is a connected desktop system. To access PIComposer&#8217;s essential features, users must have access to the PIComposer cloud service. To create an account with the PIComposer cloud service, first, install PIComposer on your desktop.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -925,7 +944,7 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>PIComposer Community Edition is currently only available to Windows.  Support for MacOS and Linux will come.</p>
+<p>PIComposer Community Edition is currently available only for Windows. Support for MacOS and Linux will be added in the future.</p>
 </div>
 </td>
 </tr>
@@ -934,36 +953,19 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 <div class="sect2">
 <h3 id="installation"><a class="anchor" href="#installation"></a>2.1. Installation</h3>
 <div class="paragraph">
-<p>To install PIComposer, first download the installer from <a href="https://www.microsoft.com/store/apps/9NKNML3421HC">Microsoft App Store</a> or <a href="https://github.com/chi-w-ng/picomposer_community_edition/tree/main/installers">PIComposer Community Edition</a> github repository.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The installer in Gibhub is a self signed msix package. To use the installer, you must install the certificate embedded in the msix package.</p>
+<p>To install PIComposer, first download the installer from <a href="https://www.microsoft.com/store/apps/9NKNML3421HC">Microsoft App Store</a> and follow the App store directions.</p>
 </div>
 <div class="paragraph">
-<p>To enable the installer, install the self signed certificate by following <a href="https://www.advancedinstaller.com/install-test-certificate-from-msix.html">these steps</a>.   Once the certificate is installed, use the installer to install PIComposer.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>After installation, launch PIComposer and initiate the signup workflow by clicking the signup button.</p>
 </div>
 <div class="paragraph">
-<p>Next, launch PIComposer and initiate the signup workflow by clicking the signup button.</p>
+<p>Fill in your email and choose your password.</p>
 </div>
 <div class="paragraph">
-<p>Fill in email, choose your password.</p>
+<p>Read and accept the licensing terms.</p>
 </div>
 <div class="paragraph">
-<p>Read and accept licensing terms.</p>
-</div>
-<div class="paragraph">
-<p>Click on the signup button.</p>
+<p>Click the signup button.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -975,7 +977,7 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 <div class="sect2">
 <h3 id="confirm-email"><a class="anchor" href="#confirm-email"></a>2.2. Confirm email</h3>
 <div class="paragraph">
-<p>Confirm your email to complete your signup process and PIComposer is ready for use.</p>
+<p>Confirm your email to complete your signup process, and PIComposer will be ready for use.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -991,7 +993,7 @@ A good example of such an instance is instance of IfcOwnerHistory.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>It might takes a few minutes for the confirmation email to be sent. Some email client might place the confirmation email in the spam folder. Please check the spam folder if you do not find your confirmation email in your inbox within a few minutes.</p>
+<p>It might take a few minutes for the confirmation email to be sent. Some email clients might place the confirmation email in the spam folder. If you do not find your confirmation email in your inbox within a few minutes, please check the spam folder.</p>
 </div>
 </td>
 </tr>
@@ -1907,7 +1909,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>User could return to the last active model by clicking the <span class="image"><img src="data:image/png;base64,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" alt="navigationbar model button"></span> model button from any other page of PIComposer.</p>
+<p>User can return to the last active model by clicking the <span class="image"><img src="data:image/png;base64,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" alt="navigationbar model button"></span> model button from any other page of PIComposer.</p>
 </div>
 </td>
 </tr>
@@ -1967,7 +1969,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>All tree commands are context sensitive, i.e. Their availability and action depends on the node type and the content of the node.</p>
+<p>All tree commands are context-sensitive, i.e. their availability and actions depend on the node type and the content of the node.</p>
 </div>
 </td>
 </tr>
@@ -2012,7 +2014,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Only leaf node can be deleted, except nodes with child opening or fill.</p>
+<p>Only leaf nodes can be deleted, except nodes where their children are logically part of the node&#8217;s content, such as a wall with child openings or fills.</p>
 </div>
 </td>
 </tr>
@@ -2111,7 +2113,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If template is not used when creating IfcShapeRepresenation, only a skeleton of a IfcRepresentationItem is created.  Details must be fill out in the <strong>Instance Detail Tree</strong>.</p>
+<p>If a template is not used when creating IfcShapeRepresenation, only a skeleton of a IfcRepresentationItem is created.  Details must be fill out in the <strong>Instance Detail Tree</strong>.</p>
 </div>
 </td>
 </tr>
@@ -2125,7 +2127,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Adding children using the spatial tree node menu always adds a corresponding placement node to the placement tree.  The child is placed relative the parent.</p>
+<p>Adding children using the spatial tree node menu always adds a corresponding placement node to the placement tree. The child is placed relative to the parent.</p>
 </div>
 </td>
 </tr>
@@ -2139,7 +2141,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Adding a child also creates multiple inverse links in the database to manage the various relationships between the node in different trees.  To have the correct model content appear on the trees, it is best to use the available commands.</p>
+<p>Adding a child using tree node menu commands creates the desired child, as well as other related nodes such as a child&#8217;s placement node, and additionally, multiple inverse links in the database to manage the various relationships between the nodes in different trees. To ensure that the correct model content appears in the trees, it is best to use the available commands.</p>
 </div>
 </td>
 </tr>
@@ -2187,7 +2189,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Copying exception: nodes that could be templates are copyable.  For exmple an IfcWall with openings and doors/windows are copyable although it has openings as children</p>
+<p>Copy command exception: nodes that could be templates are copyable.  For exmple an IfcWall with openings and doors/windows are copyable although it has openings as children</p>
 </div>
 </td>
 </tr>
@@ -2204,7 +2206,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Unlike template packaging, which do not package IfcTypeProduct, IfcPropertyset components into the template, the copy/paste command copy does since we are pasting into same model context.</p>
+<p>Unlike template packaging, which do not package IfcTypeProduct, IfcPropertyset components into the template, the copy/paste command copy does since we are pasted into same model context.</p>
 </div>
 </td>
 </tr>
@@ -2221,7 +2223,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>All the show xxx commands apply the instance id filter to the targeted component to show the component in the detail tree.</p>
+<p>All the 'show' commands, such as 'show shape', apply the instance ID filter to the targeted component to display the component in the detail tree.</p>
 </div>
 </td>
 </tr>
@@ -2260,7 +2262,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The show placed instance command uses an inverse link to find the placed instance.</p>
+<p>The 'show placed instance' command uses an inverse link to find the placed product instance in the model, selects it in the instance filter, and then shows its content in the detail tree.</p>
 </div>
 </td>
 </tr>
@@ -2372,7 +2374,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Instance created using the create command here will not create any inverse links like it does using the spatial tree commands.  User is responsible for managing instance life cycle.</p>
+<p>Instances created using the 'create' command via the filter panel will not create any inverse links, unlike when using the spatial tree commands. Users are responsible for managing instance lifecycle and data consistency.</p>
 </div>
 </td>
 </tr>
@@ -2612,7 +2614,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Defined type is an alias for some already existed underline type.  For example IfcLogical is a LOGICAL type.</p>
+<p>A defined type is an alias for some already existing underlying type. For example, IfcLogical is a LOGICAL type.</p>
 </div>
 </td>
 </tr>
@@ -2701,7 +2703,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>When an attribute has been modified, there are two ways to commit the updates to the data store in PIComposer. You can either right-click on the label of the attribute to access the tree node menu and select the 'save' menu item, or click the 'save' button located in the top-right corner of the interface.</p>
+<p>When an attribute has been modified, there are two ways to commit the updates to the data store in PIComposer. You can either right-click on the label of the attribute to access the tree node menu and select the 'save' menu item, or click the 'save' button located at the top-right corner of the detail instance tree interface.</p>
 </div>
 </td>
 </tr>
@@ -2715,7 +2717,7 @@ Double clicking on any project on the project list also activates the project pa
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The 'save' button located in the upper right corner of the interface is a batch save button. It allows you to commit all changes made to the instance tree to the data store all at once.</p>
+<p>The 'save' button located in the upper right corner of the interface is a batch save button. It allows you to commit all changes made to the detail instance tree to the data store all at once. The attribute node save command is a targeted command; it will only save its change and clear changes to other nodes.</p>
 </div>
 </td>
 </tr>
@@ -2892,13 +2894,13 @@ Double clicking on any project on the project list also activates the project pa
 <p>To share an object within a container object, create it under the composites node and share it by aggregation.</p>
 </li>
 <li>
-<p>To compose an object, use a create/add object command and compose the object in situ.  For detail see below.</p>
+<p>To compose an object, use a create/add object command and compose the object in situ. For details, see below.</p>
 </li>
 <li>
-<p>Prefer composition over aggregation, whenever possible.</p>
+<p>Prefer composition over aggregation whenever possible.</p>
 </li>
 <li>
-<p>To share across model boundary, create a template.</p>
+<p>To share across model boundaries, create a template.</p>
 </li>
 </ul>
 </div>
@@ -2931,7 +2933,7 @@ To use the <strong>reference selected instance</strong> command, follow the step
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Reference selected command will only be available if the selected instance is compatible to the Entity attribute. If attribute is optional, it must be null. To reset to a different reference, nullify first</p>
+<p>"Reference selected" command will only be available if the selected instance is compatible to the Entity attribute. If attribute is optional, it must be null. To reset to a different reference, nullify first</p>
 </div>
 </td>
 </tr>
@@ -3046,7 +3048,7 @@ To use the <strong>reference selected instance</strong> command, follow the step
 </td>
 <td class="content">
 <div class="paragraph">
-<p>A collection such as a list could be restricted to contain uniuqe values by using the key word UNIQUE. For example, the EXPRESS expression LIST [3:?] OF UNIQUE IfcCartesianPoint; means list of unique catesian points.</p>
+<p>A collection such as a list could be restricted to unique values by using the keyword UNIQUE. For example, the EXPRESS expression LIST [3:?] OF UNIQUE IfcCartesianPoint; means a list of unique Cartesian points.</p>
 </div>
 </td>
 </tr>
@@ -3073,6 +3075,20 @@ To use the <strong>reference selected instance</strong> command, follow the step
 <p>clear list&#8212;&#8203;empty the collection</p>
 </li>
 </ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When dealing with aggregation types, it is up to the user to manage the attributes' constraints, including uniqueness.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>In PIComposer, a collection attribute has its own grouping node where collection commands are anchored.</p>
@@ -3439,10 +3455,10 @@ and press the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAA
 <div class="sect2">
 <h3 id="ifc-exporting-and-3d-viewer"><a class="anchor" href="#ifc-exporting-and-3d-viewer"></a>5.8. Ifc Exporting and 3d Viewer</h3>
 <div class="paragraph">
-<p>To export models to ifc, click the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAApCAYAAACsldDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAUTSURBVFhHzZnNbxtFGIf5V7ggOINUjlQcuHJA4oQQHODEgVMPQCuBeuBCCwcIVKKllKqilQgKIJSmatOkJiShaUIcf+TDTuzYjr/jJBWBNm95Now7uzP75TilI/2k1e687+/Z2XdmZ+0ndnZ2JKq2t7dla2tLNjc3pdVqSb1el42NDSmXy1IsFmVtbU1WV1cln8874phzXKMPfYkhlhzkIqfNy6ZYsEoKutPpOKbNZlNqtZqk8mW5kSzLT3f2xTHnuEYf+hITF1KpJ1iEWaXeknNTDXlrqC1Hznbkyc+3rOIafehLTC+gKDYsRtlSS94backzX9rhgkQMseSICx0Llsf4yXhTnhqwg8QROchFTpuXTZFhc+WmvPZD22p8EJGT3DZPr0JheVS3cw158cKm1awfIjceYWURCEtwutiUF759CHrs+l8ycHu3Z338264LVAkPvIKAfWEJYrl55fLDR3+rcE/60a7m/nGBKuGFpx+wLyzr4YmRRjcRI9rP5geMJ942Jissi/ZouuZKwiNULVm7bzzeIAFma37AeMPg5TJgeQS8Dt8YbLoSYKraH+V7rmth0mO9zQaMNwzecjBguaNEtmokOCxY2o9ZExgG7+i6YLmTdrstHwy7SwAdJqwtHwyw6KPrguVO2HQcPW8u/o8aFgZY9NHtwnIHzMI/cxUjEOmGu/+uYMXOXmTV7+79F2lvfjcPC0xqdF2wDPvl6bI1MGx0DtL8YGHRS6ELy3AzAz8dfXxgYYFJlYILttFoyIfDjw8sLDAZsNQGnxzHfy1ZA/8PWFhgUm80Fyyz7+TwujUwKuxy6758l/zb6Q9ElOYHCwtMBiybYC58MbpmDYwCy0bHG8cuK6z5wcICk9qgG7A/T+esgWGwnd09eX3orjWWvURQ84OFxQqranZ5eVmeHjA32mGwfoaol1gYYPGtWWYe3/qvXjJXhEcNCwMsMBmwLA9sfNfX1+Wzq0tGcJghbzVvjFIvZQADLDAZSxdvCRZgfjlJp9Py7Bn/LaJfA0qPQawMYc0LizcMsOhbRRcshVytVmVlZUVODLlHNwosjX0AWz4gw0ZUNS8s3jDAApMBi1Td8tvU/Py8HD270U3Q788avekbcDzxhkGvVwOW2mDjUKlUnJn4zbX5bhLUrw9GvbEr05c8PPGGARZVrwYsw62PbiqVkuODaRfwQT/FvdJz44WnPqqqBAxYpEaXnydzuZzMzc3Ju1eyrqSHITzwwhNv76giAxZxRywZzMalpSWZmZmRY1dSVpN+iNx44IUn3nqtKllh1crA24O1bnFx0Ul2emhGnvuqbjXsReQiJ7nxwAtPfQXQZYVFOjA1RLLZ2Vm5fjMhb1/MWM3jiBzkIie58QgCRb6wSNWvGmFmKcvK1NSUDI7ckncuLcjzZ8zPdj/RlxhiyUEucqoRtdWprkBYRDB3y+yknvivIJPJOJNhcnJSxsbG5PwvCXn/+zvy5oWMvHwuLy99XXDEMee4Rh/6EkMsOchFTnLjEQSKQmGRKgkKn7cKI8GsxZDRoeYYqYmJCUkkEjI+Pu6IY85xjT70JYZYcpCLnEGPXlckWEQyVRaMBEalUsn5N4ZXYzabdd7nCwsLkkwmHXHMOa7Rh77EEEsO9dijgKLIsEokZlnBiFGh1tTfS4wWE6VQKDjimHNcU38rEUOsd8GPotiwSmqkVT3/vliVi9NVOXWzJh9d2xfHnOOaXpdxIfe1Iw8A/zoKmcWYXhwAAAAASUVORK5CYII=" alt="navigationbar export model button"></span> export model ifc model on the navigation bar.</p>
+<p>To export models to ifc, click the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAApCAYAAACsldDLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAUTSURBVFhHzZnNbxtFGIf5V7ggOINUjlQcuHJA4oQQHODEgVMPQCuBeuBCCwcIVKKllKqilQgKIJSmatOkJiShaUIcf+TDTuzYjr/jJBWBNm95Now7uzP75TilI/2k1e687+/Z2XdmZ+0ndnZ2JKq2t7dla2tLNjc3pdVqSb1el42NDSmXy1IsFmVtbU1WV1cln8874phzXKMPfYkhlhzkIqfNy6ZYsEoKutPpOKbNZlNqtZqk8mW5kSzLT3f2xTHnuEYf+hITF1KpJ1iEWaXeknNTDXlrqC1Hznbkyc+3rOIafehLTC+gKDYsRtlSS94backzX9rhgkQMseSICx0Llsf4yXhTnhqwg8QROchFTpuXTZFhc+WmvPZD22p8EJGT3DZPr0JheVS3cw158cKm1awfIjceYWURCEtwutiUF759CHrs+l8ycHu3Z338264LVAkPvIKAfWEJYrl55fLDR3+rcE/60a7m/nGBKuGFpx+wLyzr4YmRRjcRI9rP5geMJ942Jissi/ZouuZKwiNULVm7bzzeIAFma37AeMPg5TJgeQS8Dt8YbLoSYKraH+V7rmth0mO9zQaMNwzecjBguaNEtmokOCxY2o9ZExgG7+i6YLmTdrstHwy7SwAdJqwtHwyw6KPrguVO2HQcPW8u/o8aFgZY9NHtwnIHzMI/cxUjEOmGu/+uYMXOXmTV7+79F2lvfjcPC0xqdF2wDPvl6bI1MGx0DtL8YGHRS6ELy3AzAz8dfXxgYYFJlYILttFoyIfDjw8sLDAZsNQGnxzHfy1ZA/8PWFhgUm80Fyyz7+TwujUwKuxy6758l/zb6Q9ElOYHCwtMBiybYC58MbpmDYwCy0bHG8cuK6z5wcICk9qgG7A/T+esgWGwnd09eX3orjWWvURQ84OFxQqranZ5eVmeHjA32mGwfoaol1gYYPGtWWYe3/qvXjJXhEcNCwMsMBmwLA9sfNfX1+Wzq0tGcJghbzVvjFIvZQADLDAZSxdvCRZgfjlJp9Py7Bn/LaJfA0qPQawMYc0LizcMsOhbRRcshVytVmVlZUVODLlHNwosjX0AWz4gw0ZUNS8s3jDAApMBi1Td8tvU/Py8HD270U3Q788avekbcDzxhkGvVwOW2mDjUKlUnJn4zbX5bhLUrw9GvbEr05c8PPGGARZVrwYsw62PbiqVkuODaRfwQT/FvdJz44WnPqqqBAxYpEaXnydzuZzMzc3Ju1eyrqSHITzwwhNv76giAxZxRywZzMalpSWZmZmRY1dSVpN+iNx44IUn3nqtKllh1crA24O1bnFx0Ul2emhGnvuqbjXsReQiJ7nxwAtPfQXQZYVFOjA1RLLZ2Vm5fjMhb1/MWM3jiBzkIie58QgCRb6wSNWvGmFmKcvK1NSUDI7ckncuLcjzZ8zPdj/RlxhiyUEucqoRtdWprkBYRDB3y+yknvivIJPJOJNhcnJSxsbG5PwvCXn/+zvy5oWMvHwuLy99XXDEMee4Rh/6EkMsOchFTnLjEQSKQmGRKgkKn7cKI8GsxZDRoeYYqYmJCUkkEjI+Pu6IY85xjT70JYZYcpCLnEGPXlckWEQyVRaMBEalUsn5N4ZXYzabdd7nCwsLkkwmHXHMOa7Rh77EEEsO9dijgKLIsEokZlnBiFGh1tTfS4wWE6VQKDjimHNcU38rEUOsd8GPotiwSmqkVT3/vliVi9NVOXWzJh9d2xfHnOOaXpdxIfe1Iw8A/zoKmcWYXhwAAAAASUVORK5CYII=" alt="navigationbar export model button"></span> button on the navigation bar.  The exported model is saved to user&#8217;s download folder with the the file name "modelId.ifc".</p>
 </div>
 <div class="paragraph">
-<p>To view a model in 3d view, click show the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAtCAYAAAADfVPBAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAUoSURBVGhD7ZnNbxtFGMb5V+i1Uq9cuIIEF8QBECekCiEQBw4cgAuHClS4cOihDWpFQaVSWlGhqilqAMlGVpNUqYOTJrGbxKnjD9mJv+24IrT0Lb9Vxl57x+uZ3aVCVUd6pNXuzPO8z7zvfDh5rtfrydOCZ2b+r3hmZhz29/el2+1Ku90eAu/4phsTJUKbIdA7+aacWWjIBzMtefliW46d68iRM10HPPOOb/ShL2N0XGER2AwzPv1nQ9660pbnT3etwBjGwqHjDgprM8zqr+mGvH7Z3sQo4IArqkxZmWEmv4w3tYGFAZxRZMnYTLPZlPdnojeiADcaOm1TGJlB5PjV/86IAhphDE00Q/o/vtEYEv0k9pdMLR34gj7uMV/P6/spqP5oBS05XzOdTkfOLtSGgrpZeCimDQOMubrx4PDN+JYsP+xroIm2LiY/jDXDIbdVqsuxs52+CLNn04KaQRNt24NWawYSUv3pbL0vACgH1ToHj+Ti2t+eclFQRhTcZbZW/eeQZdDcZgDaxGBjSGuGfX+zWHVOcLcAgag2Km6KcVka5UObGGzOII8ZlZVv/qgOkYOwZkaN1O4/OnzS8xGDTXY8ZpiJer0ur00P72AgjJlRI5QaZaqajo8YiMU0Ox4z7CLbxV0PMQhqRmfknWv3jfiIxXRnGzKjSmwmVdYSBzEzzgjf2BRUY8sfHQuIxbTUhsyQTk7g04lozPgZcff57d4DzyGrQCzEZFJqHjONRkO++D28GRMjJiAWYrI2Q23WajX5/EY4M1EZAcRCTCbrxmOmWq3KidmSltjEjI0R3nP40uDW9SEWYrI2w0Jj4KlYQUs8yYxtRkwmh1iIidjcseqgNfPTrXtaYj9x95lBMyktEzPEEsiMKrM7d7NaYj/xYmdwmpuuERMzxEJMgdYMiy2Xy8mrF/Y8xH7ilBiGOC9MjIBJZoiBWAJtAGprLhaLcuKXnIfcZCZtMImPGIgl0NbMAA6ocrksC8sZOTJC/iTNoE0MxBLo0FTXmd3dXclms/LhleHsPEkzaBMDsRCT9XUGqHVTKBQkcXtVjn7b0oof/Pvr2e/HmQncm4bbDJpoE4PpegEeM+5S29zclJMzmb6I7c9mm8b9TOmcvH7X0bYpMeAxo0qN7TCfz8vq6qq8Oz04d2z+oGHayJDaAdFCE211vpiUGPCYASo7lUrFqdulpSV540K+b4gM6comKBQvGmihibZNVoDWDDNBnfIrr1QqycbGhiwuLsrbP3q366gANxpooYk2MZhmBWjNAHe5sRAzmYwj9tGlwRqKCnDCjQZatuWlMNYMIMWtVkv29vacGkYsmUzK1PXb8tJ3+pu1DeCAC0640UALTZvyUvA1A9T6QYRZowyWl5dlbm5Ovvo5Ka+c19+w/cAYxsIBF5xwo2G7TtyYaAaoDJF+6pkFur6+7ixWAro0e1M+u5ySN3/IyovnKnJ0qumc4IBn3vGNPvRlDGPhgAtOuINmRMHIDECEOmZhstNQEltbW05AqVTKqfn5+XlJJBISj8clFos54Jl3fKMPfRnDWDjgghPuMEaAsRmgdjlKgZnkUKM8tre3nVJJp9POGbGysuKUD+CZd3yjD30Zw1g44LLdtcbBygxAVGWJQLhucH8iOG64zPbOzo5zdQc8845v9KEvYxirshGFEWBtRkGZYlYJims6M53OlSW+Vnb+3gV45h3f6ENfxkRpQiGwGUAwlVpTvl+sy3vXWvLC+cG/P0bBN/rQlzFRG+n1evIYrpBYqhKL7DIAAAAASUVORK5CYII=" alt="navigationbar show3d button"></span> 3d button on the navigation bar. This will kick start the export of the model to part21.  When the export is completed, the web 3d viewer will be launched.</p>
+<p>To view a model in 3d view, click show the show 3d <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAtCAYAAAADfVPBAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAUoSURBVGhD7ZnNbxtFGMb5V+i1Uq9cuIIEF8QBECekCiEQBw4cgAuHClS4cOihDWpFQaVSWlGhqilqAMlGVpNUqYOTJrGbxKnjD9mJv+24IrT0Lb9Vxl57x+uZ3aVCVUd6pNXuzPO8z7zvfDh5rtfrydOCZ2b+r3hmZhz29/el2+1Ku90eAu/4phsTJUKbIdA7+aacWWjIBzMtefliW46d68iRM10HPPOOb/ShL2N0XGER2AwzPv1nQ9660pbnT3etwBjGwqHjDgprM8zqr+mGvH7Z3sQo4IArqkxZmWEmv4w3tYGFAZxRZMnYTLPZlPdnojeiADcaOm1TGJlB5PjV/86IAhphDE00Q/o/vtEYEv0k9pdMLR34gj7uMV/P6/spqP5oBS05XzOdTkfOLtSGgrpZeCimDQOMubrx4PDN+JYsP+xroIm2LiY/jDXDIbdVqsuxs52+CLNn04KaQRNt24NWawYSUv3pbL0vACgH1ToHj+Ti2t+eclFQRhTcZbZW/eeQZdDcZgDaxGBjSGuGfX+zWHVOcLcAgag2Km6KcVka5UObGGzOII8ZlZVv/qgOkYOwZkaN1O4/OnzS8xGDTXY8ZpiJer0ur00P72AgjJlRI5QaZaqajo8YiMU0Ox4z7CLbxV0PMQhqRmfknWv3jfiIxXRnGzKjSmwmVdYSBzEzzgjf2BRUY8sfHQuIxbTUhsyQTk7g04lozPgZcff57d4DzyGrQCzEZFJqHjONRkO++D28GRMjJiAWYrI2Q23WajX5/EY4M1EZAcRCTCbrxmOmWq3KidmSltjEjI0R3nP40uDW9SEWYrI2w0Jj4KlYQUs8yYxtRkwmh1iIidjcseqgNfPTrXtaYj9x95lBMyktEzPEEsiMKrM7d7NaYj/xYmdwmpuuERMzxEJMgdYMiy2Xy8mrF/Y8xH7ilBiGOC9MjIBJZoiBWAJtAGprLhaLcuKXnIfcZCZtMImPGIgl0NbMAA6ocrksC8sZOTJC/iTNoE0MxBLo0FTXmd3dXclms/LhleHsPEkzaBMDsRCT9XUGqHVTKBQkcXtVjn7b0oof/Pvr2e/HmQncm4bbDJpoE4PpegEeM+5S29zclJMzmb6I7c9mm8b9TOmcvH7X0bYpMeAxo0qN7TCfz8vq6qq8Oz04d2z+oGHayJDaAdFCE211vpiUGPCYASo7lUrFqdulpSV540K+b4gM6comKBQvGmihibZNVoDWDDNBnfIrr1QqycbGhiwuLsrbP3q366gANxpooYk2MZhmBWjNAHe5sRAzmYwj9tGlwRqKCnDCjQZatuWlMNYMIMWtVkv29vacGkYsmUzK1PXb8tJ3+pu1DeCAC0640UALTZvyUvA1A9T6QYRZowyWl5dlbm5Ovvo5Ka+c19+w/cAYxsIBF5xwo2G7TtyYaAaoDJF+6pkFur6+7ixWAro0e1M+u5ySN3/IyovnKnJ0qumc4IBn3vGNPvRlDGPhgAtOuINmRMHIDECEOmZhstNQEltbW05AqVTKqfn5+XlJJBISj8clFos54Jl3fKMPfRnDWDjgghPuMEaAsRmgdjlKgZnkUKM8tre3nVJJp9POGbGysuKUD+CZd3yjD30Zw1g44LLdtcbBygxAVGWJQLhucH8iOG64zPbOzo5zdQc8845v9KEvYxirshGFEWBtRkGZYlYJims6M53OlSW+Vnb+3gV45h3f6ENfxkRpQiGwGUAwlVpTvl+sy3vXWvLC+cG/P0bBN/rQlzFRG+n1evIYrpBYqhKL7DIAAAAASUVORK5CYII=" alt="navigationbar show3d button"></span> button on the navigation bar. This will kick start the export of the model to part21.  When the export is completed, the web 3d viewer will be launched.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3704,8 +3720,8 @@ and press the <span class="image"><img src="data:image/png;base64,iVBORw0KGgoAAA
 </div>
 <div id="footer">
 <div id="footer-text">
-Version v1.1<br>
-Last updated 2023-07-16 18:26:11 -0700
+Version v1.0.10.0<br>
+Last updated 2023-07-30 09:09:14 -0700
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
