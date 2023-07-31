@@ -61,6 +61,11 @@ Storing the buffer in the latter structure has many benefits, including:
 The PIComposer command to create the first IFCPERSONANDORGANIZATION structure is <<node_commands,set reference>> command, the second is the <<node_commands,create>> command.  Which structure to prefer depends on whether the  entity instance stored in an attribute should be shared.
 ====
 
+[NOTE]
+====
+PIComposer stores STRING types using utf8 encoding.
+====
+
 PIComposer organizes BIM model data similar to an Entity Component System https://en.wikipedia.org/wiki/Entity_component_system[*(ECS)*]. 
 
 .Entity Component System
